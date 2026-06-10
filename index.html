@@ -119,36 +119,31 @@
     }
     .hero-annotation {
       position: absolute;
-      bottom: 5%;
-      left: 4%;
+      bottom: 8%;
+      left: 5%;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 0.5rem;
-      transform: rotate(-8deg);
+      gap: 0.8rem;
+      transform: rotate(-5deg);
       pointer-events: none;
     }
-    .hero-annotation .annotation-ring {
-      width: 2.2rem;
-      height: 2.2rem;
-      border: 2.5px dashed rgba(255, 110, 199, 0.85);
-      border-radius: 50%;
-      position: relative;
-      box-shadow: 0 0 12px rgba(255, 110, 199, 0.12);
+    .hero-annotation svg {
+      width: 60px;
+      height: 60px;
       filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.3));
     }
-    .hero-annotation .annotation-ring::after {
-      content: '';
-      position: absolute;
-      left: -0.6rem;
-      top: -0.8rem;
-      width: 0.75rem;
-      height: 0.75rem;
-      border-top: 2px dashed rgba(255, 110, 199, 0.85);
-      border-right: 2px dashed rgba(255, 110, 199, 0.85);
-      transform: rotate(-25deg);
-      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.3));
+    .hero-annotation svg path {
+      stroke: rgba(255, 110, 199, 0.9);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .hero-annotation svg polygon {
+      fill: rgba(255, 110, 199, 0.9);
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
     }
     .hero-annotation .annotation-label {
       padding: 0.45rem 0.85rem;
@@ -292,7 +287,10 @@
   <main>
     <section class="hero" id="hero">
       <div class="hero-annotation">
-        <div class="annotation-ring"></div>
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 10 40 Q 20 15 45 10" />
+          <polygon points="45,10 40,22 32,14" />
+        </svg>
         <div class="annotation-label">Special Sports Sedan</div>
       </div>
       <div class="container">
