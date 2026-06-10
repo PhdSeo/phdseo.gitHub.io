@@ -119,80 +119,97 @@
     }
     .hero-annotation {
       position: absolute;
-      top: 22%;
-      right: 12%;
-      z-index: 2;
+      right: 10%;
+      bottom: 12%;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 0.85rem;
-      transform: rotate(5deg);
+      gap: 0.75rem;
+      width: min(230px, 26vw);
+      transform: rotate(3deg);
       pointer-events: none;
-      width: 170px;
     }
     .hero-annotation svg {
-      width: 130px;
-      height: 90px;
+      width: 100%;
+      height: auto;
       overflow: visible;
-      filter: drop-shadow(2px 2px 0px rgba(255, 110, 199, 0.22));
     }
-    .hero-annotation svg path,
-    .hero-annotation svg polyline {
-      stroke: rgba(255, 110, 199, 0.9);
-      stroke-width: 3.4;
+    .hero-annotation svg .shadow {
+      stroke: rgba(255, 110, 199, 0.18);
+      stroke-width: 6.5;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-dasharray: 4 4;
-      opacity: 0.95;
+      opacity: 0.5;
     }
-    .hero-annotation svg .crayon {
+    .hero-annotation svg .scribble {
       stroke: rgba(255, 110, 199, 0.96);
-      stroke-width: 3.8;
-      stroke-dasharray: 2 4;
-      opacity: 0.95;
+      stroke-width: 4.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 2 3;
+      opacity: 0.96;
+    }
+    .hero-annotation svg .texture {
+      stroke: rgba(255, 110, 199, 0.35);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1 4;
+      opacity: 0.6;
     }
     .hero-annotation svg polygon {
       fill: rgba(255, 110, 199, 0.95);
-      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.22));
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
     }
     .hero-annotation .annotation-label {
-      padding: 0.5rem 0.95rem;
+      padding: 0.5rem 1rem;
       border-radius: 18px;
-      background: rgba(15, 23, 42, 0.72);
-      border: 1.5px solid rgba(255, 110, 199, 0.45);
+      background: rgba(10, 16, 29, 0.82);
+      border: 1px solid rgba(255, 110, 199, 0.32);
       color: #ffd2ea;
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: none;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 3px 10px rgba(0, 0, 0, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 4px 18px rgba(0, 0, 0, 0.18);
       font-family: 'Permanent Marker', 'Marker Felt', 'Comic Sans MS', cursive, sans-serif;
-      line-height: 1.3;
-      text-shadow: 0 0 2px rgba(255, 255, 255, 0.16);
-      background-image: linear-gradient(135deg, rgba(255, 110, 199, 0.18), rgba(34, 211, 238, 0.08));
-      background-clip: padding-box;
+      line-height: 1.22;
+      text-shadow: 0 0 3px rgba(255, 255, 255, 0.14);
+      background-image: linear-gradient(135deg, rgba(255, 110, 199, 0.16), rgba(34, 211, 238, 0.06));
       position: relative;
     }
     .hero-annotation .annotation-label::before,
     .hero-annotation .annotation-label::after {
       content: '';
       position: absolute;
-      width: 24px;
-      height: 4px;
+      width: 18px;
+      height: 3px;
       border-radius: 999px;
-      background: rgba(255, 110, 199, 0.4);
-      opacity: 0.65;
+      background: rgba(255, 110, 199, 0.42);
+      opacity: 0.7;
     }
     .hero-annotation .annotation-label::before {
-      top: -6px;
-      left: 8px;
-      transform: rotate(-18deg);
+      top: -5px;
+      left: 10px;
+      transform: rotate(-12deg);
     }
     .hero-annotation .annotation-label::after {
-      bottom: -6px;
-      right: 8px;
+      bottom: -4px;
+      right: 10px;
       transform: rotate(12deg);
+    }
+
+    @media (max-width: 760px) {
+      .hero-annotation {
+        right: 5%;
+        bottom: 8%;
+        width: min(180px, 30vw);
+        transform: rotate(2deg);
+      }
     }
     .button {
       display: inline-flex;
@@ -417,7 +434,7 @@
         <div class="section-title">
           <h2>Dr.S의 비전</h2>
           <p>인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.</p>
-          <p>3S는 Special, Solution, Synergy의 세 단어로 차별화된 비즈니스 가치를 완성합니다.</p>
+          <p>3S는 Special, Strategy, Scale의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.</p>
         </div>
         <div class="cards">
           <div class="card">
