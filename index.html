@@ -115,52 +115,48 @@
     }
     .hero .container {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     .hero-annotation {
       position: absolute;
-      right: 10%;
-      bottom: 12%;
-      z-index: 3;
+      right: 12%;
+      bottom: 8%;
+      z-index: 1; /* sit between background (0) and text (.hero .container z-index:2) */
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 0.75rem;
-      width: min(230px, 26vw);
-      transform: rotate(3deg);
+      gap: 0.6rem;
+      width: min(260px, 28vw);
+      transform: rotate(2.5deg);
       pointer-events: none;
     }
     .hero-annotation svg {
       width: 100%;
       height: auto;
       overflow: visible;
+      display: block;
     }
     .hero-annotation svg .shadow {
-      stroke: rgba(255, 110, 199, 0.18);
-      stroke-width: 6.5;
+      stroke: rgba(0,0,0,0.22);
+      stroke-width: 6.8;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
-      opacity: 0.5;
+      opacity: 0.28;
     }
-    .hero-annotation svg .scribble {
-      stroke: rgba(255, 110, 199, 0.96);
-      stroke-width: 4.2;
+    .hero-annotation svg .scribble,
+    .hero-annotation svg .scribble2,
+    .hero-annotation svg .scribble3 {
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-dasharray: 2 3;
-      opacity: 0.96;
+      opacity: 0.98;
     }
-    .hero-annotation svg .texture {
-      stroke: rgba(255, 110, 199, 0.35);
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 1 4;
-      opacity: 0.6;
-    }
+    .hero-annotation svg .scribble { stroke: rgba(255,110,199,0.98); stroke-width:4.6; stroke-dasharray:3 4; }
+    .hero-annotation svg .scribble2 { stroke: rgba(34,211,238,0.75); stroke-width:3.2; stroke-dasharray:2 3; }
+    .hero-annotation svg .scribble3 { stroke: rgba(156,85,255,0.6); stroke-width:2.2; stroke-dasharray:1 3; }
+    .hero-annotation svg .grain { opacity: 0.14; }
+    .hero-annotation svg polygon.arrowhead { fill: rgba(255,110,199,0.88); stroke: rgba(34,211,238,0.08); }
     .hero-annotation svg polygon {
       fill: rgba(255, 110, 199, 0.95);
       filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
@@ -202,13 +198,13 @@
       right: 10px;
       transform: rotate(12deg);
     }
+    @media (max-width: 1100px) {
+      .hero-annotation { right: 8%; bottom: 9%; width: min(220px, 32vw); transform: rotate(2deg); }
+    }
     @media (max-width: 760px) {
-      .hero-annotation {
-        right: 5%;
-        bottom: 8%;
-        width: min(180px, 30vw);
-        transform: rotate(2deg);
-      }
+      .hero-annotation { right: 6%; bottom: 6%; width: min(160px, 34vw); transform: rotate(1.5deg); }
+      /* move to left if it still overlaps critical text on narrow screens */
+      .hero-annotation.overlap-left { right: auto; left: 6%; }
     }
     .button {
       display: inline-flex;
@@ -336,14 +332,22 @@
 
   <main>
     <section class="hero" id="hero">
-      <div class="hero-annotation">
+      <div class="hero-annotation" aria-hidden="true">
         <div class="annotation-label">Special Sports Sedan (3S)</div>
-        <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg">
-          <path class="shadow" d="M 12 52 C 26 36 34 24 48 30 C 62 36 58 54 48 52 C 38 50 42 36 50 32 C 58 28 66 34 70 42 C 74 50 82 64 94 60 C 106 56 110 46 118 40" />
-          <path class="scribble" d="M 12 52 C 26 34 34 24 48 30 C 62 36 58 54 48 50 C 38 46 42 36 50 32 C 58 28 66 34 70 42 C 74 50 82 64 94 60 C 108 54 112 42 118 38" />
-          <path class="texture" d="M 40 34 C 48 26 56 26 64 34" />
-          <path class="texture" d="M 64 34 C 72 42 78 44 86 44" />
-          <polygon points="118,40 112,52 104,44" />
+        <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <defs>
+            <filter id="paperGrain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <!-- soft shadow behind scribbles -->
+          <path class="shadow" d="M 10 54 C 26 38 36 26 50 32 C 64 38 60 56 50 54 C 40 52 44 38 52 34 C 60 30 68 36 72 44 C 76 52 84 66 96 62 C 108 58 112 48 120 42" />
+          <!-- multiple colored strokes to mimic colored-pencil layering -->
+          <path class="scribble" d="M 10 54 C 24 36 34 26 48 32 C 60 38 56 56 46 52 C 36 48 40 36 48 32 C 56 28 64 34 68 42 C 72 50 80 66 92 62 C 104 58 110 46 118 40" />
+          <path class="scribble2" d="M 12 50 C 26 34 36 24 48 30 C 60 36 56 52 46 50 C 36 48 40 36 48 32 C 56 28 66 32 70 40 C 74 48 82 64 94 60 C 106 56 110 44 118 38" />
+          <path class="scribble3" d="M 36 36 C 44 28 52 28 60 36" />
+          <!-- subtle grain overlay -->
+          <path class="grain" filter="url(#paperGrain)" d="M 8 56 L 132 56" stroke="rgba(255,255,255,0.02)" stroke-width="6" />
+          <!-- arrowhead -->
+          <polygon class="arrowhead" points="120,40 112,54 102,44" />
         </svg>
       </div>
       <div class="container">
@@ -434,7 +438,7 @@
         <div class="section-title">
           <h2>Dr.S의 비전</h2>
           <p>인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.</p>
-          <p>3S는 Special, Strategy, Scale의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.</p>
+          <p>3S는 Special, Strategy, Solution의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.</p>
         </div>
         <div class="cards">
           <div class="card">
