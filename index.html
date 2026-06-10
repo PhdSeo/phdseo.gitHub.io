@@ -119,46 +119,51 @@
     }
     .hero-annotation {
       position: absolute;
-      bottom: 8%;
-      left: 5%;
+      top: 22%;
+      right: 12%;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.8rem;
-      transform: rotate(-5deg);
+      align-items: flex-end;
+      gap: 0.85rem;
+      transform: rotate(5deg);
       pointer-events: none;
+      width: 170px;
     }
     .hero-annotation svg {
-      width: 60px;
-      height: 60px;
-      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.3));
+      width: 130px;
+      height: 90px;
+      overflow: visible;
+      filter: drop-shadow(2px 2px 0px rgba(255, 110, 199, 0.22));
     }
-    .hero-annotation svg path {
+    .hero-annotation svg path,
+    .hero-annotation svg polyline {
       stroke: rgba(255, 110, 199, 0.9);
-      stroke-width: 2.5;
+      stroke-width: 3.2;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
+      stroke-dasharray: 6 3;
     }
     .hero-annotation svg polygon {
-      fill: rgba(255, 110, 199, 0.9);
-      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
+      fill: rgba(255, 110, 199, 0.95);
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.18));
     }
     .hero-annotation .annotation-label {
-      padding: 0.45rem 0.85rem;
-      border-radius: 4px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1.5px dashed rgba(255, 110, 199, 0.8);
-      color: #ff6ec7;
-      font-size: 0.85rem;
+      padding: 0.55rem 1rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255, 110, 199, 0.22), rgba(34, 211, 238, 0.14));
+      border: 1.5px dashed rgba(255, 110, 199, 0.75);
+      color: #ff9fe0;
+      font-size: 0.95rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: none;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-      font-family: 'Marker Felt', 'Comic Sans MS', cursive, sans-serif;
-      font-style: italic;
-      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 3px 10px rgba(0, 0, 0, 0.2);
+      font-family: 'Permanent Marker', 'Comic Sans MS', cursive, sans-serif;
+      line-height: 1.2;
+      text-shadow: 0 0 2px rgba(255, 255, 255, 0.18);
+      background-image: radial-gradient(circle at top left, rgba(255,255,255,0.18) 0%, transparent 28%), linear-gradient(135deg, rgba(255, 110, 199, 0.22), rgba(34, 211, 238, 0.12));
     }
     .button {
       display: inline-flex;
@@ -287,11 +292,12 @@
   <main>
     <section class="hero" id="hero">
       <div class="hero-annotation">
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 10 40 Q 20 15 45 10" />
-          <polygon points="45,10 40,22 32,14" />
-        </svg>
         <div class="annotation-label">Special Sports Sedan</div>
+        <svg viewBox="0 0 130 90" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 12 46 C 22 28 34 18 42 30 C 50 42 44 56 36 52 C 28 48 32 34 40 28 C 48 22 58 28 62 38 C 66 48 72 62 84 58 C 96 54 104 44 110 38" />
+          <path d="M 110 38 C 116 44 118 52 112 58" />
+          <polygon points="112,58 106,66 102,56" />
+        </svg>
       </div>
       <div class="container">
         <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;">AI 트렌드를 선도하는 인텔리전스</p>
