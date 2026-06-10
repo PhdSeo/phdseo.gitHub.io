@@ -119,45 +119,51 @@
     }
     .hero-annotation {
       position: absolute;
-      top: 18%;
-      right: 8%;
+      bottom: 5%;
+      left: 4%;
       z-index: 2;
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      transform: rotate(-10deg);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      transform: rotate(-8deg);
       pointer-events: none;
     }
     .hero-annotation .annotation-ring {
-      width: 3rem;
-      height: 3rem;
-      border: 3px solid rgba(255, 110, 199, 0.95);
+      width: 2.2rem;
+      height: 2.2rem;
+      border: 2.5px dashed rgba(255, 110, 199, 0.85);
       border-radius: 50%;
       position: relative;
-      box-shadow: 0 0 18px rgba(255, 110, 199, 0.16);
+      box-shadow: 0 0 12px rgba(255, 110, 199, 0.12);
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.3));
     }
     .hero-annotation .annotation-ring::after {
       content: '';
       position: absolute;
-      right: -0.4rem;
-      bottom: -0.2rem;
-      width: 1rem;
-      height: 1rem;
-      border-top: 3px solid rgba(255, 110, 199, 0.95);
-      border-right: 3px solid rgba(255, 110, 199, 0.95);
-      transform: rotate(45deg);
+      left: -0.6rem;
+      top: -0.8rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-top: 2px dashed rgba(255, 110, 199, 0.85);
+      border-right: 2px dashed rgba(255, 110, 199, 0.85);
+      transform: rotate(-25deg);
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.3));
     }
     .hero-annotation .annotation-label {
-      padding: 0.65rem 1rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #f8fafc;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+      padding: 0.45rem 0.85rem;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1.5px dashed rgba(255, 110, 199, 0.8);
+      color: #ff6ec7;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      font-family: 'Marker Felt', 'Comic Sans MS', cursive, sans-serif;
+      font-style: italic;
+      filter: drop-shadow(1px 1px 0px rgba(255, 110, 199, 0.2));
     }
     .button {
       display: inline-flex;
@@ -287,7 +293,7 @@
     <section class="hero" id="hero">
       <div class="container">
         <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;">AI 트렌드를 선도하는 인텔리전스</p>
-        <h1>Dr.S와 함께하는 인공지능 시대의 차별화된 독보적인 비즈니스 튜닝(3S)</h1>
+        <h1>Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝</h1>
         <p>Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. 최신 AI 기술로 성장과 경험을 업그레이드하는 단일 페이지 소개 사이트입니다.</p>
         <div class="hero-annotation">
           <div class="annotation-ring"></div>
@@ -377,7 +383,7 @@
         <div class="section-title">
           <h2>Dr.S의 비전</h2>
           <p>인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.</p>
-          <p>3S는 Special, Sports, Sedan의 세 단어로 차별화된 비즈니스 가치를 완성합니다.</p>
+          <p>3S는 Special, Solution, Synergy의 세 단어로 차별화된 비즈니스 가치를 완성합니다.</p>
         </div>
         <div class="cards">
           <div class="card">
