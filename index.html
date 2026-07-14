@@ -317,8 +317,17 @@
         min-height: auto;
       }
       .hero::before {
-        background: url('site-background.jpg') center 40%/115% auto no-repeat;
+        background: url('site-background.jpg') center top/145% auto no-repeat;
         opacity: 0.85;
+      }
+      .hero-annotation {
+        top: 26%;
+        bottom: auto;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) rotate(0.5deg);
+        width: auto;
+        z-index: 3;
       }
       .hero .cards {
         margin-top: 16rem;
