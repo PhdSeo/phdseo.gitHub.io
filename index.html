@@ -93,7 +93,7 @@
       position: absolute;
       inset: 0;
       background: url('site-background.jpg') center/cover no-repeat;
-      opacity: 0.72;
+      opacity: 0.5;
       z-index: 0;
       pointer-events: none;
     }
@@ -120,21 +120,20 @@
     }
     .hero-annotation {
       position: absolute;
-      bottom: 44%;
-      left: 50%;
-      top: auto;
-      right: auto;
+      top: 2rem;
+      right: 8%;
+      bottom: auto;
       z-index: 1; /* sit between background (0) and text (.hero .container z-index:2) */
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-end;
       gap: 0.6rem;
-      width: auto;
-      transform: translateX(-50%) rotate(1deg);
+      width: min(240px, 24vw);
+      transform: rotate(-1deg);
       pointer-events: none;
     }
     .hero-annotation svg {
-      width: min(160px, 20vw);
+      width: 100%;
       height: auto;
       overflow: visible;
       display: block;
@@ -202,10 +201,10 @@
       transform: rotate(12deg);
     }
     @media (max-width: 1100px) {
-      .hero-annotation { bottom: 44%; left: 50%; top: auto; right: auto; width: auto; transform: translateX(-50%) rotate(0.8deg); }
+      .hero-annotation { top: 2.5rem; right: 6%; width: min(220px, 32vw); transform: rotate(-0.8deg); }
     }
     @media (max-width: 760px) {
-      .hero-annotation { bottom: 42%; left: 50%; top: auto; right: auto; width: auto; transform: translateX(-50%) rotate(0.5deg); }
+      .hero-annotation { top: 2rem; right: 5%; width: min(160px, 34vw); transform: rotate(-0.5deg); }
     }
     .button {
       display: inline-flex;
@@ -325,9 +324,14 @@
         bottom: auto;
         left: 50%;
         right: auto;
-        transform: translateX(-50%) rotate(0.5deg);
+        flex-direction: row;
+        align-items: center;
         width: auto;
+        transform: translateX(-50%) rotate(0.5deg);
         z-index: 3;
+      }
+      .hero-annotation svg {
+        width: min(160px, 40vw);
       }
       .hero .cards {
         margin-top: 16rem;
@@ -353,7 +357,6 @@
   <main>
     <section class="hero" id="hero">
       <div class="hero-annotation" aria-hidden="true">
-        <div class="annotation-label">Special Sports Sedan (3S)</div>
         <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
           <defs>
             <filter id="paperGrain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -369,6 +372,7 @@
           <!-- arrowhead at the end of the scribble (118,40), pointing upper-right -->
           <polygon class="arrowhead" points="122,36 114,47 108,40" />
         </svg>
+        <div class="annotation-label">Special Sports Sedan (3S)</div>
       </div>
       <div class="container">
         <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;">AI 트렌드를 선도하는 인텔리전스</p>
