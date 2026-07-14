@@ -93,7 +93,7 @@
       position: absolute;
       inset: 0;
       background: url('site-background.jpg') center/cover no-repeat;
-      opacity: 0.5;
+      opacity: 0.72;
       z-index: 0;
       pointer-events: none;
     }
@@ -315,6 +315,10 @@
       }
       .hero {
         min-height: auto;
+      }
+      .hero::before {
+        background: url('site-background.jpg') center center/contain no-repeat;
+        opacity: 0.85;
       }
     }
   </style>
