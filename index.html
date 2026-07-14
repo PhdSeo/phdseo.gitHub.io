@@ -321,7 +321,7 @@
         display: none;
       }
       .hero-car-wrap {
-        position: relative;
+        display: grid;
         width: 100%;
         margin-top: 1.5rem;
         border-radius: 16px;
@@ -329,19 +329,22 @@
       }
       .hero-car-mobile {
         display: block;
+        grid-area: 1 / 1;
         width: 100%;
         height: 220px;
         background: url('site-background.jpg') center 30%/145% auto no-repeat;
       }
-      .hero-annotation {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(0.5deg);
+      .hero-car-wrap .hero-annotation {
+        grid-area: 1 / 1;
+        place-self: center;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: rotate(0.5deg);
         z-index: 3;
         margin: 0;
       }
-      .hero-annotation svg {
+      .hero-car-wrap .hero-annotation svg {
         width: min(140px, 38vw);
       }
       .hero .cards {
