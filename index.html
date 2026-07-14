@@ -120,20 +120,21 @@
     }
     .hero-annotation {
       position: absolute;
-      top: 2rem;
-      right: 8%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-1deg);
       bottom: auto;
-      z-index: 1; /* sit between background (0) and text (.hero .container z-index:2) */
+      right: auto;
+      z-index: 3;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      flex-direction: row;
+      align-items: center;
       gap: 0.6rem;
-      width: min(240px, 24vw);
-      transform: rotate(-1deg);
+      width: auto;
       pointer-events: none;
     }
     .hero-annotation svg {
-      width: 100%;
+      width: min(160px, 20vw);
       height: auto;
       overflow: visible;
       display: block;
@@ -201,10 +202,10 @@
       transform: rotate(12deg);
     }
     @media (max-width: 1100px) {
-      .hero-annotation { top: 2.5rem; right: 6%; width: min(220px, 32vw); transform: rotate(-0.8deg); }
+      .hero-annotation { transform: translate(-50%, -50%) rotate(-0.8deg); }
     }
     @media (max-width: 760px) {
-      .hero-annotation { top: 2rem; right: 5%; width: min(160px, 34vw); transform: rotate(-0.5deg); }
+      .hero-annotation { transform: translate(-50%, -50%) rotate(-0.5deg); }
     }
     .button {
       display: inline-flex;
@@ -320,21 +321,20 @@
         opacity: 0.85;
       }
       .hero-annotation {
-        top: 26%;
-        bottom: auto;
-        left: 50%;
-        right: auto;
-        flex-direction: row;
-        align-items: center;
-        width: auto;
-        transform: translateX(-50%) rotate(0.5deg);
-        z-index: 3;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: rotate(0.5deg);
+        z-index: auto;
+        justify-content: center;
+        margin: 2rem auto 0;
+        pointer-events: auto;
       }
       .hero-annotation svg {
-        width: min(160px, 40vw);
+        width: min(140px, 38vw);
       }
       .hero .cards {
-        margin-top: 16rem;
+        margin-top: 2rem;
       }
     }
   </style>
@@ -356,24 +356,6 @@
 
   <main>
     <section class="hero" id="hero">
-      <div class="hero-annotation" aria-hidden="true">
-        <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-          <defs>
-            <filter id="paperGrain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-          </defs>
-          <!-- soft shadow behind scribbles -->
-          <path class="shadow" d="M 10 54 C 26 38 36 26 50 32 C 64 38 60 56 50 54 C 40 52 44 38 52 34 C 60 30 68 36 72 44 C 76 52 84 66 96 62 C 108 58 112 48 120 42" />
-          <!-- multiple colored strokes to mimic colored-pencil layering -->
-          <path class="scribble" d="M 10 54 C 24 36 34 26 48 32 C 60 38 56 56 46 52 C 36 48 40 36 48 32 C 56 28 64 34 68 42 C 72 50 80 66 92 62 C 104 58 110 46 118 40" />
-          <path class="scribble2" d="M 12 50 C 26 34 36 24 48 30 C 60 36 56 52 46 50 C 36 48 40 36 48 32 C 56 28 66 32 70 40 C 74 48 82 64 94 60 C 106 56 110 44 118 38" />
-          <path class="scribble3" d="M 36 36 C 44 28 52 28 60 36" />
-          <!-- subtle grain overlay -->
-          <path class="grain" filter="url(#paperGrain)" d="M 8 56 L 132 56" stroke="rgba(255,255,255,0.02)" stroke-width="6" />
-          <!-- arrowhead at the end of the scribble (118,40), pointing upper-right -->
-          <polygon class="arrowhead" points="122,36 114,47 108,40" />
-        </svg>
-        <div class="annotation-label">Special Sports Sedan (3S)</div>
-      </div>
       <div class="container">
         <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;">AI 트렌드를 선도하는 인텔리전스</p>
         <h1>Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝</h1>
@@ -381,6 +363,24 @@
         <div class="buttons">
           <a class="button button-primary" href="#contact">AI 트렌드 상담</a>
           <a class="button button-secondary" href="#services">서비스 보기</a>
+        </div>
+        <div class="hero-annotation" aria-hidden="true">
+          <svg viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <filter id="paperGrain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+            </defs>
+            <!-- soft shadow behind scribbles -->
+            <path class="shadow" d="M 10 54 C 26 38 36 26 50 32 C 64 38 60 56 50 54 C 40 52 44 38 52 34 C 60 30 68 36 72 44 C 76 52 84 66 96 62 C 108 58 112 48 120 42" />
+            <!-- multiple colored strokes to mimic colored-pencil layering -->
+            <path class="scribble" d="M 10 54 C 24 36 34 26 48 32 C 60 38 56 56 46 52 C 36 48 40 36 48 32 C 56 28 64 34 68 42 C 72 50 80 66 92 62 C 104 58 110 46 118 40" />
+            <path class="scribble2" d="M 12 50 C 26 34 36 24 48 30 C 60 36 56 52 46 50 C 36 48 40 36 48 32 C 56 28 66 32 70 40 C 74 48 82 64 94 60 C 106 56 110 44 118 38" />
+            <path class="scribble3" d="M 36 36 C 44 28 52 28 60 36" />
+            <!-- subtle grain overlay -->
+            <path class="grain" filter="url(#paperGrain)" d="M 8 56 L 132 56" stroke="rgba(255,255,255,0.02)" stroke-width="6" />
+            <!-- arrowhead at the end of the scribble (118,40), pointing upper-right -->
+            <polygon class="arrowhead" points="122,36 114,47 108,40" />
+          </svg>
+          <div class="annotation-label">Special Sports Sedan (3S)</div>
         </div>
         <div class="cards">
           <div class="card">
