@@ -68,11 +68,13 @@
     .nav-links {
       display: flex;
       gap: 1.5rem;
+      flex-wrap: nowrap;
     }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
     .nav-links a:hover {
       color: var(--text);
@@ -412,10 +414,35 @@
     }
     .hero-car-mobile { display: none; }
     @media (max-width: 640px) {
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
+      nav {
+        gap: 0.5rem;
       }
+      .brand {
+        font-size: clamp(0.95rem, 4vw, 1.45rem);
+        flex-shrink: 0;
+      }
+      .nav-links {
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        gap: clamp(0.4rem, 2vw, 1rem);
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+      .nav-links a {
+        font-size: clamp(0.72rem, 3vw, 0.95rem);
+      }
+    }
+    @media (max-width: 400px) {
+      .nav-links a {
+        font-size: clamp(0.62rem, 3.2vw, 0.85rem);
+      }
+    }
       .hero {
         min-height: auto;
       }
