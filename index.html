@@ -230,6 +230,66 @@
       border: 1px solid rgba(255,255,255,0.16);
       color: var(--text);
     }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .contact-row:last-child {
+      margin-bottom: 0;
+    }
+    .contact-link {
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .contact-link:hover {
+      color: var(--accent2);
+    }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      position: relative;
+    }
+    .copy-btn:hover {
+      color: var(--text);
+      border-color: var(--accent2);
+    }
+    .copy-btn.copied {
+      color: #86efac;
+      border-color: rgba(134,239,172,0.5);
+    }
+    .copy-btn::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: var(--text);
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .copy-btn.copied::after {
+      opacity: 1;
+    }
     .button:hover {
       transform: translateY(-2px);
     }
@@ -702,8 +762,18 @@
         </div>
         <div class="card" style="text-align: center;">
           <p style="margin-bottom: 1.25rem; font-size: 1.05rem; color: var(--muted);">AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.</p>
-          <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><strong>cpim@icloud.com</strong></p>
-          <p style="font-size: 1.1rem;"><strong>SMS: 070-7522-4438</strong></p>
+          <div class="contact-row">
+            <a class="contact-link" href="mailto:cpim@icloud.com"><strong>cpim@icloud.com</strong></a>
+            <button type="button" class="copy-btn" data-copy="cpim@icloud.com" data-label="이메일" aria-label="이메일 주소 복사">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+          <div class="contact-row">
+            <a class="contact-link" href="tel:07075224438"><strong>SMS: 070-7522-4438</strong></a>
+            <button type="button" class="copy-btn" data-copy="070-7522-4438" data-label="전화번호" aria-label="전화번호 복사">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -714,6 +784,36 @@
       <p>© 2026 Dr.S. 모든 권리 보유.</p>
     </div>
   </footer>
+
+  <script>
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const value = btn.dataset.copy;
+        const label = btn.dataset.label || "";
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            const temp = document.createElement("textarea");
+            temp.value = value;
+            temp.style.position = "fixed";
+            temp.style.opacity = "0";
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+          }
+          btn.dataset.tooltip = `${label} 복사됨!`;
+          btn.classList.add("copied");
+          setTimeout(() => btn.classList.remove("copied"), 1500);
+        } catch (err) {
+          btn.dataset.tooltip = "복사 실패";
+          btn.classList.add("copied");
+          setTimeout(() => btn.classList.remove("copied"), 1500);
+        }
+      });
+    });
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
