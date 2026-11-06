@@ -81,6 +81,20 @@
     .nav-links a:hover {
       color: var(--text);
     }
+    .lang-switch select {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .lang-switch select:focus {
+      outline: none;
+      border-color: var(--accent2);
+    }
     main > section {
       padding: 5rem 0;
     }
@@ -575,6 +589,10 @@
       .nav-links a {
         font-size: clamp(0.82rem, 3.8vw, 0.98rem);
       }
+      .lang-switch select {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+      }
     }
   </style>
 </head>
@@ -584,11 +602,21 @@
       <nav>
         <a class="brand" href="#hero">Dr.<span>S</span></a>
         <div class="nav-links">
-          <a href="#about">박사님 소개</a>
-          <a href="#services">서비스</a>
-          <a href="#vision">비전</a>
-          <a href="#board">AX 게시판</a>
-          <a href="#contact">문의</a>
+          <a href="#about" data-i18n="nav_about">박사님 소개</a>
+          <a href="#services" data-i18n="nav_services">서비스</a>
+          <a href="#vision" data-i18n="nav_vision">비전</a>
+          <a href="#board" data-i18n="nav_board">AX 게시판</a>
+          <a href="#contact" data-i18n="nav_contact">문의</a>
+        </div>
+        <div class="lang-switch">
+          <select id="lang-select" aria-label="Language / 언어 선택">
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+          </select>
         </div>
       </nav>
     </div>
@@ -597,12 +625,12 @@
   <main>
     <section class="hero" id="hero">
       <div class="container">
-        <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;">AI 트렌드를 선도하는 인텔리전스</p>
-        <h1>Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝</h1>
-        <p>Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. 최신 AI 기술로 성장과 경험을 업그레이드하는 단일 페이지 소개 사이트입니다.</p>
+        <p style="color: var(--accent); letter-spacing: 0.24em; text-transform: uppercase; font-weight: 700; margin-bottom: 1.75rem;" data-i18n="hero_eyebrow">AI 트렌드를 선도하는 인텔리전스</p>
+        <h1 data-i18n="hero_title">Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝</h1>
+        <p data-i18n="hero_desc">Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. 최신 AI 기술로 성장과 경험을 업그레이드하는 단일 페이지 소개 사이트입니다.</p>
         <div class="buttons">
-          <a class="button button-primary" href="#contact">AI 트렌드 상담</a>
-          <a class="button button-secondary" href="#services">서비스 보기</a>
+          <a class="button button-primary" href="#contact" data-i18n="hero_btn1">AI 트렌드 상담</a>
+          <a class="button button-secondary" href="#services" data-i18n="hero_btn2">서비스 보기</a>
         </div>
         <div class="hero-car-wrap">
           <div class="hero-car-mobile" aria-hidden="true"></div>
@@ -627,16 +655,16 @@
         </div>
         <div class="cards">
           <div class="card">
-            <h3>AI 혁신 전략</h3>
-            <p>지속가능한 AI와 설명가능한 AI(XAI) 트렌드를 반영한 전략으로 비즈니스 경쟁력을 강화합니다.</p>
+            <h3 data-i18n="hero_card1_title">AI 혁신 전략</h3>
+            <p data-i18n="hero_card1_desc">지속가능한 AI와 설명가능한 AI(XAI) 트렌드를 반영한 전략으로 비즈니스 경쟁력을 강화합니다.</p>
           </div>
           <div class="card">
-            <h3>트렌드 인사이트</h3>
-            <p>데이터와 AI 기술을 결합해 미래 시장의 변화를 빠르게 예측하고 대응합니다.</p>
+            <h3 data-i18n="hero_card2_title">트렌드 인사이트</h3>
+            <p data-i18n="hero_card2_desc">데이터와 AI 기술을 결합해 미래 시장의 변화를 빠르게 예측하고 대응합니다.</p>
           </div>
           <div class="card">
-            <h3>디지털 경험</h3>
-            <p>사용자 중심의 AI 경험을 설계하여 브랜드와 고객의 연결을 자연스럽게 만듭니다.</p>
+            <h3 data-i18n="hero_card3_title">디지털 경험</h3>
+            <p data-i18n="hero_card3_desc">사용자 중심의 AI 경험을 설계하여 브랜드와 고객의 연결을 자연스럽게 만듭니다.</p>
           </div>
         </div>
       </div>
@@ -651,24 +679,24 @@
     <section id="about">
       <div class="container">
         <div class="section-title">
-          <h2>박사님 소개</h2>
-          <p>AI 트렌드와 데이터 기반 인텔리전스를 중심에 두고, 고객의 비즈니스 혁신을 함께 실현하는 전문 파트너입니다.</p>
+          <h2 data-i18n="about_title">박사님 소개</h2>
+          <p data-i18n="about_desc">AI 트렌드와 데이터 기반 인텔리전스를 중심에 두고, 고객의 비즈니스 혁신을 함께 실현하는 전문 파트너입니다.</p>
         </div>
         <div class="grid-3">
           <div class="feature">
             <span>01</span>
-            <h3>AI 트렌드 리서치</h3>
-            <p>최신 기술 흐름을 분석하여 기업이 선제적으로 활용할 수 있는 인사이트를 제공합니다.</p>
+            <h3 data-i18n="about_f1_title">AI 트렌드 리서치</h3>
+            <p data-i18n="about_f1_desc">최신 기술 흐름을 분석하여 기업이 선제적으로 활용할 수 있는 인사이트를 제공합니다.</p>
           </div>
           <div class="feature">
             <span>02</span>
-            <h3>지능형 솔루션 디자인</h3>
-            <p>사용자 경험과 자동화가 결합된 AI 솔루션을 설계해 비즈니스 효율을 극대화합니다.</p>
+            <h3 data-i18n="about_f2_title">지능형 솔루션 디자인</h3>
+            <p data-i18n="about_f2_desc">사용자 경험과 자동화가 결합된 AI 솔루션을 설계해 비즈니스 효율을 극대화합니다.</p>
           </div>
           <div class="feature">
             <span>03</span>
-            <h3>미래 지향 실행</h3>
-            <p>프로젝트 실행부터 확장까지 안정적인 성장 로드맵을 제공합니다.</p>
+            <h3 data-i18n="about_f3_title">미래 지향 실행</h3>
+            <p data-i18n="about_f3_desc">프로젝트 실행부터 확장까지 안정적인 성장 로드맵을 제공합니다.</p>
           </div>
         </div>
       </div>
@@ -677,24 +705,24 @@
     <section id="services" style="background: rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);">
       <div class="container">
         <div class="section-title">
-          <h2>주요 서비스</h2>
-          <p>AI 트렌드를 중심으로 하는 핵심 서비스로 브랜드의 디지털 전환과 혁신을 지원합니다.</p>
+          <h2 data-i18n="services_title">주요 서비스</h2>
+          <p data-i18n="services_desc">AI 트렌드를 중심으로 하는 핵심 서비스로 브랜드의 디지털 전환과 혁신을 지원합니다.</p>
         </div>
         <div class="grid-3">
           <div class="feature">
             <span>🤖</span>
-            <h3>AI 전략 수립</h3>
-            <p>비즈니스 목표에 맞춘 AI 적용 전략과 데이터 활용 방안을 제시합니다.</p>
+            <h3 data-i18n="services_f1_title">AI 전략 수립</h3>
+            <p data-i18n="services_f1_desc">비즈니스 목표에 맞춘 AI 적용 전략과 데이터 활용 방안을 제시합니다.</p>
           </div>
           <div class="feature">
             <span>📈</span>
-            <h3>트렌드 분석</h3>
-            <p>산업별 AI 동향과 기술 전망을 분석해 고객의 경쟁 우위를 강화합니다.</p>
+            <h3 data-i18n="services_f2_title">트렌드 분석</h3>
+            <p data-i18n="services_f2_desc">산업별 AI 동향과 기술 전망을 분석해 고객의 경쟁 우위를 강화합니다.</p>
           </div>
           <div class="feature">
             <span>⚙️</span>
-            <h3>AI 구현 지원</h3>
-            <p>멀티 에이전트 오케스트레이션, AI 하네스, LLM 파이프라인 등 실제 AI 솔루션 구현을 실무적으로 지원합니다.</p>
+            <h3 data-i18n="services_f3_title">AI 구현 지원</h3>
+            <p data-i18n="services_f3_desc">멀티 에이전트 오케스트레이션, AI 하네스, LLM 파이프라인 등 실제 AI 솔루션 구현을 실무적으로 지원합니다.</p>
           </div>
         </div>
       </div>
@@ -703,22 +731,22 @@
     <section id="vision">
       <div class="container">
         <div class="section-title">
-          <h2>Dr.S의 비전</h2>
-          <p>인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.</p>
-          <p>3S는 Specialty, Strategy, Solution의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.</p>
+          <h2 data-i18n="vision_title">Dr.S의 비전</h2>
+          <p data-i18n="vision_desc1">인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.</p>
+          <p data-i18n="vision_desc2">3S는 Specialty, Strategy, Solution의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.</p>
         </div>
         <div class="cards">
           <div class="card">
-            <h3>혁신의 최전선</h3>
-            <p>AI 기반 혁신을 통해 새로운 비즈니스 모델과 경험을 창출합니다.</p>
+            <h3 data-i18n="vision_c1_title">혁신의 최전선</h3>
+            <p data-i18n="vision_c1_desc">AI 기반 혁신을 통해 새로운 비즈니스 모델과 경험을 창출합니다.</p>
           </div>
           <div class="card">
-            <h3>데이터 중심 의사결정</h3>
-            <p>정확한 데이터 인사이트로 빠르고 신뢰할 수 있는 결정을 돕습니다.</p>
+            <h3 data-i18n="vision_c2_title">데이터 중심 의사결정</h3>
+            <p data-i18n="vision_c2_desc">정확한 데이터 인사이트로 빠르고 신뢰할 수 있는 결정을 돕습니다.</p>
           </div>
           <div class="card">
-            <h3>지속 가능한 성장</h3>
-            <p>지능형 솔루션을 통해 고객이 미래까지 지속 가능한 경쟁력을 갖추게 합니다.</p>
+            <h3 data-i18n="vision_c3_title">지속 가능한 성장</h3>
+            <p data-i18n="vision_c3_desc">지능형 솔루션을 통해 고객이 미래까지 지속 가능한 경쟁력을 갖추게 합니다.</p>
           </div>
         </div>
       </div>
@@ -727,29 +755,29 @@
     <section id="board" style="background: rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);">
       <div class="container">
         <div class="section-title">
-          <h2>AX 게시판</h2>
-          <p>AI/AX 관련 생각과 소식을 자유롭게 기록하는 공간입니다. 글쓰기는 관리자 로그인 후에만 가능합니다.</p>
+          <h2 data-i18n="board_title">AX 게시판</h2>
+          <p data-i18n="board_desc">AI/AX 관련 생각과 소식을 자유롭게 기록하는 공간입니다. 글쓰기는 관리자 로그인 후에만 가능합니다.</p>
         </div>
 
         <div id="board-auth" class="board-auth">
-          <input type="email" id="board-email" placeholder="이메일" autocomplete="username">
-          <input type="password" id="board-password" placeholder="비밀번호" autocomplete="current-password">
-          <button type="button" class="button button-primary" id="board-login-btn">로그인</button>
+          <input type="email" id="board-email" placeholder="이메일" data-i18n-placeholder="board_email_ph" autocomplete="username">
+          <input type="password" id="board-password" placeholder="비밀번호" data-i18n-placeholder="board_password_ph" autocomplete="current-password">
+          <button type="button" class="button button-primary" id="board-login-btn" data-i18n="board_login_btn">로그인</button>
         </div>
         <div id="board-user-bar" class="board-auth" style="display:none; flex-direction: row; justify-content: center; align-items: center; gap: 1rem;">
           <span id="board-user-email" style="color: var(--muted); font-size: 0.9rem;"></span>
-          <button type="button" class="button button-secondary" id="board-logout-btn">로그아웃</button>
+          <button type="button" class="button button-secondary" id="board-logout-btn" data-i18n="board_logout_btn">로그아웃</button>
         </div>
         <p id="board-status" class="board-status"></p>
 
         <form id="board-write" class="board-write" style="display:none;">
-          <input type="text" id="board-title" placeholder="제목" required>
-          <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" required></textarea>
-          <button type="submit" class="button button-primary">게시글 등록</button>
+          <input type="text" id="board-title" placeholder="제목" data-i18n-placeholder="board_title_ph" required>
+          <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" data-i18n-placeholder="board_content_ph" required></textarea>
+          <button type="submit" class="button button-primary" data-i18n="board_submit_btn">게시글 등록</button>
         </form>
 
         <div id="board-posts" class="board-posts">
-          <p class="board-empty">게시글을 불러오는 중입니다...</p>
+          <p class="board-empty" data-i18n="board_loading">게시글을 불러오는 중입니다...</p>
         </div>
       </div>
     </section>
@@ -757,20 +785,20 @@
     <section id="contact">
       <div class="container">
         <div class="section-title">
-          <h2>문의하기</h2>
-          <p>Dr.S와 함께 AI 트렌드 기반 혁신을 시작하세요. 맞춤형 상담을 언제든 지원합니다.</p>
+          <h2 data-i18n="contact_title">문의하기</h2>
+          <p data-i18n="contact_desc">Dr.S와 함께 AI 트렌드 기반 혁신을 시작하세요. 맞춤형 상담을 언제든 지원합니다.</p>
         </div>
         <div class="card" style="text-align: center;">
-          <p style="margin-bottom: 1.25rem; font-size: 1.05rem; color: var(--muted);">AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.</p>
+          <p style="margin-bottom: 1.25rem; font-size: 1.05rem; color: var(--muted);" data-i18n="contact_note">AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.</p>
           <div class="contact-row">
             <a class="contact-link" href="mailto:cpim@icloud.com"><strong>cpim@icloud.com</strong></a>
-            <button type="button" class="copy-btn" data-copy="cpim@icloud.com" data-label="이메일" aria-label="이메일 주소 복사">
+            <button type="button" class="copy-btn" data-copy="cpim@icloud.com" data-label-i18n="contact_email_label" aria-label="이메일 주소 복사" data-i18n-aria="contact_email_aria">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
           </div>
           <div class="contact-row">
             <a class="contact-link" href="tel:07075224438"><strong>SMS: 070-7522-4438</strong></a>
-            <button type="button" class="copy-btn" data-copy="070-7522-4438" data-label="전화번호" aria-label="전화번호 복사">
+            <button type="button" class="copy-btn" data-copy="070-7522-4438" data-label-i18n="contact_phone_label" aria-label="전화번호 복사" data-i18n-aria="contact_phone_aria">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
           </div>
@@ -781,15 +809,290 @@
 
   <footer>
     <div class="container">
-      <p>© 2026 Dr.S. 모든 권리 보유.</p>
+      <p data-i18n="footer_text">© 2026 Dr.S. 모든 권리 보유.</p>
     </div>
   </footer>
 
   <script>
+    window.translations = {
+      ko: {
+        nav_about: "박사님 소개", nav_services: "서비스", nav_vision: "비전", nav_board: "AX 게시판", nav_contact: "문의",
+        hero_eyebrow: "AI 트렌드를 선도하는 인텔리전스",
+        hero_title: "Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝",
+        hero_desc: "Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. 최신 AI 기술로 성장과 경험을 업그레이드하는 단일 페이지 소개 사이트입니다.",
+        hero_btn1: "AI 트렌드 상담", hero_btn2: "서비스 보기",
+        hero_card1_title: "AI 혁신 전략", hero_card1_desc: "지속가능한 AI와 설명가능한 AI(XAI) 트렌드를 반영한 전략으로 비즈니스 경쟁력을 강화합니다.",
+        hero_card2_title: "트렌드 인사이트", hero_card2_desc: "데이터와 AI 기술을 결합해 미래 시장의 변화를 빠르게 예측하고 대응합니다.",
+        hero_card3_title: "디지털 경험", hero_card3_desc: "사용자 중심의 AI 경험을 설계하여 브랜드와 고객의 연결을 자연스럽게 만듭니다.",
+        about_title: "박사님 소개", about_desc: "AI 트렌드와 데이터 기반 인텔리전스를 중심에 두고, 고객의 비즈니스 혁신을 함께 실현하는 전문 파트너입니다.",
+        about_f1_title: "AI 트렌드 리서치", about_f1_desc: "최신 기술 흐름을 분석하여 기업이 선제적으로 활용할 수 있는 인사이트를 제공합니다.",
+        about_f2_title: "지능형 솔루션 디자인", about_f2_desc: "사용자 경험과 자동화가 결합된 AI 솔루션을 설계해 비즈니스 효율을 극대화합니다.",
+        about_f3_title: "미래 지향 실행", about_f3_desc: "프로젝트 실행부터 확장까지 안정적인 성장 로드맵을 제공합니다.",
+        services_title: "주요 서비스", services_desc: "AI 트렌드를 중심으로 하는 핵심 서비스로 브랜드의 디지털 전환과 혁신을 지원합니다.",
+        services_f1_title: "AI 전략 수립", services_f1_desc: "비즈니스 목표에 맞춘 AI 적용 전략과 데이터 활용 방안을 제시합니다.",
+        services_f2_title: "트렌드 분석", services_f2_desc: "산업별 AI 동향과 기술 전망을 분석해 고객의 경쟁 우위를 강화합니다.",
+        services_f3_title: "AI 구현 지원", services_f3_desc: "멀티 에이전트 오케스트레이션, AI 하네스, LLM 파이프라인 등 실제 AI 솔루션 구현을 실무적으로 지원합니다.",
+        vision_title: "Dr.S의 비전", vision_desc1: "인공지능 트렌드를 통찰력 있게 연결하여, 고객이 다음 시대를 주도하도록 돕습니다.",
+        vision_desc2: "3S는 Specialty, Strategy, Solution의 세 단어로 차별화된 비즈니스 튜닝 가치를 완성합니다.",
+        vision_c1_title: "혁신의 최전선", vision_c1_desc: "AI 기반 혁신을 통해 새로운 비즈니스 모델과 경험을 창출합니다.",
+        vision_c2_title: "데이터 중심 의사결정", vision_c2_desc: "정확한 데이터 인사이트로 빠르고 신뢰할 수 있는 결정을 돕습니다.",
+        vision_c3_title: "지속 가능한 성장", vision_c3_desc: "지능형 솔루션을 통해 고객이 미래까지 지속 가능한 경쟁력을 갖추게 합니다.",
+        board_title: "AX 게시판", board_desc: "AI/AX 관련 생각과 소식을 자유롭게 기록하는 공간입니다. 글쓰기는 관리자 로그인 후에만 가능합니다.",
+        board_email_ph: "이메일", board_password_ph: "비밀번호", board_login_btn: "로그인", board_logout_btn: "로그아웃",
+        board_title_ph: "제목", board_content_ph: "내용을 입력하세요", board_submit_btn: "게시글 등록", board_loading: "게시글을 불러오는 중입니다...",
+        board_empty_posts: "아직 등록된 게시글이 없습니다.", board_confirm_delete: "이 게시글을 삭제할까요?",
+        board_post_created: "게시글이 등록되었습니다.", board_create_failed_prefix: "등록에 실패했습니다: ",
+        board_post_updated: "게시글이 수정되었습니다.", board_update_failed_prefix: "수정에 실패했습니다: ",
+        board_fill_credentials: "이메일과 비밀번호를 입력해주세요.", board_login_failed_prefix: "로그인에 실패했습니다: ",
+        board_not_admin: "관리자 계정이 아닙니다. 게시글 작성 권한이 없습니다.",
+        board_edit_btn: "수정", board_delete_btn: "삭제", board_save_btn: "저장", board_cancel_btn: "취소",
+        contact_title: "문의하기", contact_desc: "Dr.S와 함께 AI 트렌드 기반 혁신을 시작하세요. 맞춤형 상담을 언제든 지원합니다.",
+        contact_note: "AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.",
+        contact_email_label: "이메일", contact_phone_label: "전화번호",
+        contact_email_aria: "이메일 주소 복사", contact_phone_aria: "전화번호 복사",
+        copied_template: "{label} 복사됨!", copy_failed: "복사 실패",
+        footer_text: "© 2026 Dr.S. 모든 권리 보유."
+      },
+      en: {
+        nav_about: "About Dr.S", nav_services: "Services", nav_vision: "Vision", nav_board: "AX Board", nav_contact: "Contact",
+        hero_eyebrow: "Intelligence Leading the AI Trend",
+        hero_title: "Differentiated Business Tuning for the AI Era with Dr.S",
+        hero_desc: "Dr.S combines AI trends with data-driven innovation to design the future of your brand. A single-page site that upgrades growth and experience with the latest AI technology.",
+        hero_btn1: "AI Trend Consultation", hero_btn2: "View Services",
+        hero_card1_title: "AI Innovation Strategy", hero_card1_desc: "Strengthens business competitiveness with strategies reflecting sustainable AI and explainable AI (XAI) trends.",
+        hero_card2_title: "Trend Insights", hero_card2_desc: "Combines data and AI technology to quickly predict and respond to future market changes.",
+        hero_card3_title: "Digital Experience", hero_card3_desc: "Designs user-centered AI experiences that naturally connect brands with customers.",
+        about_title: "About Dr.S", about_desc: "A professional partner focused on AI trends and data-driven intelligence, realizing business innovation together with clients.",
+        about_f1_title: "AI Trend Research", about_f1_desc: "Analyzes the latest technology trends to provide insights companies can proactively leverage.",
+        about_f2_title: "Intelligent Solution Design", about_f2_desc: "Designs AI solutions combining user experience and automation to maximize business efficiency.",
+        about_f3_title: "Future-Oriented Execution", about_f3_desc: "Provides a stable growth roadmap from project execution to expansion.",
+        services_title: "Key Services", services_desc: "Supports your brand's digital transformation and innovation with core services centered on AI trends.",
+        services_f1_title: "AI Strategy Development", services_f1_desc: "Proposes AI adoption strategies and data utilization plans tailored to business goals.",
+        services_f2_title: "Trend Analysis", services_f2_desc: "Analyzes industry-specific AI trends and technology outlooks to strengthen clients' competitive edge.",
+        services_f3_title: "AI Implementation Support", services_f3_desc: "Provides hands-on support for implementing real AI solutions such as multi-agent orchestration, AI harnesses, and LLM pipelines.",
+        vision_title: "Dr.S's Vision", vision_desc1: "Insightfully connecting AI trends to help clients lead the next era.",
+        vision_desc2: "3S completes the value of differentiated business tuning through the three words: Specialty, Strategy, and Solution.",
+        vision_c1_title: "At the Forefront of Innovation", vision_c1_desc: "Creates new business models and experiences through AI-driven innovation.",
+        vision_c2_title: "Data-Driven Decision Making", vision_c2_desc: "Helps make fast, reliable decisions with accurate data insights.",
+        vision_c3_title: "Sustainable Growth", vision_c3_desc: "Equips clients with sustainable competitiveness for the future through intelligent solutions.",
+        board_title: "AX Board", board_desc: "A space to freely record thoughts and news related to AI/AX. Writing posts is only available after admin login.",
+        board_email_ph: "Email", board_password_ph: "Password", board_login_btn: "Log In", board_logout_btn: "Log Out",
+        board_title_ph: "Title", board_content_ph: "Enter your content", board_submit_btn: "Submit Post", board_loading: "Loading posts...",
+        board_empty_posts: "No posts have been registered yet.", board_confirm_delete: "Delete this post?",
+        board_post_created: "Post has been created.", board_create_failed_prefix: "Failed to create post: ",
+        board_post_updated: "Post has been updated.", board_update_failed_prefix: "Failed to update post: ",
+        board_fill_credentials: "Please enter your email and password.", board_login_failed_prefix: "Login failed: ",
+        board_not_admin: "This is not an admin account. You don't have permission to write posts.",
+        board_edit_btn: "Edit", board_delete_btn: "Delete", board_save_btn: "Save", board_cancel_btn: "Cancel",
+        contact_title: "Contact", contact_desc: "Start AI trend-driven innovation with Dr.S. Customized consulting is always available.",
+        contact_note: "For AI project, technology adoption, or strategy consulting inquiries, please contact us via the email below.",
+        contact_email_label: "Email", contact_phone_label: "Phone number",
+        contact_email_aria: "Copy email address", contact_phone_aria: "Copy phone number",
+        copied_template: "{label} copied!", copy_failed: "Copy failed",
+        footer_text: "© 2026 Dr.S. All rights reserved."
+      },
+      ja: {
+        nav_about: "Dr.S紹介", nav_services: "サービス", nav_vision: "ビジョン", nav_board: "AX掲示板", nav_contact: "お問い合わせ",
+        hero_eyebrow: "AIトレンドをリードするインテリジェンス",
+        hero_title: "Dr.Sと共にAI時代を切り拓く、差別化されたビジネスチューニング",
+        hero_desc: "Dr.SはAIトレンドとデータ革新を組み合わせ、ブランドの未来を設計します。最新のAI技術で成長と体験をアップグレードするワンページ紹介サイトです。",
+        hero_btn1: "AIトレンド相談", hero_btn2: "サービスを見る",
+        hero_card1_title: "AIイノベーション戦略", hero_card1_desc: "持続可能なAIと説明可能なAI(XAI)のトレンドを反映した戦略でビジネス競争力を強化します。",
+        hero_card2_title: "トレンドインサイト", hero_card2_desc: "データとAI技術を組み合わせ、未来市場の変化を迅速に予測し対応します。",
+        hero_card3_title: "デジタル体験", hero_card3_desc: "ユーザー中心のAI体験を設計し、ブランドと顧客の自然なつながりを作ります。",
+        about_title: "Dr.S紹介", about_desc: "AIトレンドとデータに基づくインテリジェンスを中心に、顧客のビジネス革新を共に実現する専門パートナーです。",
+        about_f1_title: "AIトレンドリサーチ", about_f1_desc: "最新の技術トレンドを分析し、企業が先取りして活用できるインサイトを提供します。",
+        about_f2_title: "インテリジェントソリューション設計", about_f2_desc: "ユーザー体験と自動化を組み合わせたAIソリューションを設計し、ビジネス効率を最大化します。",
+        about_f3_title: "未来志向の実行", about_f3_desc: "プロジェクトの実行から拡張まで、安定した成長ロードマップを提供します。",
+        services_title: "主要サービス", services_desc: "AIトレンドを中心としたコアサービスで、ブランドのデジタル変革と革新を支援します。",
+        services_f1_title: "AI戦略策定", services_f1_desc: "ビジネス目標に合わせたAI適用戦略とデータ活用方法を提案します。",
+        services_f2_title: "トレンド分析", services_f2_desc: "業界別のAI動向と技術展望を分析し、顧客の競争優位性を強化します。",
+        services_f3_title: "AI実装支援", services_f3_desc: "マルチエージェントオーケストレーション、AIハーネス、LLMパイプラインなど、実際のAIソリューション実装を実務的に支援します。",
+        vision_title: "Dr.Sのビジョン", vision_desc1: "AIトレンドを洞察力豊かに結びつけ、顧客が次の時代をリードできるよう支援します。",
+        vision_desc2: "3SはSpecialty、Strategy、Solutionの3つの言葉で、差別化されたビジネスチューニングの価値を完成させます。",
+        vision_c1_title: "イノベーションの最前線", vision_c1_desc: "AIによる革新を通じて、新しいビジネスモデルと体験を創出します。",
+        vision_c2_title: "データ中心の意思決定", vision_c2_desc: "正確なデータインサイトで、迅速かつ信頼できる意思決定を支援します。",
+        vision_c3_title: "持続可能な成長", vision_c3_desc: "インテリジェントソリューションを通じ、顧客が将来にわたり持続可能な競争力を備えられるようにします。",
+        board_title: "AX掲示板", board_desc: "AI/AXに関する考えやニュースを自由に記録する場所です。投稿は管理者ログイン後のみ可能です。",
+        board_email_ph: "メールアドレス", board_password_ph: "パスワード", board_login_btn: "ログイン", board_logout_btn: "ログアウト",
+        board_title_ph: "タイトル", board_content_ph: "内容を入力してください", board_submit_btn: "投稿する", board_loading: "投稿を読み込んでいます...",
+        board_empty_posts: "まだ投稿がありません。", board_confirm_delete: "この投稿を削除しますか？",
+        board_post_created: "投稿が登録されました。", board_create_failed_prefix: "投稿に失敗しました: ",
+        board_post_updated: "投稿が更新されました。", board_update_failed_prefix: "更新に失敗しました: ",
+        board_fill_credentials: "メールアドレスとパスワードを入力してください。", board_login_failed_prefix: "ログインに失敗しました: ",
+        board_not_admin: "管理者アカウントではありません。投稿の作成権限がありません。",
+        board_edit_btn: "編集", board_delete_btn: "削除", board_save_btn: "保存", board_cancel_btn: "キャンセル",
+        contact_title: "お問い合わせ", contact_desc: "Dr.SとともにAIトレンドに基づく革新を始めましょう。カスタマイズされたご相談をいつでも承ります。",
+        contact_note: "AIプロジェクト、技術導入、戦略策定に関するお問い合わせは、下記のメールアドレスまでご連絡ください。",
+        contact_email_label: "メールアドレス", contact_phone_label: "電話番号",
+        contact_email_aria: "メールアドレスをコピー", contact_phone_aria: "電話番号をコピー",
+        copied_template: "{label}をコピーしました！", copy_failed: "コピーに失敗しました",
+        footer_text: "© 2026 Dr.S. All rights reserved."
+      },
+      zh: {
+        nav_about: "关于Dr.S", nav_services: "服务", nav_vision: "愿景", nav_board: "AX留言板", nav_contact: "联系我们",
+        hero_eyebrow: "引领AI趋势的智能",
+        hero_title: "与Dr.S一起打造人工智能时代的差异化商业调优",
+        hero_desc: "Dr.S将人工智能趋势与数据创新相结合，为品牌的未来进行设计。这是一个利用最新AI技术提升成长与体验的单页介绍网站。",
+        hero_btn1: "AI趋势咨询", hero_btn2: "查看服务",
+        hero_card1_title: "AI创新战略", hero_card1_desc: "通过反映可持续AI与可解释AI(XAI)趋势的战略，增强企业竞争力。",
+        hero_card2_title: "趋势洞察", hero_card2_desc: "结合数据与AI技术，快速预测并应对未来市场变化。",
+        hero_card3_title: "数字体验", hero_card3_desc: "以用户为中心设计AI体验，使品牌与客户之间建立自然的连接。",
+        about_title: "关于Dr.S", about_desc: "以AI趋势与数据驱动的智能为核心，是与客户共同实现业务创新的专业合作伙伴。",
+        about_f1_title: "AI趋势研究", about_f1_desc: "分析最新技术趋势，为企业提供可提前应用的洞察。",
+        about_f2_title: "智能解决方案设计", about_f2_desc: "设计结合用户体验与自动化的AI解决方案，最大化业务效率。",
+        about_f3_title: "面向未来的执行", about_f3_desc: "从项目执行到扩展，提供稳定的成长路线图。",
+        services_title: "主要服务", services_desc: "以AI趋势为核心的核心服务，支持品牌的数字化转型与创新。",
+        services_f1_title: "AI战略制定", services_f1_desc: "根据业务目标提出AI应用战略和数据利用方案。",
+        services_f2_title: "趋势分析", services_f2_desc: "分析各行业AI动态与技术前景，增强客户的竞争优势。",
+        services_f3_title: "AI实施支持", services_f3_desc: "为多智能体编排、AI工具链、LLM流水线等实际AI解决方案的落地提供实务支持。",
+        vision_title: "Dr.S的愿景", vision_desc1: "以深刻洞察连接AI趋势，帮助客户引领下一个时代。",
+        vision_desc2: "3S以Specialty（专长）、Strategy（战略）、Solution（方案）三个词，完成差异化商业调优的价值。",
+        vision_c1_title: "创新最前沿", vision_c1_desc: "通过以AI为基础的创新，创造新的商业模式与体验。",
+        vision_c2_title: "数据驱动决策", vision_c2_desc: "凭借准确的数据洞察，帮助做出快速而可靠的决策。",
+        vision_c3_title: "可持续增长", vision_c3_desc: "通过智能解决方案，使客户具备面向未来的可持续竞争力。",
+        board_title: "AX留言板", board_desc: "这是一个自由记录AI/AX相关想法与消息的空间。发帖仅限管理员登录后进行。",
+        board_email_ph: "电子邮箱", board_password_ph: "密码", board_login_btn: "登录", board_logout_btn: "退出登录",
+        board_title_ph: "标题", board_content_ph: "请输入内容", board_submit_btn: "发布帖子", board_loading: "正在加载帖子...",
+        board_empty_posts: "暂无已发布的帖子。", board_confirm_delete: "确定要删除这篇帖子吗？",
+        board_post_created: "帖子已发布。", board_create_failed_prefix: "发布失败：",
+        board_post_updated: "帖子已更新。", board_update_failed_prefix: "更新失败：",
+        board_fill_credentials: "请输入电子邮箱和密码。", board_login_failed_prefix: "登录失败：",
+        board_not_admin: "这不是管理员账户，没有发帖权限。",
+        board_edit_btn: "编辑", board_delete_btn: "删除", board_save_btn: "保存", board_cancel_btn: "取消",
+        contact_title: "联系我们", contact_desc: "与Dr.S一起开启基于AI趋势的创新。随时为您提供定制化咨询。",
+        contact_note: "如有AI项目、技术引进、战略制定方面的咨询，请通过下方邮箱联系我们。",
+        contact_email_label: "电子邮箱", contact_phone_label: "电话号码",
+        contact_email_aria: "复制电子邮箱地址", contact_phone_aria: "复制电话号码",
+        copied_template: "{label}已复制！", copy_failed: "复制失败",
+        footer_text: "© 2026 Dr.S. 保留所有权利。"
+      },
+      fr: {
+        nav_about: "À propos de Dr.S", nav_services: "Services", nav_vision: "Vision", nav_board: "Forum AX", nav_contact: "Contact",
+        hero_eyebrow: "L'intelligence qui mène les tendances de l'IA",
+        hero_title: "Un tuning commercial différencié pour l'ère de l'IA, avec Dr.S",
+        hero_desc: "Dr.S associe les tendances de l'IA à l'innovation des données pour concevoir l'avenir de votre marque. Un site vitrine d'une seule page qui fait évoluer la croissance et l'expérience grâce aux dernières technologies d'IA.",
+        hero_btn1: "Consultation sur les tendances IA", hero_btn2: "Voir les services",
+        hero_card1_title: "Stratégie d'innovation IA", hero_card1_desc: "Renforce la compétitivité de l'entreprise grâce à des stratégies intégrant les tendances de l'IA durable et de l'IA explicable (XAI).",
+        hero_card2_title: "Analyse des tendances", hero_card2_desc: "Combine données et technologie IA pour anticiper et réagir rapidement aux évolutions du marché.",
+        hero_card3_title: "Expérience numérique", hero_card3_desc: "Conçoit des expériences IA centrées sur l'utilisateur pour relier naturellement la marque et ses clients.",
+        about_title: "À propos de Dr.S", about_desc: "Un partenaire professionnel centré sur les tendances de l'IA et l'intelligence basée sur les données, œuvrant avec ses clients pour réaliser l'innovation commerciale.",
+        about_f1_title: "Recherche sur les tendances IA", about_f1_desc: "Analyse les dernières tendances technologiques pour fournir des insights exploitables de manière proactive par les entreprises.",
+        about_f2_title: "Conception de solutions intelligentes", about_f2_desc: "Conçoit des solutions IA alliant expérience utilisateur et automatisation pour maximiser l'efficacité commerciale.",
+        about_f3_title: "Exécution tournée vers l'avenir", about_f3_desc: "Fournit une feuille de route de croissance stable, de l'exécution du projet à son expansion.",
+        services_title: "Services principaux", services_desc: "Soutient la transformation numérique et l'innovation de votre marque grâce à des services clés centrés sur les tendances de l'IA.",
+        services_f1_title: "Élaboration de stratégie IA", services_f1_desc: "Propose des stratégies d'adoption de l'IA et des plans d'exploitation des données adaptés aux objectifs de l'entreprise.",
+        services_f2_title: "Analyse des tendances", services_f2_desc: "Analyse les tendances de l'IA par secteur et les perspectives technologiques pour renforcer l'avantage concurrentiel des clients.",
+        services_f3_title: "Support à l'implémentation IA", services_f3_desc: "Offre un accompagnement pratique pour la mise en œuvre de solutions IA réelles telles que l'orchestration multi-agents, les harnais IA et les pipelines LLM.",
+        vision_title: "La vision de Dr.S", vision_desc1: "Relie les tendances de l'IA avec perspicacité pour aider les clients à mener la prochaine ère.",
+        vision_desc2: "3S réalise la valeur d'un tuning commercial différencié à travers les trois mots : Specialty, Strategy et Solution.",
+        vision_c1_title: "À l'avant-garde de l'innovation", vision_c1_desc: "Crée de nouveaux modèles économiques et expériences grâce à l'innovation portée par l'IA.",
+        vision_c2_title: "Décisions fondées sur les données", vision_c2_desc: "Aide à prendre des décisions rapides et fiables grâce à des insights de données précis.",
+        vision_c3_title: "Croissance durable", vision_c3_desc: "Dote les clients d'une compétitivité durable pour l'avenir grâce à des solutions intelligentes.",
+        board_title: "Forum AX", board_desc: "Un espace pour consigner librement vos réflexions et actualités liées à l'IA/AX. La publication n'est possible qu'après connexion en tant qu'administrateur.",
+        board_email_ph: "E-mail", board_password_ph: "Mot de passe", board_login_btn: "Se connecter", board_logout_btn: "Se déconnecter",
+        board_title_ph: "Titre", board_content_ph: "Saisissez le contenu", board_submit_btn: "Publier", board_loading: "Chargement des articles...",
+        board_empty_posts: "Aucun article n'a encore été publié.", board_confirm_delete: "Supprimer cet article ?",
+        board_post_created: "L'article a été publié.", board_create_failed_prefix: "Échec de la publication : ",
+        board_post_updated: "L'article a été modifié.", board_update_failed_prefix: "Échec de la modification : ",
+        board_fill_credentials: "Veuillez saisir votre e-mail et votre mot de passe.", board_login_failed_prefix: "Échec de la connexion : ",
+        board_not_admin: "Ce n'est pas un compte administrateur. Vous n'avez pas l'autorisation de publier.",
+        board_edit_btn: "Modifier", board_delete_btn: "Supprimer", board_save_btn: "Enregistrer", board_cancel_btn: "Annuler",
+        contact_title: "Contact", contact_desc: "Lancez l'innovation portée par les tendances de l'IA avec Dr.S. Un conseil personnalisé est disponible à tout moment.",
+        contact_note: "Pour toute demande concernant un projet IA, l'adoption de technologies ou l'élaboration de stratégie, veuillez nous contacter à l'adresse e-mail ci-dessous.",
+        contact_email_label: "E-mail", contact_phone_label: "Numéro de téléphone",
+        contact_email_aria: "Copier l'adresse e-mail", contact_phone_aria: "Copier le numéro de téléphone",
+        copied_template: "{label} copié !", copy_failed: "Échec de la copie",
+        footer_text: "© 2026 Dr.S. Tous droits réservés."
+      },
+      es: {
+        nav_about: "Sobre Dr.S", nav_services: "Servicios", nav_vision: "Visión", nav_board: "Foro AX", nav_contact: "Contacto",
+        hero_eyebrow: "Inteligencia que lidera las tendencias de la IA",
+        hero_title: "Ajuste empresarial diferenciado para la era de la IA, junto a Dr.S",
+        hero_desc: "Dr.S combina las tendencias de la IA con la innovación de datos para diseñar el futuro de su marca. Un sitio de una sola página que impulsa el crecimiento y la experiencia con la tecnología de IA más reciente.",
+        hero_btn1: "Consultoría en tendencias de IA", hero_btn2: "Ver servicios",
+        hero_card1_title: "Estrategia de innovación en IA", hero_card1_desc: "Fortalece la competitividad empresarial con estrategias que reflejan las tendencias de la IA sostenible y la IA explicable (XAI).",
+        hero_card2_title: "Perspectivas de tendencias", hero_card2_desc: "Combina datos y tecnología de IA para predecir y responder rápidamente a los cambios del mercado futuro.",
+        hero_card3_title: "Experiencia digital", hero_card3_desc: "Diseña experiencias de IA centradas en el usuario que conectan de forma natural la marca con sus clientes.",
+        about_title: "Sobre Dr.S", about_desc: "Un socio profesional centrado en las tendencias de la IA y la inteligencia basada en datos, que realiza la innovación empresarial junto a sus clientes.",
+        about_f1_title: "Investigación de tendencias de IA", about_f1_desc: "Analiza las últimas tendencias tecnológicas para ofrecer información que las empresas puedan aprovechar de forma proactiva.",
+        about_f2_title: "Diseño de soluciones inteligentes", about_f2_desc: "Diseña soluciones de IA que combinan experiencia de usuario y automatización para maximizar la eficiencia empresarial.",
+        about_f3_title: "Ejecución orientada al futuro", about_f3_desc: "Ofrece una hoja de ruta de crecimiento estable, desde la ejecución del proyecto hasta su expansión.",
+        services_title: "Servicios principales", services_desc: "Apoya la transformación digital y la innovación de su marca con servicios clave centrados en las tendencias de la IA.",
+        services_f1_title: "Desarrollo de estrategia de IA", services_f1_desc: "Propone estrategias de adopción de IA y planes de uso de datos adaptados a los objetivos empresariales.",
+        services_f2_title: "Análisis de tendencias", services_f2_desc: "Analiza las tendencias de IA por industria y las perspectivas tecnológicas para fortalecer la ventaja competitiva del cliente.",
+        services_f3_title: "Soporte de implementación de IA", services_f3_desc: "Brinda apoyo práctico para la implementación de soluciones de IA reales, como orquestación multiagente, arneses de IA y pipelines de LLM.",
+        vision_title: "La visión de Dr.S", vision_desc1: "Conecta las tendencias de la IA con perspicacia para ayudar a los clientes a liderar la próxima era.",
+        vision_desc2: "3S completa el valor del ajuste empresarial diferenciado a través de tres palabras: Specialty, Strategy y Solution.",
+        vision_c1_title: "A la vanguardia de la innovación", vision_c1_desc: "Crea nuevos modelos de negocio y experiencias a través de la innovación impulsada por la IA.",
+        vision_c2_title: "Decisiones basadas en datos", vision_c2_desc: "Ayuda a tomar decisiones rápidas y confiables con información de datos precisa.",
+        vision_c3_title: "Crecimiento sostenible", vision_c3_desc: "Dota a los clientes de una competitividad sostenible para el futuro mediante soluciones inteligentes.",
+        board_title: "Foro AX", board_desc: "Un espacio para registrar libremente ideas y noticias relacionadas con la IA/AX. Solo se puede publicar tras iniciar sesión como administrador.",
+        board_email_ph: "Correo electrónico", board_password_ph: "Contraseña", board_login_btn: "Iniciar sesión", board_logout_btn: "Cerrar sesión",
+        board_title_ph: "Título", board_content_ph: "Ingrese el contenido", board_submit_btn: "Publicar", board_loading: "Cargando publicaciones...",
+        board_empty_posts: "Aún no hay publicaciones registradas.", board_confirm_delete: "¿Eliminar esta publicación?",
+        board_post_created: "La publicación se ha creado.", board_create_failed_prefix: "No se pudo publicar: ",
+        board_post_updated: "La publicación se ha actualizado.", board_update_failed_prefix: "No se pudo actualizar: ",
+        board_fill_credentials: "Por favor ingrese su correo electrónico y contraseña.", board_login_failed_prefix: "Error al iniciar sesión: ",
+        board_not_admin: "Esta no es una cuenta de administrador. No tiene permiso para publicar.",
+        board_edit_btn: "Editar", board_delete_btn: "Eliminar", board_save_btn: "Guardar", board_cancel_btn: "Cancelar",
+        contact_title: "Contacto", contact_desc: "Comience la innovación impulsada por las tendencias de la IA junto a Dr.S. La consultoría personalizada está disponible en todo momento.",
+        contact_note: "Para consultas sobre proyectos de IA, adopción de tecnología o desarrollo de estrategias, contáctenos a través del correo electrónico a continuación.",
+        contact_email_label: "Correo electrónico", contact_phone_label: "Número de teléfono",
+        contact_email_aria: "Copiar dirección de correo electrónico", contact_phone_aria: "Copiar número de teléfono",
+        copied_template: "¡{label} copiado!", copy_failed: "Error al copiar",
+        footer_text: "© 2026 Dr.S. Todos los derechos reservados."
+      }
+    };
+
+    const SUPPORTED_LANGS = Object.keys(window.translations);
+
+    window.t = function t(key) {
+      const lang = window.currentLang || "ko";
+      const dict = window.translations[lang] || window.translations.ko;
+      return (dict && dict[key] !== undefined) ? dict[key] : (window.translations.ko[key] || key);
+    };
+
+    function applyLanguage(lang) {
+      if (!SUPPORTED_LANGS.includes(lang)) lang = "ko";
+      window.currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        el.textContent = window.t(key);
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        el.placeholder = window.t(key);
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-aria");
+        el.setAttribute("aria-label", window.t(key));
+      });
+      const select = document.getElementById("lang-select");
+      if (select) select.value = lang;
+      try { localStorage.setItem("site_lang", lang); } catch (e) {}
+      document.dispatchEvent(new CustomEvent("site-lang-changed", { detail: { lang } }));
+    }
+    window.applyLanguage = applyLanguage;
+
+    let initialLang = "ko";
+    try {
+      const stored = localStorage.getItem("site_lang");
+      if (stored && SUPPORTED_LANGS.includes(stored)) initialLang = stored;
+    } catch (e) {}
+    applyLanguage(initialLang);
+
+    const langSelect = document.getElementById("lang-select");
+    if (langSelect) {
+      langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+    }
+
     document.querySelectorAll(".copy-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const value = btn.dataset.copy;
-        const label = btn.dataset.label || "";
+        const labelKey = btn.getAttribute("data-label-i18n");
+        const label = labelKey ? window.t(labelKey) : "";
         try {
           if (navigator.clipboard && navigator.clipboard.writeText) {
             await navigator.clipboard.writeText(value);
@@ -803,11 +1106,11 @@
             document.execCommand("copy");
             document.body.removeChild(temp);
           }
-          btn.dataset.tooltip = `${label} 복사됨!`;
+          btn.dataset.tooltip = window.t("copied_template").replace("{label}", label);
           btn.classList.add("copied");
           setTimeout(() => btn.classList.remove("copied"), 1500);
         } catch (err) {
-          btn.dataset.tooltip = "복사 실패";
+          btn.dataset.tooltip = window.t("copy_failed");
           btn.classList.add("copied");
           setTimeout(() => btn.classList.remove("copied"), 1500);
         }
@@ -858,6 +1161,10 @@
     const writeForm = document.getElementById("board-write");
     const postsEl = document.getElementById("board-posts");
 
+    function t(key) {
+      return window.t ? window.t(key) : key;
+    }
+
     function setStatus(message, isError) {
       statusEl.textContent = message || "";
       statusEl.classList.toggle("error", Boolean(isError));
@@ -867,7 +1174,7 @@
       const email = document.getElementById("board-email").value.trim();
       const password = document.getElementById("board-password").value;
       if (!email || !password) {
-        setStatus("이메일과 비밀번호를 입력해주세요.", true);
+        setStatus(t("board_fill_credentials"), true);
         return;
       }
       try {
@@ -875,7 +1182,7 @@
         document.getElementById("board-password").value = "";
         setStatus("");
       } catch (err) {
-        setStatus("로그인에 실패했습니다: " + err.message, true);
+        setStatus(t("board_login_failed_prefix") + err.message, true);
       }
     });
 
@@ -884,15 +1191,17 @@
       setStatus("");
     });
 
+    let lastIsAdmin = false;
     onAuthStateChanged(auth, (user) => {
       const isAdmin = Boolean(user && user.email === ADMIN_EMAIL);
+      lastIsAdmin = isAdmin;
       authBox.style.display = user ? "none" : "flex";
       userBar.style.display = user ? "flex" : "none";
       writeForm.style.display = isAdmin ? "flex" : "none";
       if (user) {
         userEmailEl.textContent = user.email;
         if (!isAdmin) {
-          setStatus("관리자 계정이 아닙니다. 게시글 작성 권한이 없습니다.", true);
+          setStatus(t("board_not_admin"), true);
         } else {
           setStatus("");
         }
@@ -914,103 +1223,114 @@
         });
         document.getElementById("board-title").value = "";
         document.getElementById("board-content").value = "";
-        setStatus("게시글이 등록되었습니다.");
+        setStatus(t("board_post_created"));
       } catch (err) {
-        setStatus("등록에 실패했습니다: " + err.message, true);
+        setStatus(t("board_create_failed_prefix") + err.message, true);
       }
     });
 
+    let lastSnapshotDocs = null;
     let unsubscribePosts = null;
+
+    function renderPostList(docs, isAdmin) {
+      if (!docs || docs.length === 0) {
+        postsEl.innerHTML = `<p class="board-empty">${t("board_empty_posts")}</p>`;
+        return;
+      }
+      postsEl.innerHTML = "";
+      docs.forEach((docSnap) => {
+        const post = docSnap.data();
+        const date = post.createdAt && post.createdAt.toDate
+          ? post.createdAt.toDate().toLocaleString("ko-KR")
+          : "";
+        const el = document.createElement("div");
+        el.className = "board-post";
+        const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
+        el.innerHTML = `
+          <h4></h4>
+          <div class="board-meta"></div>
+          <p></p>
+          ${admin ? `
+            <div class="board-actions">
+              <button type="button" class="board-edit">${t("board_edit_btn")}</button>
+              <button type="button" class="board-delete">${t("board_delete_btn")}</button>
+            </div>
+            <form class="board-edit-form" style="display:none;">
+              <input type="text" class="board-edit-title" required>
+              <textarea class="board-edit-content" rows="5" required></textarea>
+              <div class="board-actions">
+                <button type="submit" class="board-edit-save">${t("board_save_btn")}</button>
+                <button type="button" class="board-edit-cancel">${t("board_cancel_btn")}</button>
+              </div>
+            </form>
+          ` : ""}
+        `;
+        const titleEl = el.querySelector("h4");
+        const contentEl = el.querySelector("p");
+        titleEl.textContent = post.title || "";
+        el.querySelector(".board-meta").textContent = `Dr.S. · ${date}`;
+        contentEl.textContent = post.content || "";
+        const delBtn = el.querySelector(".board-delete");
+        if (delBtn) {
+          delBtn.addEventListener("click", async () => {
+            if (confirm(t("board_confirm_delete"))) {
+              await deleteDoc(doc(db, "posts", docSnap.id));
+            }
+          });
+        }
+        const editBtn = el.querySelector(".board-edit");
+        const editForm = el.querySelector(".board-edit-form");
+        const actionsEl = el.querySelector(".board-actions");
+        if (editBtn && editForm) {
+          const editTitleInput = editForm.querySelector(".board-edit-title");
+          const editContentInput = editForm.querySelector(".board-edit-content");
+          editBtn.addEventListener("click", () => {
+            editTitleInput.value = post.title || "";
+            editContentInput.value = post.content || "";
+            titleEl.style.display = "none";
+            contentEl.style.display = "none";
+            actionsEl.style.display = "none";
+            editForm.style.display = "flex";
+          });
+          editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
+            editForm.style.display = "none";
+            titleEl.style.display = "";
+            contentEl.style.display = "";
+            actionsEl.style.display = "";
+          });
+          editForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const newTitle = editTitleInput.value.trim();
+            const newContent = editContentInput.value.trim();
+            if (!newTitle || !newContent) return;
+            try {
+              await updateDoc(doc(db, "posts", docSnap.id), {
+                title: newTitle,
+                content: newContent,
+                updatedAt: serverTimestamp()
+              });
+              setStatus(t("board_post_updated"));
+            } catch (err) {
+              setStatus(t("board_update_failed_prefix") + err.message, true);
+            }
+          });
+        }
+        postsEl.appendChild(el);
+      });
+    }
+
     function renderPosts(isAdmin) {
       if (unsubscribePosts) return;
       const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
       unsubscribePosts = onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) {
-          postsEl.innerHTML = '<p class="board-empty">아직 등록된 게시글이 없습니다.</p>';
-          return;
-        }
-        postsEl.innerHTML = "";
-        snapshot.forEach((docSnap) => {
-          const post = docSnap.data();
-          const date = post.createdAt && post.createdAt.toDate
-            ? post.createdAt.toDate().toLocaleString("ko-KR")
-            : "";
-          const el = document.createElement("div");
-          el.className = "board-post";
-          const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
-          el.innerHTML = `
-            <h4></h4>
-            <div class="board-meta"></div>
-            <p></p>
-            ${admin ? `
-              <div class="board-actions">
-                <button type="button" class="board-edit">수정</button>
-                <button type="button" class="board-delete">삭제</button>
-              </div>
-              <form class="board-edit-form" style="display:none;">
-                <input type="text" class="board-edit-title" required>
-                <textarea class="board-edit-content" rows="5" required></textarea>
-                <div class="board-actions">
-                  <button type="submit" class="board-edit-save">저장</button>
-                  <button type="button" class="board-edit-cancel">취소</button>
-                </div>
-              </form>
-            ` : ""}
-          `;
-          const titleEl = el.querySelector("h4");
-          const contentEl = el.querySelector("p");
-          titleEl.textContent = post.title || "";
-          el.querySelector(".board-meta").textContent = `Dr.S. · ${date}`;
-          contentEl.textContent = post.content || "";
-          const delBtn = el.querySelector(".board-delete");
-          if (delBtn) {
-            delBtn.addEventListener("click", async () => {
-              if (confirm("이 게시글을 삭제할까요?")) {
-                await deleteDoc(doc(db, "posts", docSnap.id));
-              }
-            });
-          }
-          const editBtn = el.querySelector(".board-edit");
-          const editForm = el.querySelector(".board-edit-form");
-          const actionsEl = el.querySelector(".board-actions");
-          if (editBtn && editForm) {
-            const editTitleInput = editForm.querySelector(".board-edit-title");
-            const editContentInput = editForm.querySelector(".board-edit-content");
-            editBtn.addEventListener("click", () => {
-              editTitleInput.value = post.title || "";
-              editContentInput.value = post.content || "";
-              titleEl.style.display = "none";
-              contentEl.style.display = "none";
-              actionsEl.style.display = "none";
-              editForm.style.display = "flex";
-            });
-            editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
-              editForm.style.display = "none";
-              titleEl.style.display = "";
-              contentEl.style.display = "";
-              actionsEl.style.display = "";
-            });
-            editForm.addEventListener("submit", async (e) => {
-              e.preventDefault();
-              const newTitle = editTitleInput.value.trim();
-              const newContent = editContentInput.value.trim();
-              if (!newTitle || !newContent) return;
-              try {
-                await updateDoc(doc(db, "posts", docSnap.id), {
-                  title: newTitle,
-                  content: newContent,
-                  updatedAt: serverTimestamp()
-                });
-                setStatus("게시글이 수정되었습니다.");
-              } catch (err) {
-                setStatus("수정에 실패했습니다: " + err.message, true);
-              }
-            });
-          }
-          postsEl.appendChild(el);
-        });
+        lastSnapshotDocs = snapshot.docs;
+        renderPostList(snapshot.docs, isAdmin);
       });
     }
+
+    document.addEventListener("site-lang-changed", () => {
+      renderPostList(lastSnapshotDocs, lastIsAdmin);
+    });
   </script>
 </body>
 </html>
