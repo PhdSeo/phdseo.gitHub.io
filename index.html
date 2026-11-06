@@ -308,6 +308,108 @@
       color: var(--muted);
       border-top: 1px solid rgba(255,255,255,0.06);
     }
+    .board-auth {
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .board-auth input {
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .board-auth input:focus {
+      outline: none;
+      border-color: var(--accent2);
+    }
+    .board-auth .button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+    .board-status {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      min-height: 1.3rem;
+    }
+    .board-status.error { color: #fca5a5; }
+    .board-write {
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .board-write input,
+    .board-write textarea {
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .board-write input:focus,
+    .board-write textarea:focus {
+      outline: none;
+      border-color: var(--accent2);
+    }
+    .board-write button {
+      align-self: flex-end;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+    .board-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .board-post {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 1.75rem;
+      backdrop-filter: blur(16px);
+    }
+    .board-post h4 {
+      font-size: 1.15rem;
+      margin-bottom: 0.35rem;
+    }
+    .board-post .board-meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+    .board-post p {
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+    .board-post .board-delete {
+      margin-top: 1rem;
+      background: none;
+      border: 1px solid rgba(252,165,165,0.4);
+      color: #fca5a5;
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .board-empty {
+      text-align: center;
+      color: var(--muted);
+    }
     .hero-car-mobile { display: none; }
     @media (max-width: 640px) {
       .nav-links {
@@ -362,6 +464,7 @@
           <a href="#about">박사님 소개</a>
           <a href="#services">서비스</a>
           <a href="#vision">비전</a>
+          <a href="#board">AX 게시판</a>
           <a href="#contact">문의</a>
         </div>
       </nav>
@@ -498,6 +601,36 @@
       </div>
     </section>
 
+    <section id="board" style="background: rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);">
+      <div class="container">
+        <div class="section-title">
+          <h2>자유 AX 게시판</h2>
+          <p>AI/AX 관련 생각과 소식을 자유롭게 기록하는 공간입니다. 글쓰기는 관리자 로그인 후에만 가능합니다.</p>
+        </div>
+
+        <div id="board-auth" class="board-auth">
+          <input type="email" id="board-email" placeholder="이메일" autocomplete="username">
+          <input type="password" id="board-password" placeholder="비밀번호" autocomplete="current-password">
+          <button type="button" class="button button-primary" id="board-login-btn">로그인</button>
+        </div>
+        <div id="board-user-bar" class="board-auth" style="display:none; flex-direction: row; justify-content: center; align-items: center; gap: 1rem;">
+          <span id="board-user-email" style="color: var(--muted); font-size: 0.9rem;"></span>
+          <button type="button" class="button button-secondary" id="board-logout-btn">로그아웃</button>
+        </div>
+        <p id="board-status" class="board-status"></p>
+
+        <form id="board-write" class="board-write" style="display:none;">
+          <input type="text" id="board-title" placeholder="제목" required>
+          <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" required></textarea>
+          <button type="submit" class="button button-primary">게시글 등록</button>
+        </form>
+
+        <div id="board-posts" class="board-posts">
+          <p class="board-empty">게시글을 불러오는 중입니다...</p>
+        </div>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="container">
         <div class="section-title">
@@ -518,5 +651,150 @@
       <p>© 2026 Dr.S. 모든 권리 보유.</p>
     </div>
   </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      deleteDoc,
+      doc,
+      query,
+      orderBy,
+      onSnapshot,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0_23KyUKoeZsZwgGBnILQsdYDpGeEyQI",
+      authDomain: "dr-s-11bd7.firebaseapp.com",
+      projectId: "dr-s-11bd7",
+      storageBucket: "dr-s-11bd7.firebasestorage.app",
+      messagingSenderId: "74834005419",
+      appId: "1:74834005419:web:e7c43cda9028a08d0616ee"
+    };
+
+    const ADMIN_EMAIL = "dr.seobrad@gmail.com";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const authBox = document.getElementById("board-auth");
+    const userBar = document.getElementById("board-user-bar");
+    const userEmailEl = document.getElementById("board-user-email");
+    const statusEl = document.getElementById("board-status");
+    const writeForm = document.getElementById("board-write");
+    const postsEl = document.getElementById("board-posts");
+
+    function setStatus(message, isError) {
+      statusEl.textContent = message || "";
+      statusEl.classList.toggle("error", Boolean(isError));
+    }
+
+    document.getElementById("board-login-btn").addEventListener("click", async () => {
+      const email = document.getElementById("board-email").value.trim();
+      const password = document.getElementById("board-password").value;
+      if (!email || !password) {
+        setStatus("이메일과 비밀번호를 입력해주세요.", true);
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        document.getElementById("board-password").value = "";
+        setStatus("");
+      } catch (err) {
+        setStatus("로그인에 실패했습니다: " + err.message, true);
+      }
+    });
+
+    document.getElementById("board-logout-btn").addEventListener("click", async () => {
+      await signOut(auth);
+      setStatus("");
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      const isAdmin = Boolean(user && user.email === ADMIN_EMAIL);
+      authBox.style.display = user ? "none" : "flex";
+      userBar.style.display = user ? "flex" : "none";
+      writeForm.style.display = isAdmin ? "flex" : "none";
+      if (user) {
+        userEmailEl.textContent = user.email;
+        if (!isAdmin) {
+          setStatus("관리자 계정이 아닙니다. 게시글 작성 권한이 없습니다.", true);
+        } else {
+          setStatus("");
+        }
+      }
+      renderPosts(isAdmin);
+    });
+
+    writeForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("board-title").value.trim();
+      const content = document.getElementById("board-content").value.trim();
+      if (!title || !content) return;
+      try {
+        await addDoc(collection(db, "posts"), {
+          title,
+          content,
+          author: auth.currentUser.email,
+          createdAt: serverTimestamp()
+        });
+        document.getElementById("board-title").value = "";
+        document.getElementById("board-content").value = "";
+        setStatus("게시글이 등록되었습니다.");
+      } catch (err) {
+        setStatus("등록에 실패했습니다: " + err.message, true);
+      }
+    });
+
+    let unsubscribePosts = null;
+    function renderPosts(isAdmin) {
+      if (unsubscribePosts) return;
+      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      unsubscribePosts = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) {
+          postsEl.innerHTML = '<p class="board-empty">아직 등록된 게시글이 없습니다.</p>';
+          return;
+        }
+        postsEl.innerHTML = "";
+        snapshot.forEach((docSnap) => {
+          const post = docSnap.data();
+          const date = post.createdAt && post.createdAt.toDate
+            ? post.createdAt.toDate().toLocaleString("ko-KR")
+            : "";
+          const el = document.createElement("div");
+          el.className = "board-post";
+          const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
+          el.innerHTML = `
+            <h4></h4>
+            <div class="board-meta"></div>
+            <p></p>
+            ${admin ? '<button type="button" class="board-delete">삭제</button>' : ""}
+          `;
+          el.querySelector("h4").textContent = post.title || "";
+          el.querySelector(".board-meta").textContent = `${post.author || ""} · ${date}`;
+          el.querySelector("p").textContent = post.content || "";
+          const delBtn = el.querySelector(".board-delete");
+          if (delBtn) {
+            delBtn.addEventListener("click", async () => {
+              if (confirm("이 게시글을 삭제할까요?")) {
+                await deleteDoc(doc(db, "posts", docSnap.id));
+              }
+            });
+          }
+          postsEl.appendChild(el);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
