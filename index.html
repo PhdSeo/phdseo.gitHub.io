@@ -400,8 +400,15 @@
       white-space: pre-wrap;
       color: var(--text);
     }
-    .board-post .board-delete {
+    .board-post .board-actions {
+      display: flex;
+      gap: 0.6rem;
       margin-top: 1rem;
+    }
+    .board-post .board-delete,
+    .board-post .board-edit,
+    .board-post .board-edit-save,
+    .board-post .board-edit-cancel {
       background: none;
       border: 1px solid rgba(252,165,165,0.4);
       color: #fca5a5;
@@ -409,6 +416,33 @@
       padding: 0.4rem 1rem;
       font-size: 0.8rem;
       cursor: pointer;
+    }
+    .board-post .board-edit {
+      border-color: rgba(147,197,253,0.4);
+      color: #93c5fd;
+    }
+    .board-post .board-edit-save {
+      border-color: rgba(134,239,172,0.4);
+      color: #86efac;
+    }
+    .board-post .board-edit-cancel {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--muted);
+    }
+    .board-post .board-edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .board-post .board-edit-form input,
+    .board-post .board-edit-form textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      color: var(--text);
+      font: inherit;
     }
     .board-empty {
       text-align: center;
@@ -692,6 +726,7 @@
       getFirestore,
       collection,
       addDoc,
+      updateDoc,
       deleteDoc,
       doc,
       query,
@@ -806,16 +841,68 @@
             <h4></h4>
             <div class="board-meta"></div>
             <p></p>
-            ${admin ? '<button type="button" class="board-delete">삭제</button>' : ""}
+            ${admin ? `
+              <div class="board-actions">
+                <button type="button" class="board-edit">수정</button>
+                <button type="button" class="board-delete">삭제</button>
+              </div>
+              <form class="board-edit-form" style="display:none;">
+                <input type="text" class="board-edit-title" required>
+                <textarea class="board-edit-content" rows="5" required></textarea>
+                <div class="board-actions">
+                  <button type="submit" class="board-edit-save">저장</button>
+                  <button type="button" class="board-edit-cancel">취소</button>
+                </div>
+              </form>
+            ` : ""}
           `;
-          el.querySelector("h4").textContent = post.title || "";
+          const titleEl = el.querySelector("h4");
+          const contentEl = el.querySelector("p");
+          titleEl.textContent = post.title || "";
           el.querySelector(".board-meta").textContent = `${post.author || ""} · ${date}`;
-          el.querySelector("p").textContent = post.content || "";
+          contentEl.textContent = post.content || "";
           const delBtn = el.querySelector(".board-delete");
           if (delBtn) {
             delBtn.addEventListener("click", async () => {
               if (confirm("이 게시글을 삭제할까요?")) {
                 await deleteDoc(doc(db, "posts", docSnap.id));
+              }
+            });
+          }
+          const editBtn = el.querySelector(".board-edit");
+          const editForm = el.querySelector(".board-edit-form");
+          const actionsEl = el.querySelector(".board-actions");
+          if (editBtn && editForm) {
+            const editTitleInput = editForm.querySelector(".board-edit-title");
+            const editContentInput = editForm.querySelector(".board-edit-content");
+            editBtn.addEventListener("click", () => {
+              editTitleInput.value = post.title || "";
+              editContentInput.value = post.content || "";
+              titleEl.style.display = "none";
+              contentEl.style.display = "none";
+              actionsEl.style.display = "none";
+              editForm.style.display = "flex";
+            });
+            editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
+              editForm.style.display = "none";
+              titleEl.style.display = "";
+              contentEl.style.display = "";
+              actionsEl.style.display = "";
+            });
+            editForm.addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const newTitle = editTitleInput.value.trim();
+              const newContent = editContentInput.value.trim();
+              if (!newTitle || !newContent) return;
+              try {
+                await updateDoc(doc(db, "posts", docSnap.id), {
+                  title: newTitle,
+                  content: newContent,
+                  updatedAt: serverTimestamp()
+                });
+                setStatus("게시글이 수정되었습니다.");
+              } catch (err) {
+                setStatus("수정에 실패했습니다: " + err.message, true);
               }
             });
           }
