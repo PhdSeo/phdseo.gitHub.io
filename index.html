@@ -50,7 +50,7 @@
     }
     .brand {
       font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 1.45rem;
+      font-size: 1.9rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: none;
@@ -75,6 +75,8 @@
       text-decoration: none;
       transition: color 0.2s ease;
       white-space: nowrap;
+      font-size: 1.1rem;
+      font-weight: 600;
     }
     .nav-links a:hover {
       color: var(--text);
@@ -418,13 +420,13 @@
         gap: 0.5rem;
       }
       .brand {
-        font-size: clamp(0.95rem, 4vw, 1.45rem);
+        font-size: clamp(1.3rem, 6vw, 1.9rem);
         flex-shrink: 0;
       }
       .nav-links {
         flex-wrap: nowrap;
         justify-content: flex-end;
-        gap: clamp(0.4rem, 2vw, 1rem);
+        gap: clamp(0.5rem, 2.2vw, 1rem);
         flex: 1;
         min-width: 0;
         overflow-x: auto;
@@ -435,9 +437,8 @@
         display: none;
       }
       .nav-links a {
-        font-size: clamp(0.72rem, 3vw, 0.95rem);
+        font-size: clamp(0.92rem, 3.6vw, 1.1rem);
       }
-    }
       .hero {
         min-height: auto;
       }
@@ -477,7 +478,7 @@
     }
     @media (max-width: 400px) {
       .nav-links a {
-        font-size: clamp(0.62rem, 3.2vw, 0.85rem);
+        font-size: clamp(0.82rem, 3.8vw, 0.98rem);
       }
     }
   </style>
