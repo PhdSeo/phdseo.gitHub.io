@@ -799,10 +799,16 @@
         </div>
         <p id="board-status" class="board-status"></p>
 
-        <form id="board-write" class="board-write" style="display:none;">
-          <input type="text" id="board-title" placeholder="제목" data-i18n-placeholder="board_title_ph" required>
-          <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" data-i18n-placeholder="board_content_ph" required></textarea>
-          <button type="submit" class="button button-primary" data-i18n="board_submit_btn">게시글 등록</button>
+        <form id=board-write class=board-write style=display:none;>
+          <input type=text id=board-title placeholder=제목 data-i18n-placeholder=board_title_ph required>
+          <textarea id=board-content rows=5 placeholder=내용을_입력하세요_(HTML_태그_사용_가능) data-i18n-placeholder=board_content_ph required></textarea>
+  
+          <div style=display:flex;flex-direction:column;gap:0.4rem;>
+            <label for=board-file style=color:var(--muted);font-size:0.85rem;>첨부파일 (선택사항):</label>
+            <input type=file id=board-file style=background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:0.5rem;color:var(--text);>
+          </div>
+
+          <button type=submit class=button button-primary data-i18n=board_submit_btn>게시글 등록</button>
         </form>
 
         <div id="board-posts" class="board-posts">
