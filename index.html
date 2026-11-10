@@ -799,16 +799,10 @@
         </div>
         <p id="board-status" class="board-status"></p>
 
-        <form id=board-write class=board-write style=display:none;>
-          <input type=text id=board-title placeholder=제목 data-i18n-placeholder=board_title_ph required>
-          <textarea id=board-content rows=5 placeholder=내용을_입력하세요_(HTML_태그_사용_가능) data-i18n-placeholder=board_content_ph required></textarea>
-  
-          <div style=display:flex;flex-direction:column;gap:0.4rem;>
-            <label for=board-file style=color:var(--muted);font-size:0.85rem;>첨부파일 (선택사항):</label>
-            <input type=file id=board-file style=background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:0.5rem;color:var(--text);>
-          </div>
-
-          <button type=submit class=button button-primary data-i18n=board_submit_btn>게시글 등록</button>
+        <form id="board-write" class="board-write" style="display:none;">
+          <input type="text" id="board-title" placeholder="제목" data-i18n-placeholder="board_title_ph" required>
+          <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" data-i18n-placeholder="board_content_ph" required></textarea>
+          <button type="submit" class="button button-primary" data-i18n="board_submit_btn">게시글 등록</button>
         </form>
 
         <div id="board-posts" class="board-posts">
@@ -1185,333 +1179,295 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      doc,
+      query,
+      orderBy,
+      onSnapshot,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC0_23KyUKoeZsZwgGBnILQsdYDpGeEyQI",
-  authDomain: "dr-s-11bd7.firebaseapp.com",
-  projectId: "dr-s-11bd7",
-  storageBucket: "dr-s-11bd7.firebasestorage.app",
-  messagingSenderId: "74834005419",
-  appId: "1:74834005419:web:e7c43cda9028a08d0616ee"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0_23KyUKoeZsZwgGBnILQsdYDpGeEyQI",
+      authDomain: "dr-s-11bd7.firebaseapp.com",
+      projectId: "dr-s-11bd7",
+      storageBucket: "dr-s-11bd7.firebasestorage.app",
+      messagingSenderId: "74834005419",
+      appId: "1:74834005419:web:e7c43cda9028a08d0616ee"
+    };
 
-const ADMIN_EMAIL = "dr.seobrad@gmail.com";
+    const ADMIN_EMAIL = "dr.seobrad@gmail.com";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-const authBox = document.getElementById("board-auth");
-const userBar = document.getElementById("board-user-bar");
-const userEmailEl = document.getElementById("board-user-email");
-const statusEl = document.getElementById("board-status");
-const writeForm = document.getElementById("board-write");
-const postsEl = document.getElementById("board-posts");
-const trashToggleBtn = document.getElementById("board-trash-toggle-btn");
+    const authBox = document.getElementById("board-auth");
+    const userBar = document.getElementById("board-user-bar");
+    const userEmailEl = document.getElementById("board-user-email");
+    const statusEl = document.getElementById("board-status");
+    const writeForm = document.getElementById("board-write");
+    const postsEl = document.getElementById("board-posts");
+    const trashToggleBtn = document.getElementById("board-trash-toggle-btn");
 
-function t(key) {
-  return window.t ? window.t(key) : key;
-}
-
-function setStatus(message, isError) {
-  statusEl.textContent = message || "";
-  statusEl.classList.toggle("error", Boolean(isError));
-}
-
-document.getElementById("board-login-btn").addEventListener("click", async () => {
-  const email = document.getElementById("board-email").value.trim();
-  const password = document.getElementById("board-password").value;
-  if (!email || !password) {
-    setStatus(t("board_fill_credentials"), true);
-    return;
-  }
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    document.getElementById("board-password").value = "";
-    setStatus("");
-  } catch (err) {
-    setStatus(t("board_login_failed_prefix") + err.message, true);
-  }
-});
-
-document.getElementById("board-logout-btn").addEventListener("click", async () => {
-  await signOut(auth);
-  setStatus("");
-});
-
-let viewMode = "board";
-
-function updateTrashToggleLabel() {
-  trashToggleBtn.textContent = viewMode === "trash" ? t("board_back_to_board_btn") : t("board_trash_btn");
-}
-
-trashToggleBtn.addEventListener("click", () => {
-  viewMode = viewMode === "trash" ? "board" : "trash";
-  updateTrashToggleLabel();
-  writeForm.style.display = (lastIsAdmin && viewMode === "board") ? "flex" : "none";
-  renderPostList(lastSnapshotDocs, lastIsAdmin);
-});
-
-let lastIsAdmin = false;
-onAuthStateChanged(auth, (user) => {
-  const isAdmin = Boolean(user && user.email === ADMIN_EMAIL);
-  lastIsAdmin = isAdmin;
-  authBox.style.display = user ? "none" : "flex";
-  userBar.style.display = user ? "flex" : "none";
-  trashToggleBtn.style.display = isAdmin ? "inline-flex" : "none";
-  if (!isAdmin) {
-    viewMode = "board";
-  }
-  updateTrashToggleLabel();
-  writeForm.style.display = (isAdmin && viewMode === "board") ? "flex" : "none";
-  if (user) {
-    userEmailEl.textContent = user.email;
-    if (!isAdmin) {
-      setStatus(t("board_not_admin"), true);
-    } else {
-      setStatus("");
-    }
-  }
-  renderPosts(isAdmin);
-});
-
-writeForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const title = document.getElementById("board-title").value.trim();
-  const content = document.getElementById("board-content").value.trim();
-  const fileInput = document.getElementById("board-file");
-  const file = fileInput.files[0];
-
-  if (!title || !content) return;
-
-  try {
-    setStatus("게시글 처리 중입니다...", false);
-    let fileUrl = "";
-    let fileName = "";
-
-    if (file) {
-      const fileRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
-      const snapshot = await uploadBytes(fileRef, file);
-      fileUrl = await getDownloadURL(snapshot.ref);
-      fileName = file.name;
+    function t(key) {
+      return window.t ? window.t(key) : key;
     }
 
-    await addDoc(collection(db, "posts"), {
-      title,
-      content,
-      fileUrl,
-      fileName,
-      author: auth.currentUser.email,
-      createdAt: serverTimestamp(),
-      deleted: false
+    function setStatus(message, isError) {
+      statusEl.textContent = message || "";
+      statusEl.classList.toggle("error", Boolean(isError));
+    }
+
+    document.getElementById("board-login-btn").addEventListener("click", async () => {
+      const email = document.getElementById("board-email").value.trim();
+      const password = document.getElementById("board-password").value;
+      if (!email || !password) {
+        setStatus(t("board_fill_credentials"), true);
+        return;
+      }
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        document.getElementById("board-password").value = "";
+        setStatus("");
+      } catch (err) {
+        setStatus(t("board_login_failed_prefix") + err.message, true);
+      }
     });
 
-    document.getElementById("board-title").value = "";
-    document.getElementById("board-content").value = "";
-    fileInput.value = "";
-    setStatus(t("board_post_created"));
-  } catch (err) {
-    setStatus(t("board_create_failed_prefix") + err.message, true);
-  }
-});
+    document.getElementById("board-logout-btn").addEventListener("click", async () => {
+      await signOut(auth);
+      setStatus("");
+    });
 
-let lastSnapshotDocs = null;
-let unsubscribePosts = null;
+    let viewMode = "board"; // "board" | "trash"
 
-function renderPostList(docs, isAdmin) {
-  const filtered = (docs || []).filter((docSnap) => {
-    const isDeleted = Boolean(docSnap.data().deleted);
-    return viewMode === "trash" ? isDeleted : !isDeleted;
-  });
-
-  if (filtered.length === 0) {
-    const emptyMsg = viewMode === "trash" ? t("board_trash_empty") : t("board_empty_posts");
-    postsEl.innerHTML = `<p class="board-empty">${emptyMsg}</p>`;
-    return;
-  }
-  postsEl.innerHTML = "";
-  filtered.forEach((docSnap) => {
-    const post = docSnap.data();
-    const date = post.createdAt && post.createdAt.toDate
-      ? post.createdAt.toDate().toLocaleString("ko-KR")
-      : "";
-    const deletedDate = post.deletedAt && post.deletedAt.toDate
-      ? post.deletedAt.toDate().toLocaleString("ko-KR")
-      : "";
-    const el = document.createElement("div");
-    el.className = "board-post";
-    const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
-    const inTrash = viewMode === "trash";
-
-    const fileHtml = post.fileUrl 
-      ? `<div class="board-file-attachment" style="margin-top:0.8rem; padding:0.6rem; background:rgba(255,255,255,0.05); border-radius:8px;">
-          <span style="color:var(--muted); font-size:0.85rem;">첨부파일: </span>
-          <a href="${post.fileUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--accent2); text-decoration:underline; font-size:0.9rem;">${post.fileName || '다운로드'}</a>
-         </div>`
-      : "";
-
-    el.innerHTML = `
-      <h4></h4>
-      <div class="board-meta"></div>
-      <div class="board-content-body" style="color: var(--text); line-height: 1.6;"></div>
-      ${fileHtml}
-      ${admin && !inTrash ? `
-        <div class="board-actions">
-          <button type="button" class="board-edit">${t("board_edit_btn")}</button>
-          <button type="button" class="board-delete">${t("board_delete_btn")}</button>
-        </div>
-        <form class="board-edit-form" style="display:none;">
-          <input type="text" class="board-edit-title" required>
-          <textarea class="board-edit-content" rows="5" required></textarea>
-          <div class="board-actions">
-            <button type="submit" class="board-edit-save">${t("board_save_btn")}</button>
-            <button type="button" class="board-edit-cancel">${t("board_cancel_btn")}</button>
-          </div>
-        </form>
-      ` : ""}
-      ${admin && inTrash ? `
-        <div class="board-actions">
-          <button type="button" class="board-restore">${t("board_restore_btn")}</button>
-          <button type="button" class="board-permanent-delete">${t("board_permanent_delete_btn")}</button>
-        </div>
-      ` : ""}
-    `;
-
-    const titleEl = el.querySelector("h4");
-    const contentBodyEl = el.querySelector(".board-content-body");
-    
-    titleEl.textContent = post.title || "";
-    el.querySelector(".board-meta").textContent = inTrash
-      ? `Dr.S. · ${date} · ${t("board_deleted_at_label")}: ${deletedDate}`
-      : `Dr.S. · ${date}`;
-      
-    contentBodyEl.innerHTML = post.content || "";
-
-    const delBtn = el.querySelector(".board-delete");
-    if (delBtn) {
-      delBtn.addEventListener("click", async () => {
-        if (confirm(t("board_confirm_delete"))) {
-          try {
-            await updateDoc(doc(db, "posts", docSnap.id), {
-              deleted: true,
-              deletedAt: serverTimestamp()
-            });
-            setStatus(t("board_moved_to_trash"));
-          } catch (err) {
-            setStatus(t("board_create_failed_prefix") + err.message, true);
-          }
-        }
-      });
+    function updateTrashToggleLabel() {
+      trashToggleBtn.textContent = viewMode === "trash" ? t("board_back_to_board_btn") : t("board_trash_btn");
     }
 
-    const restoreBtn = el.querySelector(".board-restore");
-    if (restoreBtn) {
-      restoreBtn.addEventListener("click", async () => {
-        try {
-          await updateDoc(doc(db, "posts", docSnap.id), {
-            deleted: false,
-            deletedAt: null
+    trashToggleBtn.addEventListener("click", () => {
+      viewMode = viewMode === "trash" ? "board" : "trash";
+      updateTrashToggleLabel();
+      writeForm.style.display = (lastIsAdmin && viewMode === "board") ? "flex" : "none";
+      renderPostList(lastSnapshotDocs, lastIsAdmin);
+    });
+
+    let lastIsAdmin = false;
+    onAuthStateChanged(auth, (user) => {
+      const isAdmin = Boolean(user && user.email === ADMIN_EMAIL);
+      lastIsAdmin = isAdmin;
+      authBox.style.display = user ? "none" : "flex";
+      userBar.style.display = user ? "flex" : "none";
+      trashToggleBtn.style.display = isAdmin ? "inline-flex" : "none";
+      if (!isAdmin) {
+        viewMode = "board";
+      }
+      updateTrashToggleLabel();
+      writeForm.style.display = (isAdmin && viewMode === "board") ? "flex" : "none";
+      if (user) {
+        userEmailEl.textContent = user.email;
+        if (!isAdmin) {
+          setStatus(t("board_not_admin"), true);
+        } else {
+          setStatus("");
+        }
+      }
+      renderPosts(isAdmin);
+    });
+
+    writeForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("board-title").value.trim();
+      const content = document.getElementById("board-content").value.trim();
+      if (!title || !content) return;
+      try {
+        await addDoc(collection(db, "posts"), {
+          title,
+          content,
+          author: auth.currentUser.email,
+          createdAt: serverTimestamp(),
+          deleted: false
+        });
+        document.getElementById("board-title").value = "";
+        document.getElementById("board-content").value = "";
+        setStatus(t("board_post_created"));
+      } catch (err) {
+        setStatus(t("board_create_failed_prefix") + err.message, true);
+      }
+    });
+
+    let lastSnapshotDocs = null;
+    let unsubscribePosts = null;
+
+    function renderPostList(docs, isAdmin) {
+      const filtered = (docs || []).filter((docSnap) => {
+        const isDeleted = Boolean(docSnap.data().deleted);
+        return viewMode === "trash" ? isDeleted : !isDeleted;
+      });
+
+      if (filtered.length === 0) {
+        const emptyMsg = viewMode === "trash" ? t("board_trash_empty") : t("board_empty_posts");
+        postsEl.innerHTML = `<p class="board-empty">${emptyMsg}</p>`;
+        return;
+      }
+      postsEl.innerHTML = "";
+      filtered.forEach((docSnap) => {
+        const post = docSnap.data();
+        const date = post.createdAt && post.createdAt.toDate
+          ? post.createdAt.toDate().toLocaleString("ko-KR")
+          : "";
+        const deletedDate = post.deletedAt && post.deletedAt.toDate
+          ? post.deletedAt.toDate().toLocaleString("ko-KR")
+          : "";
+        const el = document.createElement("div");
+        el.className = "board-post";
+        const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
+        const inTrash = viewMode === "trash";
+        el.innerHTML = `
+          <h4></h4>
+          <div class="board-meta"></div>
+          <p></p>
+          ${admin && !inTrash ? `
+            <div class="board-actions">
+              <button type="button" class="board-edit">${t("board_edit_btn")}</button>
+              <button type="button" class="board-delete">${t("board_delete_btn")}</button>
+            </div>
+            <form class="board-edit-form" style="display:none;">
+              <input type="text" class="board-edit-title" required>
+              <textarea class="board-edit-content" rows="5" required></textarea>
+              <div class="board-actions">
+                <button type="submit" class="board-edit-save">${t("board_save_btn")}</button>
+                <button type="button" class="board-edit-cancel">${t("board_cancel_btn")}</button>
+              </div>
+            </form>
+          ` : ""}
+          ${admin && inTrash ? `
+            <div class="board-actions">
+              <button type="button" class="board-restore">${t("board_restore_btn")}</button>
+              <button type="button" class="board-permanent-delete">${t("board_permanent_delete_btn")}</button>
+            </div>
+          ` : ""}
+        `;
+        const titleEl = el.querySelector("h4");
+        const contentEl = el.querySelector("p");
+        titleEl.textContent = post.title || "";
+        el.querySelector(".board-meta").textContent = inTrash
+          ? `Dr.S. · ${date} · ${t("board_deleted_at_label")}: ${deletedDate}`
+          : `Dr.S. · ${date}`;
+        contentEl.textContent = post.content || "";
+
+        const delBtn = el.querySelector(".board-delete");
+        if (delBtn) {
+          delBtn.addEventListener("click", async () => {
+            if (confirm(t("board_confirm_delete"))) {
+              try {
+                await updateDoc(doc(db, "posts", docSnap.id), {
+                  deleted: true,
+                  deletedAt: serverTimestamp()
+                });
+                setStatus(t("board_moved_to_trash"));
+              } catch (err) {
+                setStatus(t("board_create_failed_prefix") + err.message, true);
+              }
+            }
           });
-          setStatus(t("board_restored"));
-        } catch (err) {
-          setStatus(t("board_create_failed_prefix") + err.message, true);
         }
-      });
-    }
 
-    const permDeleteBtn = el.querySelector(".board-permanent-delete");
-    if (permDeleteBtn) {
-      permDeleteBtn.addEventListener("click", async () => {
-        if (confirm(t("board_confirm_permanent_delete"))) {
-          try {
-            await deleteDoc(doc(db, "posts", docSnap.id));
-            setStatus(t("board_permanently_deleted"));
-          } catch (err) {
-            setStatus(t("board_create_failed_prefix") + err.message, true);
-          }
-        }
-      });
-    }
-
-    const editBtn = el.querySelector(".board-edit");
-    const editForm = el.querySelector(".board-edit-form");
-    const actionsEl = el.querySelector(".board-actions");
-    if (editBtn && editForm) {
-      const editTitleInput = editForm.querySelector(".board-edit-title");
-      const editContentInput = editForm.querySelector(".board-edit-content");
-      editBtn.addEventListener("click", () => {
-        editTitleInput.value = post.title || "";
-        editContentInput.value = post.content || "";
-        titleEl.style.display = "none";
-        contentBodyEl.style.display = "none";
-        actionsEl.style.display = "none";
-        editForm.style.display = "flex";
-      });
-      editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
-        editForm.style.display = "none";
-        titleEl.style.display = "";
-        contentBodyEl.style.display = "";
-        actionsEl.style.display = "";
-      });
-      editForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const newTitle = editTitleInput.value.trim();
-        const newContent = editContentInput.value.trim();
-        if (!newTitle || !newContent) return;
-        try {
-          await updateDoc(doc(db, "posts", docSnap.id), {
-            title: newTitle,
-            content: newContent,
-            updatedAt: serverTimestamp()
+        const restoreBtn = el.querySelector(".board-restore");
+        if (restoreBtn) {
+          restoreBtn.addEventListener("click", async () => {
+            try {
+              await updateDoc(doc(db, "posts", docSnap.id), {
+                deleted: false,
+                deletedAt: null
+              });
+              setStatus(t("board_restored"));
+            } catch (err) {
+              setStatus(t("board_create_failed_prefix") + err.message, true);
+            }
           });
-          setStatus(t("board_post_updated"));
-        } catch (err) {
-          setStatus(t("board_update_failed_prefix") + err.message, true);
         }
+
+        const permDeleteBtn = el.querySelector(".board-permanent-delete");
+        if (permDeleteBtn) {
+          permDeleteBtn.addEventListener("click", async () => {
+            if (confirm(t("board_confirm_permanent_delete"))) {
+              try {
+                await deleteDoc(doc(db, "posts", docSnap.id));
+                setStatus(t("board_permanently_deleted"));
+              } catch (err) {
+                setStatus(t("board_create_failed_prefix") + err.message, true);
+              }
+            }
+          });
+        }
+
+        const editBtn = el.querySelector(".board-edit");
+        const editForm = el.querySelector(".board-edit-form");
+        const actionsEl = el.querySelector(".board-actions");
+        if (editBtn && editForm) {
+          const editTitleInput = editForm.querySelector(".board-edit-title");
+          const editContentInput = editForm.querySelector(".board-edit-content");
+          editBtn.addEventListener("click", () => {
+            editTitleInput.value = post.title || "";
+            editContentInput.value = post.content || "";
+            titleEl.style.display = "none";
+            contentEl.style.display = "none";
+            actionsEl.style.display = "none";
+            editForm.style.display = "flex";
+          });
+          editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
+            editForm.style.display = "none";
+            titleEl.style.display = "";
+            contentEl.style.display = "";
+            actionsEl.style.display = "";
+          });
+          editForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const newTitle = editTitleInput.value.trim();
+            const newContent = editContentInput.value.trim();
+            if (!newTitle || !newContent) return;
+            try {
+              await updateDoc(doc(db, "posts", docSnap.id), {
+                title: newTitle,
+                content: newContent,
+                updatedAt: serverTimestamp()
+              });
+              setStatus(t("board_post_updated"));
+            } catch (err) {
+              setStatus(t("board_update_failed_prefix") + err.message, true);
+            }
+          });
+        }
+        postsEl.appendChild(el);
       });
     }
-    postsEl.appendChild(el);
-  });
-}
 
-function renderPosts(isAdmin) {
-  if (unsubscribePosts) return;
-  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-  unsubscribePosts = onSnapshot(q, (snapshot) => {
-    lastSnapshotDocs = snapshot.docs;
-    renderPostList(snapshot.docs, isAdmin);
-  });
-}
+    function renderPosts(isAdmin) {
+      if (unsubscribePosts) return;
+      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      unsubscribePosts = onSnapshot(q, (snapshot) => {
+        lastSnapshotDocs = snapshot.docs;
+        renderPostList(snapshot.docs, isAdmin);
+      });
+    }
 
-document.addEventListener("site-lang-changed", () => {
-  updateTrashToggleLabel();
-  renderPostList(lastSnapshotDocs, lastIsAdmin);
-});
+    document.addEventListener("site-lang-changed", () => {
+      updateTrashToggleLabel();
+      renderPostList(lastSnapshotDocs, lastIsAdmin);
+    });
   </script>
 </body>
 </html>
