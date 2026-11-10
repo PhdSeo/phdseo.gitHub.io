@@ -795,6 +795,7 @@
         <div id="board-user-bar" class="board-auth" style="display:none; flex-direction: row; justify-content: center; align-items: center; gap: 1rem;">
           <span id="board-user-email" style="color: var(--muted); font-size: 0.9rem;"></span>
           <button type="button" class="button button-secondary" id="board-logout-btn" data-i18n="board_logout_btn">로그아웃</button>
+          <button type="button" class="button button-secondary" id="board-trash-toggle-btn" data-i18n="board_trash_btn">휴지통</button>
         </div>
         <p id="board-status" class="board-status"></p>
 
@@ -874,6 +875,11 @@
         board_fill_credentials: "이메일과 비밀번호를 입력해주세요.", board_login_failed_prefix: "로그인에 실패했습니다: ",
         board_not_admin: "관리자 계정이 아닙니다. 게시글 작성 권한이 없습니다.",
         board_edit_btn: "수정", board_delete_btn: "삭제", board_save_btn: "저장", board_cancel_btn: "취소",
+        board_trash_btn: "휴지통", board_back_to_board_btn: "게시판으로", board_restore_btn: "복구", board_permanent_delete_btn: "영구 삭제",
+        board_confirm_permanent_delete: "이 게시글을 영구적으로 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
+        board_trash_empty: "휴지통이 비어있습니다.", board_moved_to_trash: "게시글이 휴지통으로 이동했습니다.",
+        board_restored: "게시글이 복구되었습니다.", board_permanently_deleted: "게시글이 영구 삭제되었습니다.",
+        board_deleted_at_label: "삭제됨",
         contact_title: "문의하기", contact_desc: "Dr.S와 함께 AI 트렌드 기반 혁신을 시작하세요. 맞춤형 상담을 언제든 지원합니다.",
         contact_note: "AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.",
         contact_email_label: "이메일", contact_phone_label: "전화번호",
@@ -912,6 +918,11 @@
         board_fill_credentials: "Please enter your email and password.", board_login_failed_prefix: "Login failed: ",
         board_not_admin: "This is not an admin account. You don't have permission to write posts.",
         board_edit_btn: "Edit", board_delete_btn: "Delete", board_save_btn: "Save", board_cancel_btn: "Cancel",
+        board_trash_btn: "Trash", board_back_to_board_btn: "Back to board", board_restore_btn: "Restore", board_permanent_delete_btn: "Delete Permanently",
+        board_confirm_permanent_delete: "Permanently delete this post? This action cannot be undone.",
+        board_trash_empty: "Trash is empty.", board_moved_to_trash: "Post moved to trash.",
+        board_restored: "Post has been restored.", board_permanently_deleted: "Post permanently deleted.",
+        board_deleted_at_label: "Deleted",
         contact_title: "Contact", contact_desc: "Start AI trend-driven innovation with Dr.S. Customized consulting is always available.",
         contact_note: "For AI project, technology adoption, or strategy consulting inquiries, please contact us via the email below.",
         contact_email_label: "Email", contact_phone_label: "Phone number",
@@ -950,6 +961,11 @@
         board_fill_credentials: "メールアドレスとパスワードを入力してください。", board_login_failed_prefix: "ログインに失敗しました: ",
         board_not_admin: "管理者アカウントではありません。投稿の作成権限がありません。",
         board_edit_btn: "編集", board_delete_btn: "削除", board_save_btn: "保存", board_cancel_btn: "キャンセル",
+        board_trash_btn: "ゴミ箱", board_back_to_board_btn: "掲示板に戻る", board_restore_btn: "復元", board_permanent_delete_btn: "完全に削除",
+        board_confirm_permanent_delete: "この投稿を完全に削除しますか？この操作は元に戻せません。",
+        board_trash_empty: "ゴミ箱は空です。", board_moved_to_trash: "投稿がゴミ箱に移動されました。",
+        board_restored: "投稿が復元されました。", board_permanently_deleted: "投稿が完全に削除されました。",
+        board_deleted_at_label: "削除日時",
         contact_title: "お問い合わせ", contact_desc: "Dr.SとともにAIトレンドに基づく革新を始めましょう。カスタマイズされたご相談をいつでも承ります。",
         contact_note: "AIプロジェクト、技術導入、戦略策定に関するお問い合わせは、下記のメールアドレスまでご連絡ください。",
         contact_email_label: "メールアドレス", contact_phone_label: "電話番号",
@@ -988,6 +1004,11 @@
         board_fill_credentials: "请输入电子邮箱和密码。", board_login_failed_prefix: "登录失败：",
         board_not_admin: "这不是管理员账户，没有发帖权限。",
         board_edit_btn: "编辑", board_delete_btn: "删除", board_save_btn: "保存", board_cancel_btn: "取消",
+        board_trash_btn: "回收站", board_back_to_board_btn: "返回公告板", board_restore_btn: "恢复", board_permanent_delete_btn: "永久删除",
+        board_confirm_permanent_delete: "确定要永久删除这篇帖子吗？此操作无法撤销。",
+        board_trash_empty: "回收站是空的。", board_moved_to_trash: "帖子已移至回收站。",
+        board_restored: "帖子已恢复。", board_permanently_deleted: "帖子已永久删除。",
+        board_deleted_at_label: "删除时间",
         contact_title: "联系我们", contact_desc: "与Dr.S一起开启基于AI趋势的创新。随时为您提供定制化咨询。",
         contact_note: "如有AI项目、技术引进、战略制定方面的咨询，请通过下方邮箱联系我们。",
         contact_email_label: "电子邮箱", contact_phone_label: "电话号码",
@@ -1026,6 +1047,11 @@
         board_fill_credentials: "Veuillez saisir votre e-mail et votre mot de passe.", board_login_failed_prefix: "Échec de la connexion : ",
         board_not_admin: "Ce n'est pas un compte administrateur. Vous n'avez pas l'autorisation de publier.",
         board_edit_btn: "Modifier", board_delete_btn: "Supprimer", board_save_btn: "Enregistrer", board_cancel_btn: "Annuler",
+        board_trash_btn: "Corbeille", board_back_to_board_btn: "Retour au tableau", board_restore_btn: "Restaurer", board_permanent_delete_btn: "Supprimer définitivement",
+        board_confirm_permanent_delete: "Supprimer définitivement cet article ? Cette action est irréversible.",
+        board_trash_empty: "La corbeille est vide.", board_moved_to_trash: "L'article a été déplacé vers la corbeille.",
+        board_restored: "L'article a été restauré.", board_permanently_deleted: "L'article a été définitivement supprimé.",
+        board_deleted_at_label: "Supprimé le",
         contact_title: "Contact", contact_desc: "Lancez l'innovation portée par les tendances de l'IA avec Dr.S. Un conseil personnalisé est disponible à tout moment.",
         contact_note: "Pour toute demande concernant un projet IA, l'adoption de technologies ou l'élaboration de stratégie, veuillez nous contacter à l'adresse e-mail ci-dessous.",
         contact_email_label: "E-mail", contact_phone_label: "Numéro de téléphone",
@@ -1064,6 +1090,11 @@
         board_fill_credentials: "Por favor ingrese su correo electrónico y contraseña.", board_login_failed_prefix: "Error al iniciar sesión: ",
         board_not_admin: "Esta no es una cuenta de administrador. No tiene permiso para publicar.",
         board_edit_btn: "Editar", board_delete_btn: "Eliminar", board_save_btn: "Guardar", board_cancel_btn: "Cancelar",
+        board_trash_btn: "Papelera", board_back_to_board_btn: "Volver al tablón", board_restore_btn: "Restaurar", board_permanent_delete_btn: "Eliminar permanentemente",
+        board_confirm_permanent_delete: "¿Eliminar permanentemente esta publicación? Esta acción no se puede deshacer.",
+        board_trash_empty: "La papelera está vacía.", board_moved_to_trash: "La publicación se movió a la papelera.",
+        board_restored: "La publicación ha sido restaurada.", board_permanently_deleted: "La publicación se eliminó permanentemente.",
+        board_deleted_at_label: "Eliminado",
         contact_title: "Contacto", contact_desc: "Comience la innovación impulsada por las tendencias de la IA junto a Dr.S. La consultoría personalizada está disponible en todo momento.",
         contact_note: "Para consultas sobre proyectos de IA, adopción de tecnología o desarrollo de estrategias, contáctenos a través del correo electrónico a continuación.",
         contact_email_label: "Correo electrónico", contact_phone_label: "Número de teléfono",
@@ -1188,6 +1219,7 @@
     const statusEl = document.getElementById("board-status");
     const writeForm = document.getElementById("board-write");
     const postsEl = document.getElementById("board-posts");
+    const trashToggleBtn = document.getElementById("board-trash-toggle-btn");
 
     function t(key) {
       return window.t ? window.t(key) : key;
@@ -1219,13 +1251,31 @@
       setStatus("");
     });
 
+    let viewMode = "board"; // "board" | "trash"
+
+    function updateTrashToggleLabel() {
+      trashToggleBtn.textContent = viewMode === "trash" ? t("board_back_to_board_btn") : t("board_trash_btn");
+    }
+
+    trashToggleBtn.addEventListener("click", () => {
+      viewMode = viewMode === "trash" ? "board" : "trash";
+      updateTrashToggleLabel();
+      writeForm.style.display = (lastIsAdmin && viewMode === "board") ? "flex" : "none";
+      renderPostList(lastSnapshotDocs, lastIsAdmin);
+    });
+
     let lastIsAdmin = false;
     onAuthStateChanged(auth, (user) => {
       const isAdmin = Boolean(user && user.email === ADMIN_EMAIL);
       lastIsAdmin = isAdmin;
       authBox.style.display = user ? "none" : "flex";
       userBar.style.display = user ? "flex" : "none";
-      writeForm.style.display = isAdmin ? "flex" : "none";
+      trashToggleBtn.style.display = isAdmin ? "inline-flex" : "none";
+      if (!isAdmin) {
+        viewMode = "board";
+      }
+      updateTrashToggleLabel();
+      writeForm.style.display = (isAdmin && viewMode === "board") ? "flex" : "none";
       if (user) {
         userEmailEl.textContent = user.email;
         if (!isAdmin) {
@@ -1247,7 +1297,8 @@
           title,
           content,
           author: auth.currentUser.email,
-          createdAt: serverTimestamp()
+          createdAt: serverTimestamp(),
+          deleted: false
         });
         document.getElementById("board-title").value = "";
         document.getElementById("board-content").value = "";
@@ -1261,24 +1312,34 @@
     let unsubscribePosts = null;
 
     function renderPostList(docs, isAdmin) {
-      if (!docs || docs.length === 0) {
-        postsEl.innerHTML = `<p class="board-empty">${t("board_empty_posts")}</p>`;
+      const filtered = (docs || []).filter((docSnap) => {
+        const isDeleted = Boolean(docSnap.data().deleted);
+        return viewMode === "trash" ? isDeleted : !isDeleted;
+      });
+
+      if (filtered.length === 0) {
+        const emptyMsg = viewMode === "trash" ? t("board_trash_empty") : t("board_empty_posts");
+        postsEl.innerHTML = `<p class="board-empty">${emptyMsg}</p>`;
         return;
       }
       postsEl.innerHTML = "";
-      docs.forEach((docSnap) => {
+      filtered.forEach((docSnap) => {
         const post = docSnap.data();
         const date = post.createdAt && post.createdAt.toDate
           ? post.createdAt.toDate().toLocaleString("ko-KR")
           : "";
+        const deletedDate = post.deletedAt && post.deletedAt.toDate
+          ? post.deletedAt.toDate().toLocaleString("ko-KR")
+          : "";
         const el = document.createElement("div");
         el.className = "board-post";
         const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
+        const inTrash = viewMode === "trash";
         el.innerHTML = `
           <h4></h4>
           <div class="board-meta"></div>
           <p></p>
-          ${admin ? `
+          ${admin && !inTrash ? `
             <div class="board-actions">
               <button type="button" class="board-edit">${t("board_edit_btn")}</button>
               <button type="button" class="board-delete">${t("board_delete_btn")}</button>
@@ -1292,20 +1353,67 @@
               </div>
             </form>
           ` : ""}
+          ${admin && inTrash ? `
+            <div class="board-actions">
+              <button type="button" class="board-restore">${t("board_restore_btn")}</button>
+              <button type="button" class="board-permanent-delete">${t("board_permanent_delete_btn")}</button>
+            </div>
+          ` : ""}
         `;
         const titleEl = el.querySelector("h4");
         const contentEl = el.querySelector("p");
         titleEl.textContent = post.title || "";
-        el.querySelector(".board-meta").textContent = `Dr.S. · ${date}`;
+        el.querySelector(".board-meta").textContent = inTrash
+          ? `Dr.S. · ${date} · ${t("board_deleted_at_label")}: ${deletedDate}`
+          : `Dr.S. · ${date}`;
         contentEl.textContent = post.content || "";
+
         const delBtn = el.querySelector(".board-delete");
         if (delBtn) {
           delBtn.addEventListener("click", async () => {
             if (confirm(t("board_confirm_delete"))) {
-              await deleteDoc(doc(db, "posts", docSnap.id));
+              try {
+                await updateDoc(doc(db, "posts", docSnap.id), {
+                  deleted: true,
+                  deletedAt: serverTimestamp()
+                });
+                setStatus(t("board_moved_to_trash"));
+              } catch (err) {
+                setStatus(t("board_create_failed_prefix") + err.message, true);
+              }
             }
           });
         }
+
+        const restoreBtn = el.querySelector(".board-restore");
+        if (restoreBtn) {
+          restoreBtn.addEventListener("click", async () => {
+            try {
+              await updateDoc(doc(db, "posts", docSnap.id), {
+                deleted: false,
+                deletedAt: null
+              });
+              setStatus(t("board_restored"));
+            } catch (err) {
+              setStatus(t("board_create_failed_prefix") + err.message, true);
+            }
+          });
+        }
+
+        const permDeleteBtn = el.querySelector(".board-permanent-delete");
+        if (permDeleteBtn) {
+          permDeleteBtn.addEventListener("click", async () => {
+            if (confirm(t("board_confirm_permanent_delete"))) {
+              try {
+                await deleteDoc(doc(db, "posts", docSnap.id));
+                setStatus(t("board_permanently_deleted"));
+              } catch (err) {
+                setStatus(t("board_create_failed_prefix") + err.message, true);
+              }
+            }
+          });
+        }
+
         const editBtn = el.querySelector(".board-edit");
         const editForm = el.querySelector(".board-edit-form");
         const actionsEl = el.querySelector(".board-actions");
@@ -1357,6 +1465,7 @@
     }
 
     document.addEventListener("site-lang-changed", () => {
+      updateTrashToggleLabel();
       renderPostList(lastSnapshotDocs, lastIsAdmin);
     });
   </script>
