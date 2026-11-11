@@ -552,6 +552,200 @@
       text-align: center;
       color: var(--muted);
     }
+    /* Board Attachment Styles */
+    .board-file-zone {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .board-file-input {
+      display: none;
+    }
+    .board-file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .board-file-btn:hover {
+      border-color: var(--accent2);
+      color: var(--text);
+      background: rgba(34,211,238,0.06);
+    }
+    .board-file-btn svg {
+      flex-shrink: 0;
+      color: var(--accent2);
+    }
+    .board-file-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+    .board-file-preview {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+    }
+    .board-file-preview-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      overflow: hidden;
+    }
+    .board-file-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .board-file-name {
+      font-size: 0.88rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 260px;
+    }
+    .board-file-size {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .board-file-remove {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+    .board-file-remove:hover {
+      color: #fca5a5;
+    }
+    .board-attachment {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .board-attachment.is-image {
+      padding: 0.75rem;
+    }
+    .board-attachment-img-wrap {
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      max-height: 440px;
+      background: rgba(0,0,0,0.25);
+    }
+    .board-attachment-img-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 440px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .board-attachment-img-wrap:hover img {
+      transform: scale(1.008);
+    }
+    .board-attachment-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .board-attachment-icon {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent2);
+    }
+    .board-attachment-name {
+      color: var(--text);
+      font-weight: 500;
+      word-break: break-all;
+    }
+    .board-attachment-size {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .board-attachment-download {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(34,211,238,0.12);
+      border: 1px solid rgba(34,211,238,0.35);
+      color: var(--accent2);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .board-attachment-download:hover {
+      background: rgba(34,211,238,0.25);
+      color: #fff;
+    }
+    .board-edit-attachment-box {
+      margin: 0.6rem 0;
+      padding: 0.65rem 0.9rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .board-edit-attachment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .board-edit-attachment-del {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: #fca5a5;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    .board-edit-new-file-wrap {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
     .hero-car-mobile { display: none; }
     @media (max-width: 640px) {
       nav {
@@ -802,6 +996,24 @@
         <form id="board-write" class="board-write" style="display:none;">
           <input type="text" id="board-title" placeholder="제목" data-i18n-placeholder="board_title_ph" required>
           <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" data-i18n-placeholder="board_content_ph" required></textarea>
+          
+          <div class="board-file-zone">
+            <label class="board-file-btn" for="board-file">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              <span data-i18n="board_attach_file">파일 첨부</span>
+              <span class="board-file-hint" data-i18n="board_attach_file_hint">(이미지 자동 압축 / 문서 최대 750KB)</span>
+            </label>
+            <input type="file" id="board-file" class="board-file-input" accept="image/*,.pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.ppt,.pptx">
+            <div id="board-file-preview" class="board-file-preview" style="display:none;">
+              <div class="board-file-preview-info">
+                <img id="board-file-thumb" class="board-file-thumb" style="display:none;" alt="preview">
+                <span id="board-file-name" class="board-file-name"></span>
+                <span id="board-file-size" class="board-file-size"></span>
+              </div>
+              <button type="button" id="board-file-remove-btn" class="board-file-remove" title="첨부 제거">✕</button>
+            </div>
+          </div>
+
           <button type="submit" class="button button-primary" data-i18n="board_submit_btn">게시글 등록</button>
         </form>
 
@@ -880,6 +1092,10 @@
         board_trash_empty: "휴지통이 비어있습니다.", board_moved_to_trash: "게시글이 휴지통으로 이동했습니다.",
         board_restored: "게시글이 복구되었습니다.", board_permanently_deleted: "게시글이 영구 삭제되었습니다.",
         board_deleted_at_label: "삭제됨",
+        board_attach_file: "파일 첨부", board_attach_file_hint: "(이미지 자동 압축 / 문서 최대 750KB)",
+        board_download: "다운로드", board_file_too_large: "문서 파일은 최대 750KB까지 첨부할 수 있습니다. (이미지는 자동 압축 지원)",
+        board_current_attachment: "현재 첨부파일", board_delete_attachment: "첨부 삭제",
+        board_replace_attachment: "새 파일로 교체", board_processing_file: "첨부파일 처리 중...",
         contact_title: "문의하기", contact_desc: "Dr.S와 함께 AI 트렌드 기반 혁신을 시작하세요. 맞춤형 상담을 언제든 지원합니다.",
         contact_note: "AI 프로젝트, 기술 도입, 전략 수립 문의는 아래 이메일로 연락주세요.",
         contact_email_label: "이메일", contact_phone_label: "전화번호",
@@ -923,6 +1139,10 @@
         board_trash_empty: "Trash is empty.", board_moved_to_trash: "Post moved to trash.",
         board_restored: "Post has been restored.", board_permanently_deleted: "Post permanently deleted.",
         board_deleted_at_label: "Deleted",
+        board_attach_file: "Attach File", board_attach_file_hint: "(Auto image compression / Docs max 750KB)",
+        board_download: "Download", board_file_too_large: "Document files can be up to 750KB. (Images are compressed automatically)",
+        board_current_attachment: "Current attachment", board_delete_attachment: "Remove attachment",
+        board_replace_attachment: "Replace with new file", board_processing_file: "Processing file...",
         contact_title: "Contact", contact_desc: "Start AI trend-driven innovation with Dr.S. Customized consulting is always available.",
         contact_note: "For AI project, technology adoption, or strategy consulting inquiries, please contact us via the email below.",
         contact_email_label: "Email", contact_phone_label: "Phone number",
@@ -966,6 +1186,10 @@
         board_trash_empty: "ゴミ箱は空です。", board_moved_to_trash: "投稿がゴミ箱に移動されました。",
         board_restored: "投稿が復元されました。", board_permanently_deleted: "投稿が完全に削除されました。",
         board_deleted_at_label: "削除日時",
+        board_attach_file: "ファイル添付", board_attach_file_hint: "(画像自動圧縮 / 文書最大750KB)",
+        board_download: "ダウンロード", board_file_too_large: "文書ファイルは最大750KBまで添付可能です。（画像は自動圧縮されます）",
+        board_current_attachment: "現在の添付ファイル", board_delete_attachment: "添付削除",
+        board_replace_attachment: "新しいファイルに変更", board_processing_file: "ファイル処理中...",
         contact_title: "お問い合わせ", contact_desc: "Dr.SとともにAIトレンドに基づく革新を始めましょう。カスタマイズされたご相談をいつでも承ります。",
         contact_note: "AIプロジェクト、技術導入、戦略策定に関するお問い合わせは、下記のメールアドレスまでご連絡ください。",
         contact_email_label: "メールアドレス", contact_phone_label: "電話番号",
@@ -1009,6 +1233,10 @@
         board_trash_empty: "回收站是空的。", board_moved_to_trash: "帖子已移至回收站。",
         board_restored: "帖子已恢复。", board_permanently_deleted: "帖子已永久删除。",
         board_deleted_at_label: "删除时间",
+        board_attach_file: "添加附件", board_attach_file_hint: "(图片自动压缩 / 文档最大750KB)",
+        board_download: "下载", board_file_too_large: "文档附件最大支持750KB。（图片支持自动压缩）",
+        board_current_attachment: "当前附件", board_delete_attachment: "删除附件",
+        board_replace_attachment: "更换为新文件", board_processing_file: "附件处理中...",
         contact_title: "联系我们", contact_desc: "与Dr.S一起开启基于AI趋势的创新。随时为您提供定制化咨询。",
         contact_note: "如有AI项目、技术引进、战略制定方面的咨询，请通过下方邮箱联系我们。",
         contact_email_label: "电子邮箱", contact_phone_label: "电话号码",
@@ -1052,6 +1280,10 @@
         board_trash_empty: "La corbeille est vide.", board_moved_to_trash: "L'article a été déplacé vers la corbeille.",
         board_restored: "L'article a été restauré.", board_permanently_deleted: "L'article a été définitivement supprimé.",
         board_deleted_at_label: "Supprimé le",
+        board_attach_file: "Joindre un fichier", board_attach_file_hint: "(Compression d'image auto / docs max 750 Ko)",
+        board_download: "Télécharger", board_file_too_large: "Les documents sont limités à 750 Ko. (Les images sont compressées automatiquement)",
+        board_current_attachment: "Pièce jointe actuelle", board_delete_attachment: "Supprimer la pièce jointe",
+        board_replace_attachment: "Remplacer par un nouveau fichier", board_processing_file: "Traitement du fichier...",
         contact_title: "Contact", contact_desc: "Lancez l'innovation portée par les tendances de l'IA avec Dr.S. Un conseil personnalisé est disponible à tout moment.",
         contact_note: "Pour toute demande concernant un projet IA, l'adoption de technologies ou l'élaboration de stratégie, veuillez nous contacter à l'adresse e-mail ci-dessous.",
         contact_email_label: "E-mail", contact_phone_label: "Numéro de téléphone",
@@ -1095,6 +1327,10 @@
         board_trash_empty: "La papelera está vacía.", board_moved_to_trash: "La publicación se movió a la papelera.",
         board_restored: "La publicación ha sido restaurada.", board_permanently_deleted: "La publicación se eliminó permanentemente.",
         board_deleted_at_label: "Eliminado",
+        board_attach_file: "Adjuntar archivo", board_attach_file_hint: "(Compresión auto de imagen / docs hasta 750KB)",
+        board_download: "Descargar", board_file_too_large: "Los documentos pueden tener hasta 750KB. (Las imágenes se comprimen automáticamente)",
+        board_current_attachment: "Adjunto actual", board_delete_attachment: "Eliminar adjunto",
+        board_replace_attachment: "Reemplazar con nuevo archivo", board_processing_file: "Procesando archivo...",
         contact_title: "Contacto", contact_desc: "Comience la innovación impulsada por las tendencias de la IA junto a Dr.S. La consultoría personalizada está disponible en todo momento.",
         contact_note: "Para consultas sobre proyectos de IA, adopción de tecnología o desarrollo de estrategias, contáctenos a través del correo electrónico a continuación.",
         contact_email_label: "Correo electrónico", contact_phone_label: "Número de teléfono",
@@ -1287,21 +1523,152 @@
       renderPosts(isAdmin);
     });
 
+    function formatFileSize(bytes) {
+      if (!bytes || isNaN(bytes)) return "";
+      if (bytes < 1024) return bytes + " B";
+      const kb = bytes / 1024;
+      if (kb < 1024) return kb.toFixed(1) + " KB";
+      return (kb / 1024).toFixed(1) + " MB";
+    }
+
+    async function compressImageIfNeeded(file) {
+      if (!file.type.startsWith("image/")) {
+        if (file.size > 750 * 1024) {
+          throw new Error(t("board_file_too_large"));
+        }
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve({
+            fileName: file.name,
+            fileType: file.type || "application/octet-stream",
+            fileSize: file.size,
+            fileData: reader.result
+          });
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const MAX_DIM = 1600;
+            let width = img.width;
+            let height = img.height;
+            if (width > MAX_DIM || height > MAX_DIM) {
+              if (width > height) {
+                height = Math.round((height * MAX_DIM) / width);
+                width = MAX_DIM;
+              } else {
+                width = Math.round((width * MAX_DIM) / height);
+                height = MAX_DIM;
+              }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            let quality = 0.85;
+            let dataUrl = canvas.toDataURL("image/jpeg", quality);
+            if (dataUrl.length > 720 * 1024 * 1.33) {
+              dataUrl = canvas.toDataURL("image/jpeg", 0.65);
+            }
+            const approxBytes = Math.round((dataUrl.length * 3) / 4);
+            resolve({
+              fileName: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
+              fileType: "image/jpeg",
+              fileSize: approxBytes,
+              fileData: dataUrl
+            });
+          };
+          img.onerror = () => reject(new Error("이미지를 읽을 수 없습니다."));
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const fileInput = document.getElementById("board-file");
+    const filePreview = document.getElementById("board-file-preview");
+    const fileThumb = document.getElementById("board-file-thumb");
+    const fileNameEl = document.getElementById("board-file-name");
+    const fileSizeEl = document.getElementById("board-file-size");
+    const fileRemoveBtn = document.getElementById("board-file-remove-btn");
+    let currentSelectedFile = null;
+
+    if (fileInput) {
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) {
+          clearFileSelection();
+          return;
+        }
+        currentSelectedFile = file;
+        fileNameEl.textContent = file.name;
+        fileSizeEl.textContent = "(" + formatFileSize(file.size) + ")";
+        if (file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            fileThumb.src = e.target.result;
+            fileThumb.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          fileThumb.style.display = "none";
+        }
+        filePreview.style.display = "flex";
+      });
+    }
+
+    function clearFileSelection() {
+      currentSelectedFile = null;
+      if (fileInput) fileInput.value = "";
+      if (filePreview) filePreview.style.display = "none";
+      if (fileThumb) {
+        fileThumb.src = "";
+        fileThumb.style.display = "none";
+      }
+      if (fileNameEl) fileNameEl.textContent = "";
+      if (fileSizeEl) fileSizeEl.textContent = "";
+    }
+
+    if (fileRemoveBtn) {
+      fileRemoveBtn.addEventListener("click", clearFileSelection);
+    }
+
     writeForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("board-title").value.trim();
       const content = document.getElementById("board-content").value.trim();
       if (!title || !content) return;
       try {
-        await addDoc(collection(db, "posts"), {
+        let attachment = null;
+        if (currentSelectedFile) {
+          setStatus(t("board_processing_file"), false);
+          attachment = await compressImageIfNeeded(currentSelectedFile);
+        }
+        const postData = {
           title,
           content,
           author: auth.currentUser.email,
           createdAt: serverTimestamp(),
           deleted: false
-        });
+        };
+        if (attachment) {
+          postData.fileName = attachment.fileName;
+          postData.fileType = attachment.fileType;
+          postData.fileSize = attachment.fileSize;
+          postData.fileData = attachment.fileData;
+        }
+        await addDoc(collection(db, "posts"), postData);
         document.getElementById("board-title").value = "";
         document.getElementById("board-content").value = "";
+        clearFileSelection();
         setStatus(t("board_post_created"));
       } catch (err) {
         setStatus(t("board_create_failed_prefix") + err.message, true);
@@ -1339,6 +1706,7 @@
           <h4></h4>
           <div class="board-meta"></div>
           <p></p>
+          <div class="board-attachment-box"></div>
           ${admin && !inTrash ? `
             <div class="board-actions">
               <button type="button" class="board-edit">${t("board_edit_btn")}</button>
@@ -1347,6 +1715,7 @@
             <form class="board-edit-form" style="display:none;">
               <input type="text" class="board-edit-title" required>
               <textarea class="board-edit-content" rows="5" required></textarea>
+              <div class="board-edit-file-slot"></div>
               <div class="board-actions">
                 <button type="submit" class="board-edit-save">${t("board_save_btn")}</button>
                 <button type="button" class="board-edit-cancel">${t("board_cancel_btn")}</button>
@@ -1362,11 +1731,68 @@
         `;
         const titleEl = el.querySelector("h4");
         const contentEl = el.querySelector("p");
+        const attachmentBox = el.querySelector(".board-attachment-box");
         titleEl.textContent = post.title || "";
         el.querySelector(".board-meta").textContent = inTrash
           ? `Dr.S. · ${date} · ${t("board_deleted_at_label")}: ${deletedDate}`
           : `Dr.S. · ${date}`;
         contentEl.textContent = post.content || "";
+
+        // Render attachment
+        const fileSrc = post.fileData || post.fileUrl;
+        if (fileSrc && (post.fileName || post.fileData || post.fileUrl)) {
+          const isImage = (post.fileType && post.fileType.startsWith("image/")) ||
+            /\.(png|jpe?g|gif|webp|svg)$/i.test(post.fileName || "");
+          const attachDiv = document.createElement("div");
+          attachDiv.className = "board-attachment" + (isImage ? " is-image" : "");
+
+          if (isImage) {
+            const imgWrap = document.createElement("a");
+            imgWrap.href = fileSrc;
+            imgWrap.target = "_blank";
+            imgWrap.rel = "noopener noreferrer";
+            imgWrap.className = "board-attachment-img-wrap";
+            const img = document.createElement("img");
+            img.src = fileSrc;
+            img.alt = post.fileName || "첨부 이미지";
+            img.loading = "lazy";
+            imgWrap.appendChild(img);
+            attachDiv.appendChild(imgWrap);
+          }
+
+          const metaDiv = document.createElement("div");
+          metaDiv.className = "board-attachment-meta";
+
+          const iconSpan = document.createElement("span");
+          iconSpan.className = "board-attachment-icon";
+          iconSpan.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>`;
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "board-attachment-name";
+          nameSpan.textContent = post.fileName || (isImage ? "이미지 파일" : "첨부파일");
+
+          metaDiv.appendChild(iconSpan);
+          metaDiv.appendChild(nameSpan);
+
+          if (post.fileSize) {
+            const sizeSpan = document.createElement("span");
+            sizeSpan.className = "board-attachment-size";
+            sizeSpan.textContent = "(" + formatFileSize(post.fileSize) + ")";
+            metaDiv.appendChild(sizeSpan);
+          }
+
+          const downloadLink = document.createElement("a");
+          downloadLink.href = fileSrc;
+          downloadLink.download = post.fileName || "download";
+          downloadLink.className = "board-attachment-download";
+          downloadLink.target = "_blank";
+          downloadLink.rel = "noopener noreferrer";
+          downloadLink.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>${t("board_download")}</span>`;
+          metaDiv.appendChild(downloadLink);
+
+          attachDiv.appendChild(metaDiv);
+          attachmentBox.appendChild(attachDiv);
+        }
 
         const delBtn = el.querySelector(".board-delete");
         if (delBtn) {
@@ -1420,31 +1846,86 @@
         if (editBtn && editForm) {
           const editTitleInput = editForm.querySelector(".board-edit-title");
           const editContentInput = editForm.querySelector(".board-edit-content");
+          const editFileSlot = editForm.querySelector(".board-edit-file-slot");
+
           editBtn.addEventListener("click", () => {
             editTitleInput.value = post.title || "";
             editContentInput.value = post.content || "";
+
+            // Populate edit attachment area
+            editFileSlot.innerHTML = "";
+            const hasExisting = Boolean(post.fileData || post.fileUrl);
+            const editBox = document.createElement("div");
+            editBox.className = "board-edit-attachment-box";
+
+            if (hasExisting) {
+              const row = document.createElement("div");
+              row.className = "board-edit-attachment-row";
+              row.innerHTML = `<span>📎 ${t("board_current_attachment")}: <strong></strong> <span style="color:var(--muted); font-size:0.8rem;"></span></span>`;
+              row.querySelector("strong").textContent = post.fileName || "첨부파일";
+              if (post.fileSize) {
+                row.querySelector("span span").textContent = "(" + formatFileSize(post.fileSize) + ")";
+              }
+              const delLabel = document.createElement("label");
+              delLabel.className = "board-edit-attachment-del";
+              delLabel.innerHTML = `<input type="checkbox" class="board-edit-delete-file"> <span>${t("board_delete_attachment")}</span>`;
+              row.appendChild(delLabel);
+              editBox.appendChild(row);
+            }
+
+            const newFileRow = document.createElement("div");
+            newFileRow.className = "board-edit-new-file-wrap";
+            newFileRow.innerHTML = `<span>${hasExisting ? t("board_replace_attachment") : t("board_attach_file")}:</span><input type="file" class="board-edit-new-file" accept="image/*,.pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.ppt,.pptx">`;
+            editBox.appendChild(newFileRow);
+            editFileSlot.appendChild(editBox);
+
             titleEl.style.display = "none";
             contentEl.style.display = "none";
+            attachmentBox.style.display = "none";
             actionsEl.style.display = "none";
             editForm.style.display = "flex";
           });
+
           editForm.querySelector(".board-edit-cancel").addEventListener("click", () => {
             editForm.style.display = "none";
             titleEl.style.display = "";
             contentEl.style.display = "";
+            attachmentBox.style.display = "";
             actionsEl.style.display = "";
           });
+
           editForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const newTitle = editTitleInput.value.trim();
             const newContent = editContentInput.value.trim();
             if (!newTitle || !newContent) return;
             try {
-              await updateDoc(doc(db, "posts", docSnap.id), {
+              const updateData = {
                 title: newTitle,
                 content: newContent,
                 updatedAt: serverTimestamp()
-              });
+              };
+
+              const delCheck = editForm.querySelector(".board-edit-delete-file");
+              const newFileInput = editForm.querySelector(".board-edit-new-file");
+              const newFile = newFileInput && newFileInput.files && newFileInput.files[0];
+
+              if (newFile) {
+                setStatus(t("board_processing_file"), false);
+                const processed = await compressImageIfNeeded(newFile);
+                updateData.fileName = processed.fileName;
+                updateData.fileType = processed.fileType;
+                updateData.fileSize = processed.fileSize;
+                updateData.fileData = processed.fileData;
+              } else if (delCheck && delCheck.checked) {
+                updateData.fileName = "";
+                updateData.fileType = "";
+                updateData.fileSize = 0;
+                updateData.fileData = "";
+                updateData.fileUrl = "";
+              }
+
+              await updateDoc(doc(db, "posts", docSnap.id), updateData);
               setStatus(t("board_post_updated"));
             } catch (err) {
               setStatus(t("board_update_failed_prefix") + err.message, true);
