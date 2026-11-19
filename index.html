@@ -1003,7 +1003,7 @@
               <span data-i18n="board_attach_file">파일 첨부</span>
               <span class="board-file-hint" data-i18n="board_attach_file_hint">(이미지 자동 압축 / 문서 최대 750KB)</span>
             </label>
-            <input type="file" id="board-file" class="board-file-input" accept="image/*,.pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.ppt,.pptx">
+            <input type="file" id="board-file" multiple class="board-file-input" accept="image/*,.pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.ppt,.pptx">
             <div id="board-file-preview" class="board-file-preview" style="display:none;">
               <div class="board-file-preview-info">
                 <img id="board-file-thumb" class="board-file-thumb" style="display:none;" alt="preview">
@@ -1599,42 +1599,85 @@
     const fileNameEl = document.getElementById("board-file-name");
     const fileSizeEl = document.getElementById("board-file-size");
     const fileRemoveBtn = document.getElementById("board-file-remove-btn");
-    let currentSelectedFile = null;
+    let currentSelectedFiles = [];
 
-    if (fileInput) {
-      fileInput.addEventListener("change", () => {
-        const file = fileInput.files && fileInput.files[0];
-        if (!file) {
-          clearFileSelection();
-          return;
-        }
-        currentSelectedFile = file;
-        fileNameEl.textContent = file.name;
-        fileSizeEl.textContent = "(" + formatFileSize(file.size) + ")";
+  function renderFilePreviews() {
+    if (!filePreview) return;
+filePreview.innerHTML = "";
+if (currentSelectedFiles.length === 0) {
+filePreview.style.display = "none";
+return;
+}
+    filePreview.style.display = "flex";
+      filePreview.style.flexDirection = "column";
+      filePreview.style.alignItems = "stretch";
+      filePreview.style.gap = "0.5rem";
+
+      currentSelectedFiles.forEach((file, idx) => {
+        const item = document.createElement("div");
+        item.style.display = "flex";
+        item.style.alignItems = "center";
+        item.style.justifyContent = "space-between";
+        item.style.gap = "0.75rem";
+
+        const info = document.createElement("div");
+        info.className = "board-file-preview-info";
+
         if (file.type.startsWith("image/")) {
+          const thumb = document.createElement("img");
+          thumb.className = "board-file-thumb";
+          thumb.alt = "preview";
           const reader = new FileReader();
           reader.onload = (e) => {
-            fileThumb.src = e.target.result;
-            fileThumb.style.display = "block";
+            thumb.src = e.target.result;
           };
           reader.readAsDataURL(file);
-        } else {
-          fileThumb.style.display = "none";
+          info.appendChild(thumb);
         }
-        filePreview.style.display = "flex";
+
+        const nameEl = document.createElement("span");
+        nameEl.className = "board-file-name";
+        nameEl.textContent = file.name;
+        info.appendChild(nameEl);
+
+        const sizeEl = document.createElement("span");
+        sizeEl.className = "board-file-size";
+        sizeEl.textContent = "(" + formatFileSize(file.size) + ")";
+        info.appendChild(sizeEl);
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "board-file-remove";
+        removeBtn.textContent = "\u00d7";
+        removeBtn.addEventListener("click", () => {
+          currentSelectedFiles.splice(idx, 1);
+          renderFilePreviews();
+        });
+
+        item.appendChild(info);
+        item.appendChild(removeBtn);
+        filePreview.appendChild(item);
       });
     }
 
+    if (fileInput) {
+      fileInput.addEventListener("change", () => {
+        const files = fileInput.files ? Array.from(fileInput.files) : [];
+        if (files.length === 0) return;
+        currentSelectedFiles = currentSelectedFiles.concat(files);
+        fileInput.value = "";
+        renderFilePreviews();
+      });
+    }
+    
+
     function clearFileSelection() {
-      currentSelectedFile = null;
+      currentSelectedFiles = [];
       if (fileInput) fileInput.value = "";
-      if (filePreview) filePreview.style.display = "none";
-      if (fileThumb) {
-        fileThumb.src = "";
-        fileThumb.style.display = "none";
+      if (filePreview) {
+        filePreview.innerHTML = "";
+        filePreview.style.display = "none";
       }
-      if (fileNameEl) fileNameEl.textContent = "";
-      if (fileSizeEl) fileSizeEl.textContent = "";
     }
 
     if (fileRemoveBtn) {
@@ -1647,10 +1690,10 @@
       const content = document.getElementById("board-content").value.trim();
       if (!title || !content) return;
       try {
-        let attachment = null;
-        if (currentSelectedFile) {
+        let attachments = [];
+        if (currentSelectedFiles.length > 0) {
           setStatus(t("board_processing_file"), false);
-          attachment = await compressImageIfNeeded(currentSelectedFile);
+          for (const file of currentSelectedFiles) { attachments.push(await compressImageIfNeeded(file)); }
         }
         const postData = {
           title,
@@ -1659,11 +1702,7 @@
           createdAt: serverTimestamp(),
           deleted: false
         };
-        if (attachment) {
-          postData.fileName = attachment.fileName;
-          postData.fileType = attachment.fileType;
-          postData.fileSize = attachment.fileSize;
-          postData.fileData = attachment.fileData;
+        if (attachments.length > 0) { postData.attachments = attachments;
         }
         await addDoc(collection(db, "posts"), postData);
         document.getElementById("board-title").value = "";
@@ -1739,8 +1778,8 @@
         contentEl.textContent = post.content || "";
 
         // Render attachment
-        const fileSrc = post.fileData || post.fileUrl;
-        if (fileSrc && (post.fileName || post.fileData || post.fileUrl)) {
+        const attachmentsList = Array.isArray(post.attachments) && post.attachments.length > 0 ? post.attachments : (post.fileData || post.fileUrl) ? [{ fileName: post.fileName || "attachment", fileType: post.fileType || "", fileSize: post.fileSize || 0, fileData: post.fileData || "", fileUrl: post.fileUrl || "" }] : []; attachmentsList.forEach((att) => { const fileSrc = att.fileData || att.fileUrl;
+        if (!fileSrc || !(att.fileName || att.fileData || att.fileUrl)) return; const post = att;
           const isImage = (post.fileType && post.fileType.startsWith("image/")) ||
             /\.(png|jpe?g|gif|webp|svg)$/i.test(post.fileName || "");
           const attachDiv = document.createElement("div");
@@ -1792,7 +1831,7 @@
 
           attachDiv.appendChild(metaDiv);
           attachmentBox.appendChild(attachDiv);
-        }
+        });
 
         const delBtn = el.querySelector(".board-delete");
         if (delBtn) {
