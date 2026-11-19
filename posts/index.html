@@ -1,0 +1,53 @@
+---
+layout: null
+permalink: /posts/
+title: Dr.S 게시글 | AI·AX 인사이트
+description: Dr.S의 AI·AX 전략, 인공지능 트렌드와 데이터 혁신에 관한 게시글 모음입니다.
+---
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #0d1117; color: #f8fafc; }
+    body { margin: 0; line-height: 1.8; }
+    header, main, footer { width: min(760px, 92%); margin: 0 auto; }
+    header, footer { padding: 1.5rem 0; }
+    a { color: #67e8f9; }
+    li { margin: 1.5rem 0; }
+    time { color: #94a3b8; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header><a href="{{ '/' | relative_url }}">Dr.S 홈</a></header>
+  <main>
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.description }}</p>
+    {% assign published_posts = site.posts | where_exp: "post", "post.published != false" %}
+    {% if published_posts.size > 0 %}
+      <ol>
+        {% for post in published_posts %}
+        <li>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %m월 %d일" }}</time><br>
+          <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          {% assign summary = post.description | default: post.excerpt | strip_html | normalize_whitespace %}
+          {% if summary != empty %}<p>{{ summary | escape }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p>게시글을 준비하고 있습니다. 새 글은 이 페이지에 추가됩니다.</p>
+    {% endif %}
+  </main>
+  <footer><a href="{{ '/' | relative_url }}">Dr.S</a></footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: 'ko' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% assign page_description = page.description | default: page.excerpt | strip_html | normalize_whitespace | truncate: 160 %}
+  <title>{{ page.title | escape }} | Dr.S</title>
+  <meta name="description" content="{{ page_description | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Dr.S">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:description" content="{{ page_description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ page_description | jsonify }},
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+    "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+    "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
+    "author": {"@type": "Person", "name": "Dr.S"},
+    "publisher": {"@type": "Person", "name": "Dr.S"},
+    "inLanguage": "ko-KR"
+  }
+  </script>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #0d1117; color: #f8fafc; }
+    body { margin: 0; line-height: 1.8; }
+    header, main, footer { width: min(760px, 92%); margin: 0 auto; }
+    header, footer { padding: 1.5rem 0; }
+    a { color: #67e8f9; }
+    article { padding: 2rem 0 4rem; overflow-wrap: anywhere; }
+    h1 { line-height: 1.35; }
+    time { color: #94a3b8; }
+    .post-content img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <header><a href="{{ '/' | relative_url }}">Dr.S 홈</a> · <a href="{{ '/posts/' | relative_url }}">게시글 전체</a></header>
+  <main>
+    <article>
+      <h1>{{ page.title | escape }}</h1>
+      <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %m월 %d일" }}</time></p>
+      <div class="post-content">{{ content }}</div>
+    </article>
+  </main>
+  <footer><a href="{{ '/' | relative_url }}">Dr.S</a></footer>
+</body>
+</html>

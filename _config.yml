@@ -1,0 +1,15 @@
+title: Dr.S | AI 전략 컨설팅
+url: https://phdseo.github.io
+lang: ko
+timezone: Asia/Seoul
+permalink: /posts/:title/
+markdown: kramdown
+kramdown:
+  input: GFM
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      lang: ko
