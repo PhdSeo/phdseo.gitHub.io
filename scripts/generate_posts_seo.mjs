@@ -1,0 +1,295 @@
+import fs from "node:fs";
+import path from "node:path";
+
+const SITE_URL = "https://phdseo.github.io";
+const PROJECT_ID = "dr-s-11bd7";
+const COLLECTION = "posts";
+const POSTS_DIR = path.resolve("posts");
+
+function escapeHtml(str = "") {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function escapeXml(str = "") {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function fromFirestoreValue(val) {
+  if (!val || typeof val !== "object") return undefined;
+  if ("stringValue" in val) return val.stringValue;
+  if ("booleanValue" in val) return val.booleanValue;
+  if ("integerValue" in val) return Number(val.integerValue);
+  if ("doubleValue" in val) return Number(val.doubleValue);
+  if ("timestampValue" in val) return val.timestampValue;
+  if ("nullValue" in val) return null;
+  if ("arrayValue" in val) {
+    return (val.arrayValue.values || []).map(fromFirestoreValue);
+  }
+  if ("mapValue" in val) {
+    const out = {};
+    const fields = val.mapValue.fields || {};
+    for (const [k, v] of Object.entries(fields)) {
+      out[k] = fromFirestoreValue(v);
+    }
+    return out;
+  }
+  return undefined;
+}
+
+async function fetchAllPosts() {
+  const posts = [];
+  let pageToken = "";
+  do {
+    const url = new URL(
+      `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}`
+    );
+    url.searchParams.set("pageSize", "100");
+    if (pageToken) url.searchParams.set("pageToken", pageToken);
+
+    const res = await fetch(url.toString());
+    if (!res.ok) {
+      throw new Error(`Firestore REST API error: ${res.status} ${await res.text()}`);
+    }
+    const data = await res.json();
+    for (const doc of data.documents || []) {
+      const id = doc.name.split("/").pop();
+      const fields = {};
+      for (const [k, v] of Object.entries(doc.fields || {})) {
+        fields[k] = fromFirestoreValue(v);
+      }
+      if (!fields.deleted && fields.title && fields.content) {
+        posts.push({ id, ...fields });
+      }
+    }
+    pageToken = data.nextPageToken || "";
+  } while (pageToken);
+
+  posts.sort((a, b) => {
+    const ta = a.createdAt ? Date.parse(a.createdAt) : 0;
+    const tb = b.createdAt ? Date.parse(b.createdAt) : 0;
+    return tb - ta;
+  });
+  return posts;
+}
+
+function buildDescription(content = "") {
+  const singleLine = String(content).replace(/\s+/g, " ").trim();
+  return singleLine.length > 155 ? singleLine.slice(0, 152) + "..." : singleLine;
+}
+
+function buildPostHtml(post) {
+  const pageUrl = `${SITE_URL}/posts/${encodeURIComponent(post.id)}.html`;
+  const title = post.title || "AX 게시판 글";
+  const description = buildDescription(post.content);
+  const publishedIso = post.createdAt || new Date().toISOString();
+  const modifiedIso = post.updatedAt || publishedIso;
+  const publishedDate = publishedIso.slice(0, 10);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    datePublished: publishedIso,
+    dateModified: modifiedIso,
+    author: {
+      "@type": "Person",
+      name: "Dr.S",
+      url: `${SITE_URL}/`
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Dr.S",
+      url: `${SITE_URL}/`
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl
+    },
+    inLanguage: "ko-KR"
+  };
+
+  return `<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)} | Dr.S AX 게시판</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="${pageUrl}">
+  <meta property="og:site_name" content="Dr.S">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="article:published_time" content="${escapeHtml(publishedIso)}">
+  <meta property="article:modified_time" content="${escapeHtml(modifiedIso)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(180deg, #04070f 0%, #0d1117 100%);
+      color: #f8fafc;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+    .container {
+      width: min(820px, 92%);
+      margin: 0 auto;
+      padding: 3rem 0 5rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: #22d3ee;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+    article {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2.25rem;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.3;
+      margin: 0 0 0.75rem;
+    }
+    .meta {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 1.75rem;
+    }
+    .content {
+      white-space: pre-wrap;
+      font-size: 1.02rem;
+      color: #e2e8f0;
+    }
+    .cta-box {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .cta-box a {
+      color: #ff6ec7;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <a class="back-link" href="${SITE_URL}/#board">← Dr.S AX 게시판 전체 보기</a>
+    <article>
+      <h1>${escapeHtml(title)}</h1>
+      <div class="meta">Dr.S · ${escapeHtml(publishedDate)}</div>
+      <div class="content">${escapeHtml(post.content || "")}</div>
+      <div class="cta-box">
+        <a href="${SITE_URL}/?post=${encodeURIComponent(post.id)}#board">원본 게시판에서 첨부파일 및 전체 보기 →</a>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
+`;
+}
+
+function buildSitemapXml(posts) {
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = [
+    `  <url>
+    <loc>${SITE_URL}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>`
+  ];
+
+  for (const post of posts) {
+    const lastmod = (post.updatedAt || post.createdAt || today).slice(0, 10);
+    urls.push(`  <url>
+    <loc>${SITE_URL}/posts/${encodeURIComponent(post.id)}.html</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`);
+  }
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join("\n")}
+</urlset>
+`;
+}
+
+function buildFeedXml(posts) {
+  const items = posts.slice(0, 50).map((post) => {
+    const link = `${SITE_URL}/posts/${encodeURIComponent(post.id)}.html`;
+    const pubDate = post.createdAt ? new Date(post.createdAt).toUTCString() : new Date().toUTCString();
+    return `    <item>
+      <title>${escapeXml(post.title || "")}</title>
+      <link>${escapeXml(link)}</link>
+      <guid isPermaLink="true">${escapeXml(link)}</guid>
+      <pubDate>${pubDate}</pubDate>
+      <description>${escapeXml(buildDescription(post.content))}</description>
+    </item>`;
+  });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Dr.S AX 게시판</title>
+    <link>${SITE_URL}/#board</link>
+    <description>AI/AX 관련 생각과 소식을 기록하는 Dr.S AX 게시판</description>
+    <language>ko</language>
+${items.join("\n")}
+  </channel>
+</rss>
+`;
+}
+
+async function main() {
+  const posts = await fetchAllPosts();
+  fs.mkdirSync(POSTS_DIR, { recursive: true });
+
+  const expectedFiles = new Set(posts.map((p) => `${p.id}.html`));
+  for (const existing of fs.readdirSync(POSTS_DIR)) {
+    if (existing.endsWith(".html") && !expectedFiles.has(existing)) {
+      fs.unlinkSync(path.join(POSTS_DIR, existing));
+    }
+  }
+
+  for (const post of posts) {
+    fs.writeFileSync(path.join(POSTS_DIR, `${post.id}.html`), buildPostHtml(post), "utf8");
+  }
+
+  fs.writeFileSync(path.resolve("sitemap.xml"), buildSitemapXml(posts), "utf8");
+  fs.writeFileSync(path.resolve("feed.xml"), buildFeedXml(posts), "utf8");
+  console.log(`Generated ${posts.length} static post pages, sitemap.xml, and feed.xml.`);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
