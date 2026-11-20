@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr.S | 박사님 소개</title>
   <meta name="description" content="Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. AI 전략 수립, 트렌드 분석, 멀티 에이전트 오케스트레이션과 LLM 파이프라인 구현 지원까지 제공하는 AI 트렌드 상담 서비스입니다.">
+  <meta name="keywords" content="Dr.S, AI 컨설팅, AX, AI 트랜스포메이션, AI 전략 수립, AI 트렌드 분석, 멀티 에이전트 오케스트레이션, AI 하네스, LLM 파이프라인, 시스템 개발">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://phdseo.github.io/">
+  <link rel="alternate" type="application/rss+xml" title="Dr.S AX 게시판 RSS" href="https://phdseo.github.io/feed.xml">
+  <meta property="og:site_name" content="Dr.S">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://phdseo.github.io/">
   <meta property="og:title" content="Dr.S와 함께하는 인공지능 시대의 차별화된 비즈니스 튜닝">
@@ -17,16 +21,47 @@
   <meta name="twitter:description" content="AI 전략 수립, 트렌드 분석, AI 구현 지원을 제공하는 Dr.S의 AI 트렌드 상담 서비스.">
   <meta name="twitter:image" content="https://phdseo.github.io/DrS_B4_my25%20%EB%B3%B5%EC%82%AC%EB%B3%B8.png">
   <meta name="google-site-verification" content="zv-LGqjlZ49B_KOQio7GBbhrHw41a0UKhDH1MOjViBo" />
+  <!-- 네이버 서치어드바이저(searchadvisor.naver.com)에서 발급받은 인증 메타태그의 주석을 해제하고 코드를 입력하세요 -->
+  <!-- <meta name="naver-site-verification" content="여기에_네이버_인증코드_입력" /> -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Dr.S",
-    "url": "https://phdseo.github.io/",
-    "jobTitle": "AI 전략 컨설턴트",
-    "email": "mailto:cpim@icloud.com",
-    "telephone": "+82-70-7522-4438",
-    "sameAs": []
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://phdseo.github.io/#website",
+        "url": "https://phdseo.github.io/",
+        "name": "Dr.S | 박사님 소개",
+        "description": "Dr.S는 인공지능 트렌드와 데이터 혁신을 접목해 브랜드의 미래를 설계합니다. AI 전략 수립, 트렌드 분석, 멀티 에이전트 오케스트레이션과 LLM 파이프라인 구현 지원까지 제공하는 AI 트렌드 상담 서비스입니다.",
+        "inLanguage": "ko-KR"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://phdseo.github.io/#person",
+        "name": "Dr.S",
+        "url": "https://phdseo.github.io/",
+        "jobTitle": "AI 전략 컨설턴트",
+        "knowsAbout": [
+          "AI Strategy",
+          "AI Transformation (AX)",
+          "Multi-Agent Orchestration",
+          "AI Harness Engineering",
+          "LLM Pipelines"
+        ],
+        "email": "mailto:cpim@icloud.com",
+        "telephone": "+82-70-7522-4438",
+        "sameAs": []
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://phdseo.github.io/#service",
+        "name": "Dr.S AI & AX 컨설팅",
+        "url": "https://phdseo.github.io/",
+        "provider": { "@id": "https://phdseo.github.io/#person" },
+        "serviceType": ["AI 전략 수립", "AI 트렌드 분석", "AI 시스템 구현 지원"],
+        "areaServed": "KR"
+      }
+    ]
   }
   </script>
   <style>
@@ -135,7 +170,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('site-background.jpg') center/cover no-repeat;
+      background: url('https://phdseo.github.io/site-background.jpg') center/cover no-repeat;
       opacity: 0.5;
       z-index: 0;
       pointer-events: none;
@@ -495,6 +530,18 @@
       font-size: 1.15rem;
       margin-bottom: 0.35rem;
     }
+    .board-post h4 a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .board-post h4 a:hover {
+      color: var(--accent2);
+      text-decoration: underline;
+    }
+    .board-post.is-highlighted {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35);
+    }
     .board-post .board-meta {
       color: var(--muted);
       font-size: 0.82rem;
@@ -789,7 +836,7 @@
         grid-area: 1 / 1;
         width: 100%;
         height: 220px;
-        background: url('site-background.jpg') center 30%/145% auto no-repeat;
+        background: url('https://phdseo.github.io/site-background.jpg') center 30%/145% auto no-repeat;
       }
       .hero-car-wrap .hero-annotation {
         grid-area: 1 / 1;
@@ -861,15 +908,11 @@
             <defs>
               <filter id="paperGrain"><feTurbulence baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
             </defs>
-            <!-- soft shadow behind scribbles -->
             <path class="shadow" d="M 10 54 C 26 38 36 26 50 32 C 64 38 60 56 50 54 C 40 52 44 38 52 34 C 60 30 68 36 72 44 C 76 52 84 66 96 62 C 108 58 112 48 120 42" />
-            <!-- multiple colored strokes to mimic colored-pencil layering -->
             <path class="scribble" d="M 10 54 C 24 36 34 26 48 32 C 60 38 56 56 46 52 C 36 48 40 36 48 32 C 56 28 64 34 68 42 C 72 50 80 66 92 62 C 104 58 110 46 118 40" />
             <path class="scribble2" d="M 12 50 C 26 34 36 24 48 30 C 60 36 56 52 46 50 C 36 48 40 36 48 32 C 56 28 66 32 70 40 C 74 48 82 64 94 60 C 106 56 110 44 118 38" />
             <path class="scribble3" d="M 36 36 C 44 28 52 28 60 36" />
-            <!-- subtle grain overlay -->
             <path class="grain" filter="url(#paperGrain)" d="M 8 56 L 132 56" stroke="rgba(255,255,255,0.02)" stroke-width="6" />
-            <!-- arrowhead at the end of the scribble (118,40), pointing upper-right -->
             <polygon class="arrowhead" points="122,36 114,47 108,40" />
           </svg>
           <div class="annotation-label">Special Sports Sedan (3S)</div>
@@ -996,7 +1039,7 @@
         <form id="board-write" class="board-write" style="display:none;">
           <input type="text" id="board-title" placeholder="제목" data-i18n-placeholder="board_title_ph" required>
           <textarea id="board-content" rows="5" placeholder="내용을 입력하세요" data-i18n-placeholder="board_content_ph" required></textarea>
-          
+
           <div class="board-file-zone">
             <label class="board-file-btn" for="board-file">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
@@ -1487,7 +1530,7 @@
       setStatus("");
     });
 
-    let viewMode = "board"; // "board" | "trash"
+    let viewMode = "board";
 
     function updateTrashToggleLabel() {
       trashToggleBtn.textContent = viewMode === "trash" ? t("board_back_to_board_btn") : t("board_trash_btn");
@@ -1595,20 +1638,17 @@
 
     const fileInput = document.getElementById("board-file");
     const filePreview = document.getElementById("board-file-preview");
-    const fileThumb = document.getElementById("board-file-thumb");
-    const fileNameEl = document.getElementById("board-file-name");
-    const fileSizeEl = document.getElementById("board-file-size");
     const fileRemoveBtn = document.getElementById("board-file-remove-btn");
     let currentSelectedFiles = [];
 
-  function renderFilePreviews() {
-    if (!filePreview) return;
-filePreview.innerHTML = "";
-if (currentSelectedFiles.length === 0) {
-filePreview.style.display = "none";
-return;
-}
-    filePreview.style.display = "flex";
+    function renderFilePreviews() {
+      if (!filePreview) return;
+      filePreview.innerHTML = "";
+      if (currentSelectedFiles.length === 0) {
+        filePreview.style.display = "none";
+        return;
+      }
+      filePreview.style.display = "flex";
       filePreview.style.flexDirection = "column";
       filePreview.style.alignItems = "stretch";
       filePreview.style.gap = "0.5rem";
@@ -1669,7 +1709,6 @@ return;
         renderFilePreviews();
       });
     }
-    
 
     function clearFileSelection() {
       currentSelectedFiles = [];
@@ -1693,7 +1732,9 @@ return;
         let attachments = [];
         if (currentSelectedFiles.length > 0) {
           setStatus(t("board_processing_file"), false);
-          for (const file of currentSelectedFiles) { attachments.push(await compressImageIfNeeded(file)); }
+          for (const file of currentSelectedFiles) {
+            attachments.push(await compressImageIfNeeded(file));
+          }
         }
         const postData = {
           title,
@@ -1702,7 +1743,8 @@ return;
           createdAt: serverTimestamp(),
           deleted: false
         };
-        if (attachments.length > 0) { postData.attachments = attachments;
+        if (attachments.length > 0) {
+          postData.attachments = attachments;
         }
         await addDoc(collection(db, "posts"), postData);
         document.getElementById("board-title").value = "";
@@ -1717,7 +1759,16 @@ return;
     let lastSnapshotDocs = null;
     let unsubscribePosts = null;
 
+    function getTargetPostId() {
+      try {
+        return new URLSearchParams(window.location.search).get("post") || "";
+      } catch (e) {
+        return "";
+      }
+    }
+
     function renderPostList(docs, isAdmin) {
+      const targetPostId = getTargetPostId();
       const filtered = (docs || []).filter((docSnap) => {
         const isDeleted = Boolean(docSnap.data().deleted);
         return viewMode === "trash" ? isDeleted : !isDeleted;
@@ -1729,6 +1780,8 @@ return;
         return;
       }
       postsEl.innerHTML = "";
+      let highlightedEl = null;
+
       filtered.forEach((docSnap) => {
         const post = docSnap.data();
         const date = post.createdAt && post.createdAt.toDate
@@ -1737,12 +1790,17 @@ return;
         const deletedDate = post.deletedAt && post.deletedAt.toDate
           ? post.deletedAt.toDate().toLocaleString("ko-KR")
           : "";
-        const el = document.createElement("div");
-        el.className = "board-post";
+        const el = document.createElement("article");
+        el.className = "board-post" + (targetPostId === docSnap.id ? " is-highlighted" : "");
+        el.id = "post-" + docSnap.id;
+        if (targetPostId === docSnap.id) {
+          highlightedEl = el;
+          document.title = `${post.title || "게시글"} | Dr.S AX 게시판`;
+        }
         const admin = Boolean(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL);
         const inTrash = viewMode === "trash";
         el.innerHTML = `
-          <h4></h4>
+          <h4><a></a></h4>
           <div class="board-meta"></div>
           <p></p>
           <div class="board-attachment-box"></div>
@@ -1769,19 +1827,26 @@ return;
           ` : ""}
         `;
         const titleEl = el.querySelector("h4");
+        const titleLink = el.querySelector("h4 a");
         const contentEl = el.querySelector("p");
         const attachmentBox = el.querySelector(".board-attachment-box");
-        titleEl.textContent = post.title || "";
+        titleLink.textContent = post.title || "";
+        titleLink.href = `posts/${encodeURIComponent(docSnap.id)}.html`;
         el.querySelector(".board-meta").textContent = inTrash
           ? `Dr.S. · ${date} · ${t("board_deleted_at_label")}: ${deletedDate}`
           : `Dr.S. · ${date}`;
         contentEl.textContent = post.content || "";
 
-        // Render attachment
-        const attachmentsList = Array.isArray(post.attachments) && post.attachments.length > 0 ? post.attachments : (post.fileData || post.fileUrl) ? [{ fileName: post.fileName || "attachment", fileType: post.fileType || "", fileSize: post.fileSize || 0, fileData: post.fileData || "", fileUrl: post.fileUrl || "" }] : []; attachmentsList.forEach((att) => { const fileSrc = att.fileData || att.fileUrl;
-        if (!fileSrc || !(att.fileName || att.fileData || att.fileUrl)) return; const post = att;
-          const isImage = (post.fileType && post.fileType.startsWith("image/")) ||
-            /\.(png|jpe?g|gif|webp|svg)$/i.test(post.fileName || "");
+        const attachmentsList = Array.isArray(post.attachments) && post.attachments.length > 0
+          ? post.attachments
+          : (post.fileData || post.fileUrl)
+            ? [{ fileName: post.fileName || "attachment", fileType: post.fileType || "", fileSize: post.fileSize || 0, fileData: post.fileData || "", fileUrl: post.fileUrl || "" }]
+            : [];
+        attachmentsList.forEach((att) => {
+          const fileSrc = att.fileData || att.fileUrl;
+          if (!fileSrc || !(att.fileName || att.fileData || att.fileUrl)) return;
+          const isImage = (att.fileType && att.fileType.startsWith("image/")) ||
+            /\.(png|jpe?g|gif|webp|svg)$/i.test(att.fileName || "");
           const attachDiv = document.createElement("div");
           attachDiv.className = "board-attachment" + (isImage ? " is-image" : "");
 
@@ -1793,7 +1858,7 @@ return;
             imgWrap.className = "board-attachment-img-wrap";
             const img = document.createElement("img");
             img.src = fileSrc;
-            img.alt = post.fileName || "첨부 이미지";
+            img.alt = att.fileName || "첨부 이미지";
             img.loading = "lazy";
             imgWrap.appendChild(img);
             attachDiv.appendChild(imgWrap);
@@ -1808,21 +1873,21 @@ return;
 
           const nameSpan = document.createElement("span");
           nameSpan.className = "board-attachment-name";
-          nameSpan.textContent = post.fileName || (isImage ? "이미지 파일" : "첨부파일");
+          nameSpan.textContent = att.fileName || (isImage ? "이미지 파일" : "첨부파일");
 
           metaDiv.appendChild(iconSpan);
           metaDiv.appendChild(nameSpan);
 
-          if (post.fileSize) {
+          if (att.fileSize) {
             const sizeSpan = document.createElement("span");
             sizeSpan.className = "board-attachment-size";
-            sizeSpan.textContent = "(" + formatFileSize(post.fileSize) + ")";
+            sizeSpan.textContent = "(" + formatFileSize(att.fileSize) + ")";
             metaDiv.appendChild(sizeSpan);
           }
 
           const downloadLink = document.createElement("a");
           downloadLink.href = fileSrc;
-          downloadLink.download = post.fileName || "download";
+          downloadLink.download = att.fileName || "download";
           downloadLink.className = "board-attachment-download";
           downloadLink.target = "_blank";
           downloadLink.rel = "noopener noreferrer";
@@ -1891,7 +1956,6 @@ return;
             editTitleInput.value = post.title || "";
             editContentInput.value = post.content || "";
 
-            // Populate edit attachment area
             editFileSlot.innerHTML = "";
             const hasExisting = Boolean(post.fileData || post.fileUrl);
             const editBox = document.createElement("div");
@@ -1973,6 +2037,10 @@ return;
         }
         postsEl.appendChild(el);
       });
+
+      if (highlightedEl) {
+        highlightedEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
 
     function renderPosts(isAdmin) {
