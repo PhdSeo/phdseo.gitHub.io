@@ -261,7 +261,7 @@ function buildFeedXml(posts) {
   <channel>
     <title>Dr.S AX 게시판</title>
     <link>${SITE_URL}/#board</link>
-    <description>AI/AX 관련 생각과 소식을 기록하는 Dr.S AX 게시판</description>
+    <description>AI/AX 및 AX-GRC 관련 생각과 소식을 기록하는 Dr.S(서성웅) AX 게시판</description>
     <language>ko</language>
 ${items.join("\n")}
   </channel>
