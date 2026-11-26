@@ -215,6 +215,98 @@ function buildPostHtml(post) {
 `;
 }
 
+function buildStaticBoardPostsHtml(posts) {
+  if (!posts.length) {
+    return '          <p class="board-empty" data-i18n="board_loading">게시글을 불러오는 중입니다...</p>';
+  }
+
+  return posts.map((post) => {
+    const url = `/posts/${encodeURIComponent(post.id)}.html`;
+    const dateStr = post.createdAt
+      ? new Date(post.createdAt).toLocaleDateString("ko-KR", { timeZone: "Asia/Seoul" })
+      : "";
+    return `          <article class="board-post is-collapsed">
+            <div class="board-post-header">
+              <h3><a href="${escapeHtml(url)}" style="color: inherit; text-decoration: none;">${escapeHtml(post.title || "")}</a></h3>
+              <span class="board-post-meta">Dr.S${dateStr ? ` · ${escapeHtml(dateStr)}` : ""}</span>
+            </div>
+            <p>${escapeHtml(buildDescription(post.content))}</p>
+            <div style="margin-top: 0.5rem;"><a href="${escapeHtml(url)}" style="color: var(--accent-2); font-size: 0.9rem; font-weight: 600;">자세히 보기 →</a></div>
+          </article>`;
+  }).join("\n");
+}
+
+function buildFeedXml(posts) {
+  const items = posts.slice(0, 50).map((post) => {
+    const link = `${SITE_URL}/posts/${encodeURIComponent(post.id)}.html`;
+    const pubDate = post.createdAt ? new Date(post.createdAt).toUTCString() : new Date().toUTCString();
+    return `    <item>
+      <title>${escapeXml(post.title || "")}</title>
+      <link>${escapeXml(link)}</link>
+      <guid isPermaLink="true">${escapeXml(link)}</guid>
+      <pubDate>${pubDate}</pubDate>
+      <description>${escapeXml(post.content || "")}</description>
+    </item>`;
+  });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Dr.S AX 게시판</title>
+    <link>${SITE_URL}/</link>
+    <description>AI/AX 및 AX-GRC 관련 생각과 소식을 기록하는 Dr.S(서성웅) AX 게시판</description>
+    <language>ko</language>
+${items.join("\n")}
+  </channel>
+</rss>
+`;
+}
+
+function updateIndexHtml(posts) {
+  const indexPath = path.resolve("index.html");
+  if (!fs.existsSync(indexPath)) return;
+
+  let indexHtml = fs.readFileSync(indexPath, "utf8");
+  const rssHref = `${SITE_URL}/rss.xml`;
+  if (!indexHtml.includes(rssHref)) {
+    const feedLinkPattern = /(\s*<link rel="alternate" type="application\/rss\+xml"[^>]*href="https:\/\/phdseo\.github\.io\/feed\.xml"[^>]*>\s*)/;
+    if (!feedLinkPattern.test(indexHtml)) {
+      throw new Error("Could not find the existing feed.xml alternate link in index.html");
+    }
+    indexHtml = indexHtml.replace(
+      feedLinkPattern,
+      `$1  <link rel="alternate" type="application/rss+xml" title="Dr.S AX 게시판 RSS (rss.xml)" href="${rssHref}">\n`
+    );
+  }
+
+  const startMarker = "<!-- SEO_BOARD_POSTS_START -->";
+  const endMarker = "<!-- SEO_BOARD_POSTS_END -->";
+  if (!indexHtml.includes(startMarker) || !indexHtml.includes(endMarker)) {
+    const boardPlaceholderPattern = /(<div id="board-posts" class="board-posts">\s*)(<p class="board-empty" data-i18n="board_loading">게시��을 불러오는 중입니다\.\.\.<\/p>)(\s*<\/div>)/;
+    if (!boardPlaceholderPattern.test(indexHtml)) {
+      throw new Error("Could not find the expected #board-posts loading placeholder in index.html");
+    }
+    indexHtml = indexHtml.replace(
+      boardPlaceholderPattern,
+      `$1${startMarker}\n          $2\n          ${endMarker}$3`
+    );
+  }
+
+  const startIdx = indexHtml.indexOf(startMarker);
+  const endIdx = indexHtml.indexOf(endMarker);
+  if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
+    throw new Error("SEO board post markers in index.html are malformed");
+  }
+
+  const updatedIndexHtml =
+    indexHtml.slice(0, startIdx + startMarker.length) +
+    "\n" +
+    buildStaticBoardPostsHtml(posts) +
+    "\n          " +
+    indexHtml.slice(endIdx);
+  fs.writeFileSync(indexPath, updatedIndexHtml, "utf8");
+}
+
 function buildSitemapXml(posts) {
   const today = new Date().toISOString().slice(0, 10);
   const urls = [
@@ -243,32 +335,6 @@ ${urls.join("\n")}
 `;
 }
 
-function buildFeedXml(posts) {
-  const items = posts.slice(0, 50).map((post) => {
-    const link = `${SITE_URL}/posts/${encodeURIComponent(post.id)}.html`;
-    const pubDate = post.createdAt ? new Date(post.createdAt).toUTCString() : new Date().toUTCString();
-    return `    <item>
-      <title>${escapeXml(post.title || "")}</title>
-      <link>${escapeXml(link)}</link>
-      <guid isPermaLink="true">${escapeXml(link)}</guid>
-      <pubDate>${pubDate}</pubDate>
-      <description>${escapeXml(buildDescription(post.content))}</description>
-    </item>`;
-  });
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>Dr.S AX 게시판</title>
-    <link>${SITE_URL}/#board</link>
-    <description>AI/AX 및 AX-GRC 관련 생각과 소식을 기록하는 Dr.S(서성웅) AX 게시판</description>
-    <language>ko</language>
-${items.join("\n")}
-  </channel>
-</rss>
-`;
-}
-
 async function main() {
   const posts = await fetchAllPosts();
   fs.mkdirSync(POSTS_DIR, { recursive: true });
@@ -284,9 +350,13 @@ async function main() {
     fs.writeFileSync(path.join(POSTS_DIR, `${post.id}.html`), buildPostHtml(post), "utf8");
   }
 
+  const rssXml = buildFeedXml(posts);
   fs.writeFileSync(path.resolve("sitemap.xml"), buildSitemapXml(posts), "utf8");
-  fs.writeFileSync(path.resolve("feed.xml"), buildFeedXml(posts), "utf8");
-  console.log(`Generated ${posts.length} static post pages, sitemap.xml, and feed.xml.`);
+  fs.writeFileSync(path.resolve("feed.xml"), rssXml, "utf8");
+  fs.writeFileSync(path.resolve("rss.xml"), rssXml, "utf8");
+  updateIndexHtml(posts);
+
+  console.log(`Generated ${posts.length} static post pages, sitemap.xml, feed.xml, rss.xml, and updated index.html.`);
 }
 
 main().catch((err) => {
