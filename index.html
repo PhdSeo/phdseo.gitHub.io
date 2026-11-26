@@ -551,7 +551,7 @@
       font-size: 0.82rem;
       margin-bottom: 0.9rem;
     }
-    .board-post p {
+    .board-post.is-collapsible { cursor: pointer; } .board-post.is-collapsed p { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; } .board-post.is-collapsed .board-attachment-box { display: none; } .board-toggle-btn { margin-top: 0.65rem; padding: 0.35rem 0.85rem; border-radius: 999px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(56, 189, 248, 0.08); color: var(--accent2); font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; } .board-post p {
       white-space: pre-wrap;
       color: var(--text);
     }
@@ -2039,7 +2039,7 @@
             }
           });
         }
-        postsEl.appendChild(el);
+        postsEl.appendChild(el); (() => { const postContentEl = el.querySelector("p"); const attachEl = el.querySelector(".board-attachment-box"); const hasAttachment = !!(attachEl && attachEl.children.length > 0); el.classList.add("is-collapsed"); const isOverflowing = !!(postContentEl && (postContentEl.scrollHeight > postContentEl.clientHeight + 2)); if (!isOverflowing && !hasAttachment) { el.classList.remove("is-collapsed"); return; } el.classList.add("is-collapsible"); if (el.classList.contains("is-highlighted")) { el.classList.remove("is-collapsed"); } const toggleBtn = document.createElement("button"); toggleBtn.type = "button"; toggleBtn.className = "board-toggle-btn"; const updateToggleLabel = () => { const collapsed = el.classList.contains("is-collapsed"); toggleBtn.textContent = collapsed ? "더보기 ▼" : "접기 ▲"; toggleBtn.setAttribute("aria-expanded", String(!collapsed)); }; updateToggleLabel(); const toggleExpand = () => { el.classList.toggle("is-collapsed"); updateToggleLabel(); }; toggleBtn.addEventListener("click", (e) => { e.stopPropagation(); toggleExpand(); }); el.addEventListener("click", (e) => { if (e.target.closest("a, button, input, textarea, select, label, .board-edit-form, .board-attachment-box")) return; if (window.getSelection && window.getSelection().toString().length > 0) return; toggleExpand(); }); const editFormEl = el.querySelector(".board-edit-form"); if (editFormEl) { el.insertBefore(toggleBtn, editFormEl); } else { el.appendChild(toggleBtn); } })();
       });
 
       if (highlightedEl) {
