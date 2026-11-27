@@ -98,7 +98,7 @@ Structural Differentiation of AX-GRC and Its Application to Ultra-Reliable Missi
       <pubDate>Wed, 11 Nov 2026 01:56:51 GMT</pubDate>
       <description>* 구조적 차별성 요약 비교표
 
-&lt;비교 항목&gt;	        "전통적 GRC (Legacy)" /	"DX 기반 GRC (Digital)" /	"AX-GRC (AI Transformation)"
+&lt;비교 항목&gt;	        &quot;전통적 GRC (Legacy)&quot; /	&quot;DX 기반 GRC (Digital)&quot; /	&quot;AX-GRC (AI Transformation)&quot;
 핵심 구동 방식:	수작업 및 서류 중심 통제 /	시스템화된 고정 규칙(Rule) 기반 /	확률 기반 자율 판단 및 예측
 통제 대상:	        임직원의 행위 및 규정 준수 /	정보 자산 및 사용자 권한 /	AI 에이전트 행동 및 전사 비정형 데이터
 조직 운영 형태:	부서별 파편화된 사일로 구조 /	정형화된 프로세스 자동화 /	경계가 소멸된 실시간 협업 체계
@@ -142,7 +142,7 @@ Compliance) 라는 용어를 세계 최초로 제안합니다.</description>
 
 - AX 맞춤형 컴플라이언스: EU AI Act 등 글로벌 인공지능 규제안에 맞춰 전사 시스템의 프로세스를 자동 튜닝하고 추적 가능성(Traceability)을 확보
 
-따라서 인공지능 대전환 시대를 관통하는 통섭적 프레임워크로서 'AX-GRC'라는 명칭을 명시하고 최초 제안을 기록한 원류가 시작 되었습니다.</description>
+따라서 인공지능 대전환 시대를 관통하는 통섭적 프레임워크로서 &apos;AX-GRC&apos;라는 명칭을 명시하고 최초 제안을 기록한 원류가 시작 되었습니다.</description>
     </item>
   </channel>
 </rss>
