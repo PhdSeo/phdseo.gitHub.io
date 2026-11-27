@@ -266,45 +266,20 @@ function updateIndexHtml(posts) {
   const indexPath = path.resolve("index.html");
   if (!fs.existsSync(indexPath)) return;
 
-  let indexHtml = fs.readFileSync(indexPath, "utf8");
-  const rssHref = `${SITE_URL}/rss.xml`;
-  if (!indexHtml.includes(rssHref)) {
-    const feedLinkPattern = /(\s*<link rel="alternate" type="application\/rss\+xml"[^>]*href="https:\/\/phdseo\.github\.io\/feed\.xml"[^>]*>\s*)/;
-    if (!feedLinkPattern.test(indexHtml)) {
-      throw new Error("Could not find the existing feed.xml alternate link in index.html");
-    }
-    indexHtml = indexHtml.replace(
-      feedLinkPattern,
-      `$1  <link rel="alternate" type="application/rss+xml" title="Dr.S AX 게시판 RSS (rss.xml)" href="${rssHref}">\n`
-    );
-  }
-
+  const indexHtml = fs.readFileSync(indexPath, "utf8");
   const startMarker = "<!-- SEO_BOARD_POSTS_START -->";
   const endMarker = "<!-- SEO_BOARD_POSTS_END -->";
-  if (!indexHtml.includes(startMarker) || !indexHtml.includes(endMarker)) {
-    const boardPlaceholderPattern = /(<div id="board-posts" class="board-posts">\s*)(<p class="board-empty" data-i18n="board_loading">게시��을 불러오는 중입니다\.\.\.<\/p>)(\s*<\/div>)/;
-    if (!boardPlaceholderPattern.test(indexHtml)) {
-      throw new Error("Could not find the expected #board-posts loading placeholder in index.html");
-    }
-    indexHtml = indexHtml.replace(
-      boardPlaceholderPattern,
-      `$1${startMarker}\n          $2\n          ${endMarker}$3`
-    );
-  }
-
   const startIdx = indexHtml.indexOf(startMarker);
   const endIdx = indexHtml.indexOf(endMarker);
-  if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
-    throw new Error("SEO board post markers in index.html are malformed");
+  if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+    const updatedIndexHtml =
+      indexHtml.slice(0, startIdx + startMarker.length) +
+      "\n" +
+      buildStaticBoardPostsHtml(posts) +
+      "\n          " +
+      indexHtml.slice(endIdx);
+    fs.writeFileSync(indexPath, updatedIndexHtml, "utf8");
   }
-
-  const updatedIndexHtml =
-    indexHtml.slice(0, startIdx + startMarker.length) +
-    "\n" +
-    buildStaticBoardPostsHtml(posts) +
-    "\n          " +
-    indexHtml.slice(endIdx);
-  fs.writeFileSync(indexPath, updatedIndexHtml, "utf8");
 }
 
 function buildSitemapXml(posts) {
