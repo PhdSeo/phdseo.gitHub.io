@@ -215,6 +215,116 @@ function buildPostHtml(post) {
 `;
 }
 
+function buildPostsIndexHtml(posts) {
+  const listItems = posts.length
+    ? posts
+        .map((post) => {
+          const url = `/posts/${encodeURIComponent(post.id)}.html`;
+          const dateStr = (post.createdAt || "").slice(0, 10);
+          return `      <article>
+        <h2><a href="${escapeHtml(url)}">${escapeHtml(post.title || "AX 게시판 글")}</a></h2>
+        <div class="meta">Dr.S(서성웅)${dateStr ? ` · ${escapeHtml(dateStr)}` : ""}</div>
+        <p>${escapeHtml(buildDescription(post.content))}</p>
+        <div class="cta-box"><a href="${escapeHtml(url)}">전체 글 보기 →</a></div>
+      </article>`;
+        })
+        .join("\n")
+    : `      <article><p>등록된 게시글이 없습니다.</p></article>`;
+
+  return `<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr.S AX 게시판 글 목록 | 서성웅 · AX-GRC</title>
+  <meta name="description" content="Dr.S(서성웅) AX 게시판의 전체 게시글 목록입니다. AX-GRC, AI 전략, 멀티 에이전트 오케스트레이션 및 하네스 엔지니어링 글을 확인할 수 있습니다.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="${SITE_URL}/posts/">
+  <meta property="og:site_name" content="Dr.S">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${SITE_URL}/posts/">
+  <meta property="og:title" content="Dr.S AX 게시판 글 목록 | 서성웅 · AX-GRC">
+  <meta property="og:description" content="Dr.S(서성웅) AX 게시판의 전체 게시글 목록입니다.">
+  <meta property="og:locale" content="ko_KR">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(180deg, #04070f 0%, #0d1117 100%);
+      color: #f8fafc;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+    .container {
+      width: min(820px, 92%);
+      margin: 0 auto;
+      padding: 3rem 0 5rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: #22d3ee;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 {
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      margin: 0 0 0.5rem;
+    }
+    .lead {
+      color: #94a3b8;
+      margin: 0 0 2rem;
+    }
+    article {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+      line-height: 1.4;
+      margin: 0 0 0.5rem;
+    }
+    h2 a {
+      color: #f8fafc;
+      text-decoration: none;
+    }
+    h2 a:hover { color: #22d3ee; }
+    .meta {
+      color: #94a3b8;
+      font-size: 0.88rem;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      color: #e2e8f0;
+      margin: 0;
+    }
+    .cta-box {
+      margin-top: 1rem;
+    }
+    .cta-box a {
+      color: #ff6ec7;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <a class="back-link" href="${SITE_URL}/">← Dr.S 홈으로 돌아가기</a>
+    <h1>Dr.S AX 게시판 글 목록</h1>
+    <p class="lead">Dr.S(서성웅)의 AX-GRC 및 AI 전략 아카이브</p>
+${listItems}
+  </main>
+</body>
+</html>
+`;
+}
+
 function buildStaticBoardPostsHtml(posts) {
   if (!posts.length) {
     return '          <p class="board-empty" data-i18n="board_loading">게시글을 불러오는 중입니다...</p>';
@@ -290,6 +400,12 @@ function buildSitemapXml(posts) {
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>`,
+    `  <url>
+    <loc>${SITE_URL}/posts/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>`
   ];
 
@@ -314,7 +430,7 @@ async function main() {
   const posts = await fetchAllPosts();
   fs.mkdirSync(POSTS_DIR, { recursive: true });
 
-  const expectedFiles = new Set(posts.map((p) => `${p.id}.html`));
+  const expectedFiles = new Set(["index.html", ...posts.map((p) => `${p.id}.html`)]);
   for (const existing of fs.readdirSync(POSTS_DIR)) {
     if (existing.endsWith(".html") && !expectedFiles.has(existing)) {
       fs.unlinkSync(path.join(POSTS_DIR, existing));
@@ -324,6 +440,7 @@ async function main() {
   for (const post of posts) {
     fs.writeFileSync(path.join(POSTS_DIR, `${post.id}.html`), buildPostHtml(post), "utf8");
   }
+  fs.writeFileSync(path.join(POSTS_DIR, "index.html"), buildPostsIndexHtml(posts), "utf8");
 
   const rssXml = buildFeedXml(posts);
   fs.writeFileSync(path.resolve("sitemap.xml"), buildSitemapXml(posts), "utf8");
